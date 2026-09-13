@@ -2,9 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#4f46e5" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Mukkam Schools Hub</title>
+
+  <!-- PWA Fullscreen & Standalone Configuration (Hides Address Bar) -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Mukkam Hub" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#4f46e5" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%234f46e5'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-size='50'>🏫</text></svg>" />
+  <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22Mukkam%20Schools%20Hub%22%2C%22short_name%22%3A%22Mukkam%20Hub%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22orientation%22%3A%22portrait%22%2C%22background_color%22%3A%22%23ffffff%22%2C%22theme_color%22%3A%22%234f46e5%22%7D" />
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,93 +23,69 @@
     body {
       font-family: 'Plus Jakarta Sans', 'Anek Malayalam', sans-serif;
       -webkit-tap-highlight-color: transparent;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
     }
-    .font-malayalam {
-      font-family: 'Anek Malayalam', sans-serif;
-    }
-    .font-mono-code {
-      font-family: 'JetBrains Mono', monospace;
-    }
-    body.modal-open {
-      overflow: hidden;
-      touch-action: none;
-    }
+    .font-malayalam { font-family: 'Anek Malayalam', sans-serif; }
+    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+    body.modal-open { overflow: hidden; touch-action: none; }
 
-    /* PRINT STYLES */
+    /* PRINT STYLES (PURE MALAYALAM PARAGRAPH + TABLE) */
     @media print {
-      body {
-        background: #ffffff !important;
-        color: #000000 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-      #pageDashboard, #pageList, #pageReport, #modalBackdrop, header {
-        display: none !important;
-      }
-      #printArea {
-        display: block !important;
-        visibility: visible !important;
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 25px !important;
-        font-family: 'Anek Malayalam', 'Plus Jakarta Sans', sans-serif !important;
-      }
+      body { background: #ffffff !important; color: #000000 !important; margin: 0 !important; padding: 0 !important; }
+      #pageDashboard, #pageList, #pageReport, #modalBackdrop, #adminAuthModal, #editSchoolModal, header { display: none !important; }
+      #printArea { display: block !important; visibility: visible !important; width: 100% !important; margin: 0 !important; padding: 25px !important; font-family: 'Anek Malayalam', 'Plus Jakarta Sans', sans-serif !important; }
     }
   </style>
 </head>
 <body class="bg-slate-100/70 text-slate-800 antialiased min-h-screen selection:bg-indigo-100">
 
   <!-- ======================================================== -->
-  <!-- PAGE 1: DASHBOARD HOME (PREMIUM CARDS) -->
+  <!-- PAGE 1: DASHBOARD HOME -->
   <!-- ======================================================== -->
   <div id="pageDashboard" class="min-h-screen flex flex-col justify-between max-w-md mx-auto">
     <div>
-      <!-- Top Decorative Hero Header -->
+      <!-- Header -->
       <header class="relative overflow-hidden bg-gradient-to-br from-indigo-700 via-indigo-600 to-violet-800 text-white pt-7 pb-8 px-6 rounded-b-[2.5rem] shadow-xl shadow-indigo-950/10">
-        <!-- Background Glow effects -->
-        <div class="absolute -top-12 -right-12 w-40 h-40 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-        <div class="absolute -bottom-10 -left-10 w-36 h-36 bg-indigo-400/20 rounded-full blur-xl pointer-events-none"></div>
-
-        <div class="relative z-10">
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-3">
-              <div class="w-11 h-11 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner">
-                <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-              </div>
-              <div>
-                <h1 class="text-lg font-extrabold tracking-tight leading-tight">Mukkam Sub-District </h1>
-                <p class="text-[11px] text-indigo-200 font-medium">Sub-District Official Portal</p>
-              </div>
+        <div class="relative z-10 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center border border-white/20">
+              <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
             </div>
-            
-            <div id="syncBadge" class="flex items-center gap-1.5 text-[10px] font-bold bg-white/10 backdrop-blur-md text-indigo-100 px-3 py-1 rounded-full border border-white/15 shadow-2xs">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-              Syncing
+            <div>
+              <h1 class="text-lg font-extrabold tracking-tight">Mukkam Sub-District</h1>
+              <p class="text-[11px] text-indigo-200 font-medium">Educational Directory</p>
             </div>
           </div>
 
-          <p class="text-xs text-indigo-100/90 leading-relaxed font-normal pr-4">
-            Direct coordination portal for Headmasters, Principals, SITCs, and Little Kites Mentors.
-          </p>
+          <!-- Top Actions -->
+          <div class="flex items-center gap-2">
+            <button onclick="toggleAdminModal()" class="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md flex items-center justify-center transition active:scale-95 border border-white/20" title="Admin">
+              <span id="adminLockIcon">🔒</span>
+            </button>
+            <div id="syncBadge" class="flex items-center gap-1.5 text-[10px] font-bold bg-white/10 backdrop-blur-md text-indigo-100 px-2.5 py-1 rounded-full border border-white/15">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              Live
+            </div>
+          </div>
         </div>
       </header>
 
-      <!-- Dashboard Interactive Tiles -->
+      <!-- Dashboard Tiles -->
       <main class="px-4 -mt-3 relative z-20 space-y-3">
-        <div class="flex items-center justify-between px-2 pt-2">
-          <h2 class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">
-            Education Tiers
-          </h2>
-          <span class="text-[10px] text-slate-400 font-medium">Touch to open</span>
+        <!-- Admin Banner -->
+        <div id="adminModeBanner" class="hidden bg-amber-500 text-white px-4 py-2.5 rounded-2xl flex items-center justify-between shadow-xs">
+          <span class="text-xs font-bold">⚡ Admin Mode Active</span>
+          <div class="flex items-center gap-2">
+            <button onclick="openAddSchoolModal()" class="px-2.5 py-1 bg-white text-amber-900 rounded-lg text-[11px] font-extrabold active:scale-95 transition">+ Add School</button>
+            <button onclick="logoutAdmin()" class="text-[11px] underline opacity-90">Logout</button>
+          </div>
         </div>
 
         <!-- TILE 1: LP & UP -->
-        <button 
-          onclick="openTierPage('primary')" 
-          class="w-full bg-white p-4 rounded-3xl border border-slate-200/70 shadow-sm hover:shadow-md hover:border-indigo-300 active:scale-[0.98] transition-all flex items-center justify-between text-left group"
-        >
+        <button onclick="openTierPage('primary')" class="w-full bg-white p-4 rounded-3xl border border-slate-200/70 shadow-sm hover:shadow-md active:scale-[0.98] transition-all flex items-center justify-between text-left group">
           <div class="flex items-center gap-3.5">
             <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center border border-indigo-100 group-hover:scale-105 transition-transform">
               <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -112,25 +97,16 @@
                 <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">LP & UP Schools</h3>
                 <span id="badgePrimary" class="text-[10px] font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full border border-indigo-100">--</span>
               </div>
-              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 1–4 (LP) & 5–7 (UP)</p>
-              <div class="flex items-center gap-2 mt-1">
-                <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50/50 px-1.5 py-0.5 rounded">HM</span>
-                <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50/50 px-1.5 py-0.5 rounded">PSITC</span>
-              </div>
+              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 1–7</p>
             </div>
           </div>
           <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-            </svg>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
           </div>
         </button>
 
         <!-- TILE 2: HIGH SCHOOL -->
-        <button 
-          onclick="openTierPage('hs')" 
-          class="w-full bg-white p-4 rounded-3xl border border-slate-200/70 shadow-sm hover:shadow-md hover:border-amber-300 active:scale-[0.98] transition-all flex items-center justify-between text-left group"
-        >
+        <button onclick="openTierPage('hs')" class="w-full bg-white p-4 rounded-3xl border border-slate-200/70 shadow-sm hover:shadow-md active:scale-[0.98] transition-all flex items-center justify-between text-left group">
           <div class="flex items-center gap-3.5">
             <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100 group-hover:scale-105 transition-transform">
               <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -143,25 +119,15 @@
                 <span id="badgeHS" class="text-[10px] font-bold bg-amber-50 text-amber-800 px-2 py-0.5 rounded-full border border-amber-100">--</span>
               </div>
               <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 8–10</p>
-              <div class="flex items-center gap-1.5 mt-1">
-                <span class="text-[10px] font-bold text-amber-700 bg-amber-50/70 px-1.5 py-0.5 rounded">HM</span>
-                <span class="text-[10px] font-bold text-amber-700 bg-amber-50/70 px-1.5 py-0.5 rounded">SITC</span>
-                <span class="text-[10px] font-bold text-amber-700 bg-amber-50/70 px-1.5 py-0.5 rounded">LK Mentors</span>
-              </div>
             </div>
           </div>
           <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-amber-500 group-hover:text-white transition-all">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-            </svg>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
           </div>
         </button>
 
         <!-- TILE 3: HIGHER SECONDARY -->
-        <button 
-          onclick="openTierPage('hss')" 
-          class="w-full bg-white p-4 rounded-3xl border border-slate-200/70 shadow-sm hover:shadow-md hover:border-purple-300 active:scale-[0.98] transition-all flex items-center justify-between text-left group"
-        >
+        <button onclick="openTierPage('hss')" class="w-full bg-white p-4 rounded-3xl border border-slate-200/70 shadow-sm hover:shadow-md active:scale-[0.98] transition-all flex items-center justify-between text-left group">
           <div class="flex items-center gap-3.5">
             <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100 group-hover:scale-105 transition-transform">
               <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -175,25 +141,16 @@
                 <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">Higher Secondary</h3>
                 <span id="badgeHSS" class="text-[10px] font-bold bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full border border-purple-100">--</span>
               </div>
-              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 11–12 (HSS / VHSS)</p>
-              <div class="flex items-center gap-1.5 mt-1">
-                <span class="text-[10px] font-bold text-purple-700 bg-purple-50/70 px-1.5 py-0.5 rounded">Principal</span>
-                <span class="text-[10px] font-bold text-purple-700 bg-purple-50/70 px-1.5 py-0.5 rounded">HITC</span>
-              </div>
+              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 11–12</p>
             </div>
           </div>
           <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-purple-600 group-hover:text-white transition-all">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-            </svg>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
           </div>
         </button>
 
         <!-- TILE 4: TRAINING REPORT BUILDER -->
-        <button 
-          onclick="openReportPage()" 
-          class="w-full bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-700 text-white p-4 rounded-3xl shadow-md hover:shadow-lg active:scale-[0.98] transition-all flex items-center justify-between text-left group border border-emerald-500/30"
-        >
+        <button onclick="openReportPage()" class="w-full bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-700 text-white p-4 rounded-3xl shadow-md hover:shadow-lg active:scale-[0.98] transition-all flex items-center justify-between text-left group border border-emerald-500/30">
           <div class="flex items-center gap-3.5">
             <div class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-105 transition-transform">
               <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -206,67 +163,51 @@
                 <span class="text-[9px] font-extrabold bg-white/25 px-2 py-0.5 rounded-full uppercase tracking-wider">PDF</span>
               </div>
               <p class="text-[11px] text-emerald-100 font-medium mt-0.5">Malayalam Statement & List Generator</p>
-              <p class="text-[10px] text-emerald-200 font-semibold mt-1">Multi-tier checkmarks &bull; Instant print</p>
             </div>
           </div>
           <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-emerald-700 transition-all">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-            </svg>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
           </div>
         </button>
-
       </main>
     </div>
 
     <footer class="p-6 text-center text-xs text-slate-400 font-medium">
-      Master Trainer Mukkam &bull; Educational Sub-District
+      AEO Mukkam &bull; Educational Sub-District
     </footer>
   </div>
 
 
   <!-- ======================================================== -->
-  <!-- PAGE 2: SCHOOLS DIRECTORY (POLISHED FILTER PILLS) -->
+  <!-- PAGE 2: SCHOOLS DIRECTORY -->
   <!-- ======================================================== -->
   <div id="pageList" class="hidden min-h-screen max-w-md mx-auto pb-16">
-    <!-- Sticky Glass Header -->
     <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
       <div class="px-4 pt-3 pb-3">
-        <div class="flex items-center gap-3 mb-2.5">
-          <button 
-            onclick="backToDashboard()" 
-            class="w-9 h-9 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 active:scale-90 flex items-center justify-center font-bold transition"
-            aria-label="Back to dashboard"
-          >
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <div>
-            <h2 id="listTierTitle" class="text-base font-extrabold tracking-tight text-slate-900 leading-tight">Schools</h2>
-            <p id="listTierSubtitle" class="text-[10px] text-slate-500 font-medium">Directory</p>
+        <div class="flex items-center justify-between mb-2.5">
+          <div class="flex items-center gap-3">
+            <button onclick="backToDashboard()" class="w-9 h-9 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 active:scale-90 flex items-center justify-center font-bold transition">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <div>
+              <h2 id="listTierTitle" class="text-base font-extrabold tracking-tight text-slate-900 leading-tight">Schools</h2>
+              <p id="listTierSubtitle" class="text-[10px] text-slate-500 font-medium">Directory</p>
+            </div>
           </div>
+          
+          <button id="adminAddSchoolBtn" onclick="openAddSchoolModal()" class="hidden px-3 py-1.5 bg-indigo-600 text-white rounded-xl text-xs font-bold active:scale-95 transition shadow-xs">+ Add</button>
         </div>
 
-        <!-- Sleek Search Input -->
         <div class="relative">
           <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 text-xs pointer-events-none">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
           </span>
-          <input 
-            id="searchInput" 
-            type="search" 
-            placeholder="Search school name, code, HM, SITC..." 
-            class="w-full pl-9 pr-3 py-2 text-xs bg-slate-100/90 text-slate-800 placeholder-slate-400 rounded-2xl border border-transparent focus:border-indigo-400 focus:bg-white focus:outline-none transition shadow-inner"
-          />
+          <input id="searchInput" type="search" placeholder="Search school, code, HM, SITC..." class="w-full pl-9 pr-3 py-2 text-xs bg-slate-100/90 text-slate-800 rounded-2xl border border-transparent focus:border-indigo-400 focus:bg-white focus:outline-none transition shadow-inner" />
         </div>
       </div>
     </header>
 
     <main class="px-4 pt-3 space-y-3">
-      <!-- Modernized Filter Card -->
       <div class="bg-white p-3.5 rounded-3xl border border-slate-200/80 shadow-xs space-y-3">
         <div>
           <div class="flex items-center justify-between mb-1.5 px-0.5">
@@ -292,35 +233,24 @@
 
         <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs px-0.5">
           <span id="filteredCount" class="font-extrabold text-slate-700">0 schools</span>
-          <button onclick="resetFilters()" class="text-[11px] font-bold text-indigo-600 hover:underline">
-            Reset Filters
-          </button>
+          <button onclick="resetFilters()" class="text-[11px] font-bold text-indigo-600 hover:underline">Reset</button>
         </div>
       </div>
 
-      <!-- School Cards List -->
       <div id="schoolList" class="space-y-2.5"></div>
-
-      <div id="noResults" class="hidden text-center py-12 px-4 bg-white rounded-3xl border border-dashed border-slate-300 text-slate-400 text-xs">
-        No schools found matching your selected filters.
-      </div>
+      <div id="noResults" class="hidden text-center py-12 px-4 bg-white rounded-3xl border border-dashed border-slate-300 text-slate-400 text-xs">No schools found matching your selected filters.</div>
     </main>
   </div>
 
 
   <!-- ======================================================== -->
-  <!-- PAGE 3: TRAINING REPORT BUILDER (MALAYALAM PARAGRAPH ONLY) -->
+  <!-- PAGE 3: TRAINING REPORT BUILDER -->
   <!-- ======================================================== -->
   <div id="pageReport" class="hidden min-h-screen max-w-md mx-auto pb-16">
     <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
       <div class="px-4 py-3 flex items-center gap-3">
-        <button 
-          onclick="backToDashboard()" 
-          class="w-9 h-9 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 active:scale-90 flex items-center justify-center font-bold transition"
-        >
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
-          </svg>
+        <button onclick="backToDashboard()" class="w-9 h-9 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 active:scale-90 flex items-center justify-center font-bold transition">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
         </button>
         <div>
           <h2 class="text-base font-extrabold tracking-tight text-slate-900 leading-tight">Generate Training Report</h2>
@@ -330,27 +260,16 @@
     </header>
 
     <main class="px-4 pt-3 space-y-3.5">
-      
-      <!-- Malayalam & English Paragraph Input -->
       <div class="bg-white p-4 rounded-3xl border border-slate-200/80 shadow-xs space-y-2">
         <div class="flex items-center justify-between">
-          <h3 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider">1. Report Paragraph</h3>
-          <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-            Anek Malayalam
-          </span>
+          <h3 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider">Report Description</h3>
+          <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">Anek Malayalam</span>
         </div>
-        <p class="text-[11px] text-slate-400">ഇവിടെ നൽകുന്ന വിവരണം റിപ്പോർട്ടിന്റെ ഏറ്റവും മുകളിൽ കാണിക്കും:</p>
-        <textarea 
-          id="reportIntroPara" 
-          rows="5" 
-          placeholder="ഇവിടെ വിവരണം നൽകുക... (ഉദാ: സമഗ്ര പരിശീലനത്തിൽ പങ്കെടുക്കാത്ത സ്കൂളുകളുടെ വിവരങ്ങൾ ചുവടെ ചേർക്കുന്നു.)"
-          class="w-full font-malayalam bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none leading-relaxed transition"
-        ></textarea>
+        <textarea id="reportIntroPara" rows="4" placeholder="വിവരണം ഇവിടെ നൽകുക..." class="w-full font-malayalam bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none leading-relaxed transition"></textarea>
       </div>
 
-      <!-- Target Category Selector -->
       <div class="bg-white p-4 rounded-3xl border border-slate-200/80 shadow-xs space-y-2 text-xs">
-        <h3 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider">2. Select Category</h3>
+        <h3 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider">Select Category</h3>
         <div class="grid grid-cols-2 gap-2">
           <button onclick="setReportTier('primary')" id="rTierPrimary" class="py-2.5 text-xs rounded-2xl font-bold bg-emerald-600 text-white shadow-xs transition">Primary (PSITC)</button>
           <button onclick="setReportTier('hs')" id="rTierHS" class="py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">HS (SITC)</button>
@@ -359,43 +278,132 @@
         </div>
       </div>
 
-      <!-- Absentee Checkbox Selection -->
       <div class="bg-white p-4 rounded-3xl border border-slate-200/80 shadow-xs space-y-2.5 text-xs">
         <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 px-0.5">
-          <div>
-            <h3 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider">3. Mark Absentees</h3>
-            <p class="text-[10px] text-slate-400">Tick schools not present</p>
-          </div>
-          
+          <h3 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider">Mark Absentees</h3>
           <div class="flex items-center gap-2">
-            <button 
-              id="selectAllBtn"
-              onclick="toggleSelectAll()" 
-              class="px-3 py-1 text-[11px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl active:scale-95 transition"
-            >
-              Select All
-            </button>
-            <span id="absentCountBadge" class="bg-red-50 text-red-600 font-bold px-2.5 py-0.5 rounded-full text-[11px] border border-red-100">
-              0 Absent
-            </span>
+            <button id="selectAllBtn" onclick="toggleSelectAll()" class="px-3 py-1 text-[11px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl active:scale-95 transition">Select All</button>
+            <span id="absentCountBadge" class="bg-red-50 text-red-600 font-bold px-2.5 py-0.5 rounded-full text-[11px] border border-red-100">0 Absent</span>
           </div>
         </div>
-
         <div id="absentChecklist" class="max-h-72 overflow-y-auto space-y-1.5 pt-1"></div>
       </div>
 
-      <!-- Action Button -->
-      <button 
-        onclick="generatePDF()" 
-        class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-extrabold text-sm shadow-md active:scale-98 transition flex items-center justify-center gap-2"
-      >
-        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-        </svg>
+      <button onclick="generatePDF()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-extrabold text-sm shadow-md active:scale-98 transition flex items-center justify-center gap-2">
+        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
         <span>Generate Clean PDF</span>
       </button>
-
     </main>
+  </div>
+
+
+  <!-- ======================================================== -->
+  <!-- MODAL: ADMIN LOGIN (VERIFIED ONLY AT BACKEND) -->
+  <!-- ======================================================== -->
+  <div id="adminAuthModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-xs bg-white rounded-3xl shadow-2xl p-6 space-y-4 border border-slate-100">
+      <div class="text-center">
+        <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 mx-auto flex items-center justify-center text-xl mb-2">🔐</div>
+        <h3 class="text-base font-extrabold text-slate-900">Admin Login</h3>
+        <p class="text-xs text-slate-400 mt-0.5">Enter PIN to edit schools</p>
+      </div>
+
+      <div>
+        <input id="adminPinInput" type="password" maxlength="8" placeholder="Enter PIN" class="w-full text-center text-lg tracking-widest font-mono-code bg-slate-50 border border-slate-200 rounded-2xl py-2.5 focus:border-indigo-500 focus:outline-none" />
+      </div>
+
+      <div class="flex gap-2">
+        <button onclick="closeAdminModal()" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">Cancel</button>
+        <button id="authBtnSubmit" onclick="loginAdmin()" class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition shadow-xs">Authorize</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ======================================================== -->
+  <!-- MODAL: ADD / EDIT SCHOOL -->
+  <!-- ======================================================== -->
+  <div id="editSchoolModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="w-full sm:max-w-md bg-white rounded-t-[2.5rem] sm:rounded-3xl max-h-[90vh] flex flex-col shadow-2xl border border-slate-100">
+      <div class="px-6 pt-4 pb-3 border-b border-slate-100 flex items-center justify-between">
+        <h2 id="editModalTitle" class="text-base font-extrabold text-slate-900">Edit School</h2>
+        <button onclick="closeEditModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 flex items-center justify-center text-sm font-bold">&times;</button>
+      </div>
+
+      <form id="schoolForm" onsubmit="handleSchoolSave(event)" class="p-6 overflow-y-auto space-y-3 flex-1 text-xs">
+        <input type="hidden" id="formAction" value="add" />
+        
+        <div>
+          <label class="block font-bold text-slate-500 mb-1">School Code *</label>
+          <input id="formCode" required type="text" placeholder="e.g. 47301" class="w-full font-mono-code bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-indigo-500" />
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-500 mb-1">School Name *</label>
+          <input id="formName" required type="text" placeholder="e.g. GLPS Poolappoyil" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-indigo-500" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold text-slate-500 mb-1">Management</label>
+            <select id="formMgmt" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 outline-none">
+              <option value="Government">Government</option>
+              <option value="Aided">Aided</option>
+              <option value="Unaided Recognised">Unaided Recognised</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-500 mb-1">Level / Classes</label>
+            <input id="formLevel" type="text" placeholder="e.g. 1 - 4" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 outline-none" />
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-slate-100 space-y-2.5">
+          <p class="font-extrabold text-indigo-600 text-[11px] uppercase tracking-wider">Personnel Contacts</p>
+          
+          <div class="grid grid-cols-2 gap-2">
+            <input id="formHMName" type="text" placeholder="HM Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+            <input id="formHMPhone" type="text" placeholder="HM Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <input id="formPrincipalName" type="text" placeholder="Principal Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+            <input id="formPrincipalPhone" type="text" placeholder="Principal Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <input id="formPSITCName" type="text" placeholder="PSITC Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+            <input id="formPSITCPhone" type="text" placeholder="PSITC Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <input id="formSITCName" type="text" placeholder="SITC Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+            <input id="formSITCPhone" type="text" placeholder="SITC Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <input id="formHITCName" type="text" placeholder="HITC Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+            <input id="formHITCPhone" type="text" placeholder="HITC Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <input id="formLK1Name" type="text" placeholder="LK Mentor 1 Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+            <input id="formLK1Phone" type="text" placeholder="LK Mentor 1 Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <input id="formLK2Name" type="text" placeholder="LK Mentor 2 Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+            <input id="formLK2Phone" type="text" placeholder="LK Mentor 2 Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+          </div>
+        </div>
+
+        <div class="pt-3">
+          <button type="submit" id="saveSchoolBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold text-xs shadow-md active:scale-98 transition">
+            Save to Google Sheet
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 
 
@@ -404,19 +412,8 @@
   <!-- ======================================================== -->
   <div id="printArea" style="display: none;">
     <div style="max-width: 800px; margin: 0 auto; line-height: 1.6;">
-
-      <!-- Introductory Paragraph in Anek Malayalam font -->
-      <div 
-        id="pdfIntroBlock" 
-        style="font-family: 'Anek Malayalam', sans-serif; font-size: 14px; margin-bottom: 24px; text-align: justify; white-space: pre-wrap; word-break: break-word; color: #111;"
-      ></div>
-
-      <!-- Absent Count Heading -->
-      <div style="margin-bottom: 10px; font-weight: bold; font-size: 13px; text-transform: uppercase;">
-        List of Absent Schools (<span id="pdfAbsentCount">0</span>)
-      </div>
-
-      <!-- SIMPLIFIED TABLE: SL NO, CODE, NAME ONLY -->
+      <div id="pdfIntroBlock" style="font-family: 'Anek Malayalam', sans-serif; font-size: 14px; margin-bottom: 24px; text-align: justify; white-space: pre-wrap; word-break: break-word; color: #111;"></div>
+      <div style="margin-bottom: 10px; font-weight: bold; font-size: 13px; text-transform: uppercase;">List of Absent Schools (<span id="pdfAbsentCount">0</span>)</div>
       <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
         <thead>
           <tr style="background-color: #f3f3f3;">
@@ -427,62 +424,44 @@
         </thead>
         <tbody id="pdfTableBody"></tbody>
       </table>
-
-      <!-- Simple Bottom Seal / Signature line -->
       <div style="margin-top: 60px; display: flex; justify-content: flex-end; font-size: 12px;">
         <div style="text-align: right;">
           <p style="margin: 0; font-weight: bold;">Signature / Seal</p>
           <p style="margin-top: 45px;">Mukkam Sub-District</p>
         </div>
       </div>
-
     </div>
   </div>
 
 
   <!-- ======================================================== -->
-  <!-- ROLE-ADAPTIVE MODAL (NATIVE BOTTOM SHEET) -->
+  <!-- ROLE-ADAPTIVE MODAL (DETAILS POPUP) -->
   <!-- ======================================================== -->
   <div id="modalBackdrop" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div id="modalCard" class="w-full sm:max-w-md bg-white rounded-t-[2.5rem] sm:rounded-3xl max-h-[85vh] flex flex-col shadow-2xl transform transition-transform duration-300 translate-y-full sm:translate-y-0 sm:scale-95 border border-slate-100">
-      
-      <!-- Tactile drag pill -->
       <div class="w-full flex justify-center pt-3.5 pb-1 cursor-pointer sm:hidden" onclick="closeModal()">
         <div class="w-12 h-1.5 bg-slate-200 rounded-full"></div>
       </div>
-
-      <!-- Modal Header -->
       <div class="px-6 pt-3 pb-4 border-b border-slate-100 flex items-start justify-between gap-3">
         <div>
           <div class="flex flex-wrap items-center gap-1.5 mb-1.5" id="modalBadges"></div>
           <h2 id="modalName" class="text-base font-extrabold text-slate-900 leading-tight"></h2>
           <p id="modalSub" class="text-xs text-slate-500 mt-0.5 font-medium"></p>
         </div>
-        <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 font-bold flex items-center justify-center text-sm transition">
-          &times;
-        </button>
+        <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold flex items-center justify-center text-sm transition">&times;</button>
       </div>
-
-      <!-- Modal Contacts list -->
       <div id="modalContacts" class="p-6 overflow-y-auto space-y-3.5 flex-1 text-xs"></div>
-
-      <!-- Bottom button -->
       <div class="p-4 bg-slate-50 border-t border-slate-100">
-        <button onclick="closeModal()" class="w-full py-3 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold rounded-2xl active:scale-98 transition">
-          Close
-        </button>
+        <button onclick="closeModal()" class="w-full py-3 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold rounded-2xl active:scale-98 transition">Close</button>
       </div>
     </div>
   </div>
 
 
   <!-- ======================================================== -->
-  <!-- JAVASCRIPT -->
+  <!-- JAVASCRIPT & APP LOGIC -->
   <!-- ======================================================== -->
   <script>
-    // -------------------------------------------------------------
-    // PASTE YOUR APPS SCRIPT WEB APP URL HERE:
-    // -------------------------------------------------------------
     const API_URL = "https://script.google.com/macros/s/AKfycbwbWD044IQa31gHQ12giCVOJ4ztuRhvxAzwZaaX__3xcn90rLONsVCsyayUYxHUN1Bl/exec";
 
     let rawSchools = [];
@@ -492,6 +471,10 @@
 
     let reportTier = 'primary';
     let absentSchoolCodes = new Set();
+    
+    // Auth state - No PIN is stored here!
+    let isAdmin = false;
+    let adminToken = sessionStorage.getItem('mkm_admin_token') || "";
 
     async function loadData() {
       try {
@@ -499,33 +482,210 @@
         if (res.status === 'success') {
           rawSchools = res.data.schools || [];
           updateCounts();
-          document.getElementById('syncBadge').innerHTML = `
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Live
-          `;
+          document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Live`;
+
+          // Restore session if token exists
+          if (adminToken) {
+            isAdmin = true;
+            document.getElementById('adminLockIcon').textContent = '🔓';
+            document.getElementById('adminModeBanner').classList.remove('hidden');
+            document.getElementById('adminAddSchoolBtn').classList.remove('hidden');
+          }
         }
       } catch (err) {
-        document.getElementById('syncBadge').innerHTML = `
-          <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Offline
-        `;
+        document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Offline`;
         console.error(err);
       }
     }
 
+    // ==========================================
+    // SECURE SERVER-SIDE ADMIN AUTHENTICATION
+    // ==========================================
+    function toggleAdminModal() {
+      if (isAdmin) {
+        logoutAdmin();
+      } else {
+        document.getElementById('adminPinInput').value = '';
+        document.getElementById('adminAuthModal').classList.remove('hidden');
+      }
+    }
+
+    function closeAdminModal() {
+      document.getElementById('adminAuthModal').classList.add('hidden');
+    }
+
+    async function loginAdmin() {
+      const pinInput = document.getElementById('adminPinInput');
+      const enteredPin = pinInput.value.trim();
+      
+      if (!enteredPin) {
+        alert("Please enter a PIN");
+        return;
+      }
+
+      const submitBtn = document.getElementById('authBtnSubmit');
+      submitBtn.textContent = "Verifying...";
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({
+            action: 'verify_pin',
+            pin: enteredPin
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+          isAdmin = true;
+          adminToken = result.token;
+          sessionStorage.setItem('mkm_admin_token', adminToken);
+
+          document.getElementById('adminLockIcon').textContent = '🔓';
+          document.getElementById('adminModeBanner').classList.remove('hidden');
+          document.getElementById('adminAddSchoolBtn').classList.remove('hidden');
+          closeAdminModal();
+          renderCards();
+        } else {
+          alert("Invalid PIN. Access denied.");
+          pinInput.value = '';
+        }
+      } catch (err) {
+        alert("Verification error: " + err.message);
+      } finally {
+        submitBtn.textContent = "Authorize";
+        submitBtn.disabled = false;
+      }
+    }
+
+    function logoutAdmin() {
+      isAdmin = false;
+      adminToken = "";
+      sessionStorage.removeItem('mkm_admin_token');
+      document.getElementById('adminLockIcon').textContent = '🔒';
+      document.getElementById('adminModeBanner').classList.add('hidden');
+      document.getElementById('adminAddSchoolBtn').classList.add('hidden');
+      renderCards();
+    }
+
+    // ==========================================
+    // ADD / EDIT SCHOOL LOGIC (C.R.U.D)
+    // ==========================================
+    function openAddSchoolModal() {
+      document.getElementById('editModalTitle').textContent = "Add New School";
+      document.getElementById('formAction').value = "add";
+      document.getElementById('formCode').disabled = false;
+      document.getElementById('schoolForm').reset();
+      document.getElementById('editSchoolModal').classList.remove('hidden');
+    }
+
+    function openEditSchoolModal(code, event) {
+      if (event) event.stopPropagation();
+      const school = rawSchools.find(s => s.code === code);
+      if (!school) return;
+
+      document.getElementById('editModalTitle').textContent = "Edit School (" + school.name + ")";
+      document.getElementById('formAction').value = "edit";
+      
+      document.getElementById('formCode').value = school.code;
+      document.getElementById('formCode').disabled = true; // Primary key
+      document.getElementById('formName').value = school.name;
+      document.getElementById('formMgmt').value = school.management || "Government";
+      document.getElementById('formLevel').value = school.level || "";
+
+      document.getElementById('formHMName').value = school.hm?.name || "";
+      document.getElementById('formHMPhone').value = school.hm?.phone || "";
+      document.getElementById('formPrincipalName').value = school.principal?.name || "";
+      document.getElementById('formPrincipalPhone').value = school.principal?.phone || "";
+      document.getElementById('formPSITCName').value = school.psitc?.name || "";
+      document.getElementById('formPSITCPhone').value = school.psitc?.phone || "";
+      document.getElementById('formSITCName').value = school.sitc?.name || "";
+      document.getElementById('formSITCPhone').value = school.sitc?.phone || "";
+      document.getElementById('formHITCName').value = school.hitc?.name || "";
+      document.getElementById('formHITCPhone').value = school.hitc?.phone || "";
+
+      document.getElementById('formLK1Name').value = school.lkMentors?.[0]?.name || "";
+      document.getElementById('formLK1Phone').value = school.lkMentors?.[0]?.phone || "";
+      document.getElementById('formLK2Name').value = school.lkMentors?.[1]?.name || "";
+      document.getElementById('formLK2Phone').value = school.lkMentors?.[1]?.phone || "";
+
+      document.getElementById('editSchoolModal').classList.remove('hidden');
+    }
+
+    function closeEditModal() {
+      document.getElementById('editSchoolModal').classList.add('hidden');
+    }
+
+    async function handleSchoolSave(e) {
+      e.preventDefault();
+      const saveBtn = document.getElementById('saveSchoolBtn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = "Saving to Google Sheet...";
+
+      const action = document.getElementById('formAction').value;
+      const schoolPayload = {
+        code: document.getElementById('formCode').value.trim(),
+        name: document.getElementById('formName').value.trim(),
+        management: document.getElementById('formMgmt').value,
+        level: document.getElementById('formLevel').value.trim(),
+        hm: { name: document.getElementById('formHMName').value.trim(), phone: document.getElementById('formHMPhone').value.trim() },
+        principal: { name: document.getElementById('formPrincipalName').value.trim(), phone: document.getElementById('formPrincipalPhone').value.trim() },
+        psitc: { name: document.getElementById('formPSITCName').value.trim(), phone: document.getElementById('formPSITCPhone').value.trim() },
+        sitc: { name: document.getElementById('formSITCName').value.trim(), phone: document.getElementById('formSITCPhone').value.trim() },
+        hitc: { name: document.getElementById('formHITCName').value.trim(), phone: document.getElementById('formHITCPhone').value.trim() },
+        lkMentors: [
+          { name: document.getElementById('formLK1Name').value.trim(), phone: document.getElementById('formLK1Phone').value.trim() },
+          { name: document.getElementById('formLK2Name').value.trim(), phone: document.getElementById('formLK2Phone').value.trim() }
+        ]
+      };
+
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({
+            token: adminToken, // Pass secure token, NOT PIN
+            action: action,
+            school: schoolPayload
+          })
+        });
+
+        const result = await res.json();
+        if (result.status === 'success') {
+          if (action === 'edit') {
+            const idx = rawSchools.findIndex(s => s.code === schoolPayload.code);
+            if (idx !== -1) rawSchools[idx] = schoolPayload;
+          } else {
+            rawSchools.push(schoolPayload);
+          }
+
+          updateCounts();
+          renderCards();
+          closeEditModal();
+          alert("Saved successfully to Google Sheet!");
+        } else {
+          alert("Failed: " + result.message);
+        }
+      } catch (err) {
+        alert("Save error: " + err.message);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "Save to Google Sheet";
+      }
+    }
+
+    // ==========================================
+    // FILTER & TIER HELPERS
+    // ==========================================
     function matchSchoolTier(school, tier) {
       const lvl = (school.level || '').trim();
-
-      if (tier === 'primary') {
-        return Boolean(school.psitc) || lvl.includes('1 - 4') || lvl.includes('5 - 7') || lvl.includes('1 - 7') || lvl.includes('1 - 5');
-      }
-      if (tier === 'hs') {
-        return Boolean(school.sitc) || (school.lkMentors && school.lkMentors.length > 0) || lvl.includes('8 - 10') || lvl.includes('1 - 10') || lvl.includes('5 - 10') || lvl.includes('12');
-      }
-      if (tier === 'hss') {
-        return Boolean(school.principal) || Boolean(school.hitc) || lvl.includes('12');
-      }
-      if (tier === 'lk') {
-        return Boolean(school.lkMentors && school.lkMentors.length > 0);
-      }
+      if (tier === 'primary') return Boolean(school.psitc) || lvl.includes('1 - 4') || lvl.includes('5 - 7') || lvl.includes('1 - 7') || lvl.includes('1 - 5');
+      if (tier === 'hs') return Boolean(school.sitc) || (school.lkMentors && school.lkMentors.length > 0) || lvl.includes('8 - 10') || lvl.includes('1 - 10') || lvl.includes('5 - 10') || lvl.includes('12');
+      if (tier === 'hss') return Boolean(school.principal) || Boolean(school.hitc) || lvl.includes('12');
+      if (tier === 'lk') return Boolean(school.lkMentors && school.lkMentors.length > 0);
       return false;
     }
 
@@ -538,13 +698,9 @@
     }
 
     function updateCounts() {
-      const p = rawSchools.filter(s => matchSchoolTier(s, 'primary')).length;
-      const h = rawSchools.filter(s => matchSchoolTier(s, 'hs')).length;
-      const hs = rawSchools.filter(s => matchSchoolTier(s, 'hss')).length;
-
-      document.getElementById('badgePrimary').textContent = `${p} Schools`;
-      document.getElementById('badgeHS').textContent = `${h} Schools`;
-      document.getElementById('badgeHSS').textContent = `${hs} Schools`;
+      document.getElementById('badgePrimary').textContent = `${rawSchools.filter(s => matchSchoolTier(s, 'primary')).length} Schools`;
+      document.getElementById('badgeHS').textContent = `${rawSchools.filter(s => matchSchoolTier(s, 'hs')).length} Schools`;
+      document.getElementById('badgeHSS').textContent = `${rawSchools.filter(s => matchSchoolTier(s, 'hss')).length} Schools`;
     }
 
     function openTierPage(tier) {
@@ -554,9 +710,9 @@
       document.getElementById('searchInput').value = '';
 
       const labels = {
-        primary: { title: 'LP & UP Schools', sub: 'Classes 1–7 • HM & PSITC' },
-        hs: { title: 'High Schools', sub: 'Classes 8–10 • HM, SITC & LK Mentors' },
-        hss: { title: 'Higher Secondary', sub: 'Classes 11–12 • Principal & HITC' }
+        primary: { title: 'LP & UP Schools', sub: 'Classes 1–7' },
+        hs: { title: 'High Schools', sub: 'Classes 8–10' },
+        hss: { title: 'Higher Secondary', sub: 'Classes 11–12' }
       };
 
       document.getElementById('listTierTitle').textContent = labels[tier].title;
@@ -574,7 +730,7 @@
     }
 
     // ==========================================
-    // REPORT GENERATOR LOGIC
+    // REPORT GENERATOR
     // ==========================================
     function openReportPage() {
       document.getElementById('pageDashboard').classList.add('hidden');
@@ -588,22 +744,10 @@
 
     function setReportTier(tier) {
       reportTier = tier;
-
-      const btns = {
-        primary: document.getElementById('rTierPrimary'),
-        hs: document.getElementById('rTierHS'),
-        hss: document.getElementById('rTierHSS'),
-        lk: document.getElementById('rTierLK')
-      };
-
+      const btns = { primary: document.getElementById('rTierPrimary'), hs: document.getElementById('rTierHS'), hss: document.getElementById('rTierHSS'), lk: document.getElementById('rTierLK') };
       Object.keys(btns).forEach(k => {
-        if (k === tier) {
-          btns[k].className = 'py-2.5 text-xs rounded-2xl font-bold bg-emerald-600 text-white shadow-xs transition';
-        } else {
-          btns[k].className = 'py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
-        }
+        btns[k].className = (k === tier) ? 'py-2.5 text-xs rounded-2xl font-bold bg-emerald-600 text-white shadow-xs transition' : 'py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
       });
-
       renderChecklist();
     }
 
@@ -624,7 +768,6 @@
     function renderChecklist() {
       const container = document.getElementById('absentChecklist');
       container.innerHTML = '';
-
       const schools = getReportSchools();
 
       schools.forEach(s => {
@@ -636,20 +779,11 @@
         if (reportTier === 'primary') incharge = s.psitc?.name ? `PSITC: ${s.psitc.name}` : (s.hm?.name ? `HM: ${s.hm.name}` : '');
         else if (reportTier === 'hs') incharge = s.sitc?.name ? `SITC: ${s.sitc.name}` : (s.hm?.name ? `HM: ${s.hm.name}` : '');
         else if (reportTier === 'hss') incharge = s.hitc?.name ? `HITC: ${s.hitc.name}` : (s.principal?.name ? `Principal: ${s.principal.name}` : '');
-        else if (reportTier === 'lk') {
-          incharge = s.lkMentors && s.lkMentors.length > 0 
-            ? `LK Mentors: ${s.lkMentors.map(m => m.name).filter(Boolean).join(', ')}` 
-            : 'No Mentors Listed';
-        }
+        else if (reportTier === 'lk') incharge = s.lkMentors?.length ? `LK: ${s.lkMentors.map(m => m.name).join(', ')}` : '';
 
         row.innerHTML = `
           <div class="flex items-center gap-3">
-            <input 
-              type="checkbox" 
-              class="w-4 h-4 text-red-600 rounded-lg border-slate-300 focus:ring-red-500 accent-red-600" 
-              ${isChecked ? 'checked' : ''} 
-              onchange="toggleAbsent('${s.code}')"
-            />
+            <input type="checkbox" class="w-4 h-4 text-red-600 rounded-lg border-slate-300 focus:ring-red-500 accent-red-600" ${isChecked ? 'checked' : ''} onchange="toggleAbsent('${s.code}')" />
             <div>
               <div class="flex items-center gap-1.5">
                 <span class="font-extrabold text-slate-900 text-xs">${s.name}</span>
@@ -669,55 +803,33 @@
     }
 
     function toggleAbsent(code) {
-      if (absentSchoolCodes.has(code)) {
-        absentSchoolCodes.delete(code);
-      } else {
-        absentSchoolCodes.add(code);
-      }
+      if (absentSchoolCodes.has(code)) absentSchoolCodes.delete(code);
+      else absentSchoolCodes.add(code);
       renderChecklist();
     }
 
     function toggleSelectAll() {
       const schools = getReportSchools();
       const allSelected = schools.length > 0 && schools.every(s => absentSchoolCodes.has(s.code));
-
-      if (allSelected) {
-        schools.forEach(s => absentSchoolCodes.delete(s.code));
-      } else {
-        schools.forEach(s => absentSchoolCodes.add(s.code));
-      }
-
+      if (allSelected) schools.forEach(s => absentSchoolCodes.delete(s.code));
+      else schools.forEach(s => absentSchoolCodes.add(s.code));
       renderChecklist();
     }
 
     function updateSelectAllButtonState(totalCount) {
       const selectAllBtn = document.getElementById('selectAllBtn');
       const badge = document.getElementById('absentCountBadge');
-      
       const schools = getReportSchools();
       const allSelected = totalCount > 0 && schools.every(s => absentSchoolCodes.has(s.code));
 
-      if (allSelected) {
-        selectAllBtn.textContent = 'Deselect All';
-        selectAllBtn.className = 'px-3 py-1 text-[11px] font-bold bg-red-100 hover:bg-red-200 text-red-700 rounded-xl active:scale-95 transition';
-      } else {
-        selectAllBtn.textContent = 'Select All';
-        selectAllBtn.className = 'px-3 py-1 text-[11px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl active:scale-95 transition';
-      }
-
+      selectAllBtn.textContent = allSelected ? 'Deselect All' : 'Select All';
+      selectAllBtn.className = allSelected ? 'px-3 py-1 text-[11px] font-bold bg-red-100 hover:bg-red-200 text-red-700 rounded-xl active:scale-95 transition' : 'px-3 py-1 text-[11px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl active:scale-95 transition';
       badge.textContent = `${absentSchoolCodes.size} Absent`;
     }
 
     function generatePDF() {
       const introPara = document.getElementById('reportIntroPara').value.trim();
-
-      const introEl = document.getElementById('pdfIntroBlock');
-      if (introPara) {
-        introEl.textContent = introPara;
-      } else {
-        introEl.textContent = "ഹാജരാകാത്ത സ്കൂളുകളുടെ വിവരങ്ങൾ ചുവടെ ചേർക്കുന്നു:";
-      }
-
+      document.getElementById('pdfIntroBlock').textContent = introPara || "ഹാജരാകാത്ത സ്കൂളുകളുടെ വിവരങ്ങൾ ചുവടെ ചേർക്കുന്നു:";
       const tbody = document.getElementById('pdfTableBody');
       tbody.innerHTML = '';
 
@@ -725,82 +837,40 @@
       document.getElementById('pdfAbsentCount').textContent = absentees.length;
 
       if (absentees.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="3" style="padding: 12px; text-align: center; border: 1px solid #777; color: #555;">
-              പൂർണ്ണ ഹാജർ രേഖപ്പെടുത്തിയിരിക്കുന്നു. ആരും ഹാജരാകാതിരുന്നിട്ടില്ല.
-            </td>
-          </tr>
-        `;
+        tbody.innerHTML = `<tr><td colspan="3" style="padding: 12px; text-align: center; border: 1px solid #777; color: #555;">പൂർണ്ണ ഹാജർ രേഖപ്പെടുത്തിയിരിക്കുന്നു.</td></tr>`;
       } else {
         absentees.forEach((s, idx) => {
           const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td style="padding: 6px 10px; border: 1px solid #777; text-align: center;">${idx + 1}</td>
-            <td style="padding: 6px 10px; border: 1px solid #777; font-family: monospace;">${s.code}</td>
-            <td style="padding: 6px 10px; border: 1px solid #777; font-weight: bold;">${s.name}</td>
-          `;
+          tr.innerHTML = `<td style="padding: 6px 10px; border: 1px solid #777; text-align: center;">${idx + 1}</td><td style="padding: 6px 10px; border: 1px solid #777; font-family: monospace;">${s.code}</td><td style="padding: 6px 10px; border: 1px solid #777; font-weight: bold;">${s.name}</td>`;
           tbody.appendChild(tr);
         });
       }
 
       const printArea = document.getElementById('printArea');
       printArea.style.display = 'block';
-
       window.print();
-
-      setTimeout(() => {
-        printArea.style.display = 'none';
-      }, 1000);
+      setTimeout(() => { printArea.style.display = 'none'; }, 1000);
     }
 
     // ==========================================
-    // DIRECTORY LEVEL BUTTONS & FILTERS
+    // UI RENDERERS
     // ==========================================
     function renderLevelButtons(tier) {
       const btnGroup = document.getElementById('levelButtonGroup');
       let buttons = [];
-
-      if (tier === 'primary') {
-        buttons = [
-          { id: 'all', label: 'All' },
-          { id: 'lp', label: 'LP (1–4)' },
-          { id: 'up', label: 'UP (5–7)' },
-          { id: 'lp_up', label: 'Combined (1–7)' }
-        ];
-      } else if (tier === 'hs') {
-        buttons = [
-          { id: 'all', label: 'All' },
-          { id: 'hs', label: 'HS (8–10)' },
-          { id: 'attached', label: 'Attached (1/5–10)' },
-          { id: 'campus', label: 'Campus (8/1–12)' }
-        ];
-      } else if (tier === 'hss') {
-        buttons = [
-          { id: 'all', label: 'All HSS' },
-          { id: 'hss', label: 'HSS (11–12)' }
-        ];
-      }
+      if (tier === 'primary') buttons = [{ id: 'all', label: 'All' }, { id: 'lp', label: 'LP (1–4)' }, { id: 'up', label: 'UP (5–7)' }, { id: 'lp_up', label: 'Combined (1–7)' }];
+      else if (tier === 'hs') buttons = [{ id: 'all', label: 'All' }, { id: 'hs', label: 'HS (8–10)' }, { id: 'attached', label: 'Attached (1/5–10)' }, { id: 'campus', label: 'Campus (8/1–12)' }];
+      else if (tier === 'hss') buttons = [{ id: 'all', label: 'All HSS' }, { id: 'hss', label: 'HSS (11–12)' }];
 
       btnGroup.innerHTML = buttons.map(b => `
-        <button 
-          onclick="setLevelFilter('${b.id}')" 
-          class="lvl-btn px-3 py-1.5 text-xs rounded-xl font-semibold transition ${selectedLevel === b.id ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}" 
-          data-lvl="${b.id}"
-        >
-          ${b.label}
-        </button>
+        <button onclick="setLevelFilter('${b.id}')" class="lvl-btn px-3 py-1.5 text-xs rounded-xl font-semibold transition ${selectedLevel === b.id ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}" data-lvl="${b.id}">${b.label}</button>
       `).join('');
     }
 
     function setLevelFilter(lvl) {
       selectedLevel = lvl;
       document.querySelectorAll('.lvl-btn').forEach(btn => {
-        if (btn.getAttribute('data-lvl') === lvl) {
-          btn.className = 'lvl-btn px-3 py-1.5 text-xs rounded-xl font-bold bg-indigo-600 text-white shadow-xs transition';
-        } else {
-          btn.className = 'lvl-btn px-3 py-1.5 text-xs rounded-xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
-        }
+        btn.className = (btn.getAttribute('data-lvl') === lvl) ? 'lvl-btn px-3 py-1.5 text-xs rounded-xl font-bold bg-indigo-600 text-white shadow-xs transition' : 'lvl-btn px-3 py-1.5 text-xs rounded-xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
       });
       document.getElementById('activeLevelLabel').textContent = lvl.toUpperCase();
       renderCards();
@@ -809,11 +879,7 @@
     function setMgmtFilter(mgmt) {
       selectedMgmt = mgmt;
       document.querySelectorAll('.mgmt-btn').forEach(btn => {
-        if (btn.getAttribute('data-mgmt') === mgmt) {
-          btn.className = 'mgmt-btn px-3 py-1.5 text-xs rounded-xl font-bold bg-indigo-600 text-white shadow-xs transition';
-        } else {
-          btn.className = 'mgmt-btn px-3 py-1.5 text-xs rounded-xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
-        }
+        btn.className = (btn.getAttribute('data-mgmt') === mgmt) ? 'mgmt-btn px-3 py-1.5 text-xs rounded-xl font-bold bg-indigo-600 text-white shadow-xs transition' : 'mgmt-btn px-3 py-1.5 text-xs rounded-xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
       });
       document.getElementById('activeMgmtLabel').textContent = mgmt.replace('_', ' & ').toUpperCase();
       renderCards();
@@ -851,7 +917,6 @@
 
       let filtered = rawSchools.filter(school => {
         if (!matchSchoolTier(school, currentTier)) return false;
-
         const lvl = (school.level || '').trim();
         const mgmtType = getManagementCategory(school.management);
 
@@ -873,34 +938,17 @@
         if (selectedMgmt === 'unaided' && mgmtType !== 'unaided') return false;
 
         if (!q) return true;
-
-        const matchLK = school.lkMentors && school.lkMentors.some(m => m.name.toLowerCase().includes(q));
-
-        return (
-          school.name.toLowerCase().includes(q) ||
-          school.code.toLowerCase().includes(q) ||
-          (school.hm && school.hm.name.toLowerCase().includes(q)) ||
-          (school.principal && school.principal.name.toLowerCase().includes(q)) ||
-          (school.psitc && school.psitc.name.toLowerCase().includes(q)) ||
-          (school.sitc && school.sitc.name.toLowerCase().includes(q)) ||
-          (school.hitc && school.hitc.name.toLowerCase().includes(q)) ||
-          matchLK
-        );
+        return school.name.toLowerCase().includes(q) || school.code.toLowerCase().includes(q);
       });
 
       filtered.sort((a, b) => {
         const mgmtA = getManagementCategory(a.management);
         const mgmtB = getManagementCategory(b.management);
-
-        const isGovtOrAidedA = (mgmtA === 'govt' || mgmtA === 'aided');
-        const isGovtOrAidedB = (mgmtB === 'govt' || mgmtB === 'aided');
-
-        if (isGovtOrAidedA && !isGovtOrAidedB) return -1;
-        if (!isGovtOrAidedA && isGovtOrAidedB) return 1;
-
-        const codeA = parseInt(cleanDigits(a.code), 10) || 0;
-        const codeB = parseInt(cleanDigits(b.code), 10) || 0;
-        return codeA - codeB;
+        const isGA_A = (mgmtA === 'govt' || mgmtA === 'aided');
+        const isGA_B = (mgmtB === 'govt' || mgmtB === 'aided');
+        if (isGA_A && !isGA_B) return -1;
+        if (!isGA_A && isGA_B) return 1;
+        return (parseInt(cleanDigits(a.code), 10) || 0) - (parseInt(cleanDigits(b.code), 10) || 0);
       });
 
       countEl.textContent = `${filtered.length} schools`;
@@ -914,48 +962,36 @@
 
       filtered.forEach(school => {
         const card = document.createElement('div');
-        card.className = "bg-white p-4 rounded-3xl border border-slate-200/80 shadow-xs hover:border-indigo-300 active:scale-[0.99] transition cursor-pointer";
+        card.className = "bg-white p-4 rounded-3xl border border-slate-200/80 shadow-xs hover:border-indigo-300 active:scale-[0.99] transition cursor-pointer relative";
         card.onclick = () => openModal(school);
 
         const mgmtType = getManagementCategory(school.management);
-        const mgmtColor = mgmtType === 'govt' 
-          ? 'bg-emerald-50 text-emerald-700 border-emerald-100' 
-          : mgmtType === 'aided' 
-          ? 'bg-blue-50 text-blue-700 border-blue-100' 
-          : 'bg-amber-50 text-amber-700 border-amber-100';
+        const mgmtColor = mgmtType === 'govt' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : mgmtType === 'aided' ? 'bg-blue-50 text-blue-700 border-blue-100' : 'bg-amber-50 text-amber-700 border-amber-100';
 
         let rolePreview = '';
         if (currentTier === 'primary') {
-          rolePreview = `
-            <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">
-              <span class="text-slate-600 truncate max-w-[160px]">HM: <strong class="text-slate-800">${school.hm?.name || 'Assigned'}</strong></span>
-              <span class="text-indigo-600 font-bold truncate max-w-[150px]">PSITC: ${school.psitc?.name || 'Assigned'}</span>
-            </div>`;
+          rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]"><span class="text-slate-600 truncate max-w-[160px]">HM: <strong class="text-slate-800">${school.hm?.name || 'Assigned'}</strong></span><span class="text-indigo-600 font-bold truncate max-w-[150px]">PSITC: ${school.psitc?.name || 'Assigned'}</span></div>`;
         } else if (currentTier === 'hs') {
           const lkCount = school.lkMentors ? school.lkMentors.length : 0;
-          rolePreview = `
-            <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">
-              <span class="text-slate-600 truncate max-w-[160px]">SITC: <strong class="text-slate-800">${school.sitc?.name || 'Assigned'}</strong></span>
-              <span class="${lkCount > 0 ? 'text-amber-700 font-extrabold' : 'text-slate-400'}">
-                ${lkCount > 0 ? `🪁 ${lkCount} LK Mentors` : 'No LK'}
-              </span>
-            </div>`;
+          rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]"><span class="text-slate-600 truncate max-w-[160px]">SITC: <strong class="text-slate-800">${school.sitc?.name || 'Assigned'}</strong></span><span class="${lkCount > 0 ? 'text-amber-700 font-extrabold' : 'text-slate-400'}">${lkCount > 0 ? `🪁 ${lkCount} LK Mentors` : 'No LK'}</span></div>`;
         } else if (currentTier === 'hss') {
-          rolePreview = `
-            <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">
-              <span class="text-slate-600 truncate max-w-[160px]">Principal: <strong class="text-slate-800">${school.principal?.name || 'Assigned'}</strong></span>
-              <span class="text-purple-600 font-bold truncate max-w-[150px]">HITC: ${school.hitc?.name || 'Assigned'}</span>
-            </div>`;
+          rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]"><span class="text-slate-600 truncate max-w-[160px]">Principal: <strong class="text-slate-800">${school.principal?.name || 'Assigned'}</strong></span><span class="text-purple-600 font-bold truncate max-w-[150px]">HITC: ${school.hitc?.name || 'Assigned'}</span></div>`;
         }
+
+        // Edit button for authorized Admin
+        const editButtonHtml = isAdmin ? `
+          <button onclick="openEditSchoolModal('${school.code}', event)" class="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 transition active:scale-95" title="Edit School">
+            ✏️
+          </button>
+        ` : '';
 
         card.innerHTML = `
           <div class="flex items-center justify-between mb-1.5">
-            <span class="text-[10px] font-mono-code font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-lg">
-              #${school.code}
-            </span>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${mgmtColor}">
-              ${school.management}
-            </span>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] font-mono-code font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-lg">#${school.code}</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${mgmtColor}">${school.management}</span>
+            </div>
+            ${editButtonHtml}
           </div>
           <h3 class="text-sm font-extrabold text-slate-900 leading-snug tracking-tight">${school.name}</h3>
           <p class="text-[11px] text-slate-400 font-medium mt-0.5">Classes ${school.level || '-'}</p>
@@ -982,18 +1018,8 @@
 
           ${phone ? `
           <div class="grid grid-cols-2 gap-2 mt-2.5">
-            <a href="tel:${digits}" class="flex items-center justify-center gap-1.5 py-2 bg-white border border-slate-200 rounded-xl text-indigo-600 font-bold text-xs shadow-2xs active:bg-slate-100 transition">
-              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-              </svg>
-              Call
-            </a>
-            <a href="https://wa.me/${waNumber}" target="_blank" class="flex items-center justify-center gap-1.5 py-2 bg-emerald-600 text-white rounded-xl font-bold text-xs shadow-2xs active:bg-emerald-700 transition">
-              <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-              </svg>
-              WhatsApp
-            </a>
+            <a href="tel:${digits}" class="flex items-center justify-center gap-1.5 py-2 bg-white border border-slate-200 rounded-xl text-indigo-600 font-bold text-xs shadow-2xs active:bg-slate-100 transition">Call</a>
+            <a href="https://wa.me/${waNumber}" target="_blank" class="flex items-center justify-center gap-1.5 py-2 bg-emerald-600 text-white rounded-xl font-bold text-xs shadow-2xs active:bg-emerald-700 transition">WhatsApp</a>
           </div>` : ''}
         </div>
       `;
@@ -1001,7 +1027,6 @@
 
     function openModal(s) {
       document.body.classList.add('modal-open');
-
       document.getElementById('modalBadges').innerHTML = `
         <span class="text-[10px] font-mono-code font-bold px-2 py-0.5 rounded-lg bg-slate-100 text-slate-700">#${s.code}</span>
         <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">${s.management}</span>
@@ -1010,52 +1035,32 @@
       document.getElementById('modalSub').textContent = `Classes: ${s.level || 'Standard'} • Mukkam Educational Sub-District`;
 
       let contactsHtml = '';
-
       if (currentTier === 'primary') {
         if (s.hm) contactsHtml += renderContactBox('Headmaster / Headmistress', s.hm.name, s.hm.phone, 'HM');
         if (s.psitc) contactsHtml += renderContactBox('Primary IT Coordinator', s.psitc.name, s.psitc.phone, 'PSITC');
-      }
-      else if (currentTier === 'hs') {
+      } else if (currentTier === 'hs') {
         if (s.hm) contactsHtml += renderContactBox('Headmaster / Headmistress', s.hm.name, s.hm.phone, 'HM');
         if (s.sitc) contactsHtml += renderContactBox('High School IT Coordinator', s.sitc.name, s.sitc.phone, 'SITC');
         if (s.lkMentors && s.lkMentors.length > 0) {
-          contactsHtml += `
-            <div class="pt-1">
-              <div class="flex items-center gap-1.5 mb-2">
-                <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Little Kites Mentors</span>
-                <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-1.5 py-0.2 rounded-full">Active</span>
-              </div>
-              <div class="space-y-2">
-                ${s.lkMentors.map((lk, i) => renderContactBox(`LK Mentor ${i + 1}`, lk.name, lk.phone, 'LK Mentor')).join('')}
-              </div>
-            </div>
-          `;
+          contactsHtml += `<div class="pt-1"><div class="flex items-center gap-1.5 mb-2"><span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Little Kites Mentors</span><span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-1.5 py-0.2 rounded-full">Active</span></div><div class="space-y-2">${s.lkMentors.map((lk, i) => renderContactBox(`LK Mentor ${i + 1}`, lk.name, lk.phone, 'LK Mentor')).join('')}</div></div>`;
         }
-      }
-      else if (currentTier === 'hss') {
+      } else if (currentTier === 'hss') {
         if (s.principal) contactsHtml += renderContactBox('Principal (Higher Secondary)', s.principal.name, s.principal.phone, 'Principal');
         if (s.hitc) contactsHtml += renderContactBox('Higher Secondary IT Coordinator', s.hitc.name, s.hitc.phone, 'HITC');
       }
 
       document.getElementById('modalContacts').innerHTML = contactsHtml;
-
       const backdrop = document.getElementById('modalBackdrop');
       const card = document.getElementById('modalCard');
       backdrop.classList.remove('hidden');
-      setTimeout(() => {
-        card.classList.remove('translate-y-full', 'sm:scale-95');
-        card.classList.add('translate-y-0', 'sm:scale-100');
-      }, 10);
+      setTimeout(() => { card.classList.remove('translate-y-full', 'sm:scale-95'); card.classList.add('translate-y-0', 'sm:scale-100'); }, 10);
     }
 
     function closeModal() {
       const card = document.getElementById('modalCard');
       card.classList.remove('translate-y-0', 'sm:scale-100');
       card.classList.add('translate-y-full', 'sm:scale-95');
-      setTimeout(() => {
-        document.getElementById('modalBackdrop').classList.add('hidden');
-        document.body.classList.remove('modal-open');
-      }, 250);
+      setTimeout(() => { document.getElementById('modalBackdrop').classList.add('hidden'); document.body.classList.remove('modal-open'); }, 250);
     }
 
     document.getElementById('modalBackdrop').addEventListener('click', (e) => {
