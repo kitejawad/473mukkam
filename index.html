@@ -16,7 +16,7 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
   
   <style>
@@ -30,7 +30,7 @@
     .font-mono-code { font-family: 'JetBrains Mono', monospace; }
     body.modal-open { overflow: hidden; touch-action: none; }
 
-    /* PRINT STYLES (PURE MALAYALAM PARAGRAPH + TABLE) */
+    /* PRINT STYLES */
     @media print {
       body { background: #ffffff !important; color: #000000 !important; margin: 0 !important; padding: 0 !important; }
       #pageDashboard, #pageList, #pageReport, #modalBackdrop, #adminAuthModal, #editSchoolModal, header { display: none !important; }
@@ -66,8 +66,8 @@
               <span id="adminLockIcon">🔒</span>
             </button>
             <div id="syncBadge" class="flex items-center gap-1.5 text-[10px] font-bold bg-white/10 backdrop-blur-md text-indigo-100 px-2.5 py-1 rounded-full border border-white/15">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-              Live
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+              Loading
             </div>
           </div>
         </div>
@@ -254,7 +254,7 @@
         </button>
         <div>
           <h2 class="text-base font-extrabold tracking-tight text-slate-900 leading-tight">Generate Training Report</h2>
-          <p class="text-[10px] text-slate-500 font-medium">Official Absentee Statement (Malayalam)</p>
+          <p class="text-[10px] text-slate-500 font-medium">Official Absentee Statement</p>
         </div>
       </div>
     </header>
@@ -476,25 +476,45 @@
     let isAdmin = false;
     let adminToken = sessionStorage.getItem('mkm_admin_token') || "";
 
+    // -------------------------------------------------------------
+    // INSTANT LOCAL CACHING & FAST LOADER
+    // -------------------------------------------------------------
     async function loadData() {
+      // 1. Instant cache load (0.05 seconds)
+      const cachedJson = localStorage.getItem('mukkam_directory_cache');
+      if (cachedJson) {
+        try {
+          rawSchools = JSON.parse(cachedJson);
+          updateCounts();
+          if (currentTier) renderCards();
+          document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Ready`;
+        } catch (e) {
+          console.warn("Cache parse failed", e);
+        }
+      }
+
+      // Check session token
+      if (adminToken) {
+        isAdmin = true;
+        document.getElementById('adminLockIcon').textContent = '🔓';
+        document.getElementById('adminModeBanner').classList.remove('hidden');
+        document.getElementById('adminAddSchoolBtn').classList.remove('hidden');
+      }
+
+      // 2. Silent background sync
       try {
         const res = await fetch(API_URL).then(r => r.json());
-        if (res.status === 'success') {
-          rawSchools = res.data.schools || [];
+        if (res.status === 'success' && Array.isArray(res.data.schools)) {
+          rawSchools = res.data.schools;
+          localStorage.setItem('mukkam_directory_cache', JSON.stringify(rawSchools));
           updateCounts();
-          document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Live`;
-
-          // Restore session if token exists
-          if (adminToken) {
-            isAdmin = true;
-            document.getElementById('adminLockIcon').textContent = '🔓';
-            document.getElementById('adminModeBanner').classList.remove('hidden');
-            document.getElementById('adminAddSchoolBtn').classList.remove('hidden');
-          }
+          if (currentTier) renderCards();
+          document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Synced`;
         }
       } catch (err) {
-        document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Offline`;
-        console.error(err);
+        if (!cachedJson) {
+          document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Offline`;
+        }
       }
     }
 
@@ -591,7 +611,7 @@
       document.getElementById('formAction').value = "edit";
       
       document.getElementById('formCode').value = school.code;
-      document.getElementById('formCode').disabled = true; // Primary key
+      document.getElementById('formCode').disabled = true;
       document.getElementById('formName').value = school.name;
       document.getElementById('formMgmt').value = school.management || "Government";
       document.getElementById('formLevel').value = school.level || "";
@@ -647,7 +667,7 @@
           method: 'POST',
           headers: { 'Content-Type': 'text/plain' },
           body: JSON.stringify({
-            token: adminToken, // Pass secure token, NOT PIN
+            token: adminToken,
             action: action,
             school: schoolPayload
           })
@@ -662,6 +682,7 @@
             rawSchools.push(schoolPayload);
           }
 
+          localStorage.setItem('mukkam_directory_cache', JSON.stringify(rawSchools));
           updateCounts();
           renderCards();
           closeEditModal();
@@ -978,7 +999,6 @@
           rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]"><span class="text-slate-600 truncate max-w-[160px]">Principal: <strong class="text-slate-800">${school.principal?.name || 'Assigned'}</strong></span><span class="text-purple-600 font-bold truncate max-w-[150px]">HITC: ${school.hitc?.name || 'Assigned'}</span></div>`;
         }
 
-        // Edit button for authorized Admin
         const editButtonHtml = isAdmin ? `
           <button onclick="openEditSchoolModal('${school.code}', event)" class="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 transition active:scale-95" title="Edit School">
             ✏️
