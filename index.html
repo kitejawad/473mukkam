@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Mukkam Schools Hub</title>
 
-  <!-- PWA Fullscreen & Standalone Configuration -->
+  <!-- PWA Fullscreen & Standalone Configuration (Hides Address Bar) -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Mukkam Hub" />
@@ -30,6 +30,7 @@
     .font-mono-code { font-family: 'JetBrains Mono', monospace; }
     body.modal-open { overflow: hidden; touch-action: none; }
 
+    /* PRINT STYLES */
     @media print {
       body { background: #ffffff !important; color: #000000 !important; margin: 0 !important; padding: 0 !important; }
       #pageDashboard, #pageList, #pageReport, #modalBackdrop, #adminAuthModal, #editSchoolModal, header { display: none !important; }
@@ -92,7 +93,7 @@
                 <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">LP & UP Schools</h3>
                 <span id="badgePrimary" class="text-[10px] font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full border border-indigo-100">--</span>
               </div>
-              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 1–7 &bull; PSITC &bull; LK Junior &bull; Digital Square</p>
+              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 1–7</p>
             </div>
           </div>
           <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all">
@@ -113,7 +114,7 @@
                 <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">High Schools</h3>
                 <span id="badgeHS" class="text-[10px] font-bold bg-amber-50 text-amber-800 px-2 py-0.5 rounded-full border border-amber-100">--</span>
               </div>
-              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 8–10 &bull; HM &bull; SITC &bull; LK Master</p>
+              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 8–10</p>
             </div>
           </div>
           <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-amber-500 group-hover:text-white transition-all">
@@ -136,7 +137,7 @@
                 <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">Higher Secondary</h3>
                 <span id="badgeHSS" class="text-[10px] font-bold bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full border border-purple-100">--</span>
               </div>
-              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 11–12 &bull; Principal &bull; HITC</p>
+              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 11–12</p>
             </div>
           </div>
           <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-purple-600 group-hover:text-white transition-all">
@@ -197,7 +198,7 @@
           <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 text-xs pointer-events-none">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
           </span>
-          <input id="searchInput" type="search" placeholder="Search school, code, staff name..." class="w-full pl-9 pr-3 py-2 text-xs bg-slate-100/90 text-slate-800 rounded-2xl border border-transparent focus:border-indigo-400 focus:bg-white focus:outline-none transition shadow-inner" />
+          <input id="searchInput" type="search" placeholder="Search school, code, HM, SITC..." class="w-full pl-9 pr-3 py-2 text-xs bg-slate-100/90 text-slate-800 rounded-2xl border border-transparent focus:border-indigo-400 focus:bg-white focus:outline-none transition shadow-inner" />
         </div>
       </div>
     </header>
@@ -210,6 +211,20 @@
             <span id="activeLevelLabel" class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">ALL</span>
           </div>
           <div id="levelButtonGroup" class="flex flex-wrap gap-1.5"></div>
+        </div>
+
+        <div class="pt-2 border-t border-slate-100">
+          <div class="flex items-center justify-between mb-1.5 px-0.5">
+            <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Management</span>
+            <span id="activeMgmtLabel" class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">ALL</span>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <button onclick="setMgmtFilter('all')" class="mgmt-btn px-3 py-1.5 text-xs rounded-xl font-bold bg-indigo-600 text-white shadow-xs transition" data-mgmt="all">All</button>
+            <button onclick="setMgmtFilter('govt_aided')" class="mgmt-btn px-3 py-1.5 text-xs rounded-xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition" data-mgmt="govt_aided">Govt & Aided</button>
+            <button onclick="setMgmtFilter('govt')" class="mgmt-btn px-3 py-1.5 text-xs rounded-xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition" data-mgmt="govt">Govt</button>
+            <button onclick="setMgmtFilter('aided')" class="mgmt-btn px-3 py-1.5 text-xs rounded-lg font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition" data-mgmt="aided">Aided</button>
+            <button onclick="setMgmtFilter('unaided')" class="mgmt-btn px-3 py-1.5 text-xs rounded-xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition" data-mgmt="unaided">Unaided</button>
+          </div>
         </div>
 
         <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs px-0.5">
@@ -235,7 +250,7 @@
         </button>
         <div>
           <h2 class="text-base font-extrabold tracking-tight text-slate-900 leading-tight">Generate Training Report</h2>
-          <p class="text-[10px] text-slate-500 font-medium">Official Absentee Statement</p>
+          <p class="text-[10px] text-slate-500 font-medium">Official Absentee Statement (Malayalam)</p>
         </div>
       </div>
     </header>
@@ -250,14 +265,12 @@
       </div>
 
       <div class="bg-white p-4 rounded-3xl border border-slate-200/80 shadow-xs space-y-2 text-xs">
-        <h3 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider">Select Training Category</h3>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+        <h3 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider">Select Category</h3>
+        <div class="grid grid-cols-2 gap-2">
           <button onclick="setReportTier('primary')" id="rTierPrimary" class="py-2.5 text-xs rounded-2xl font-bold bg-emerald-600 text-white shadow-xs transition">Primary (PSITC)</button>
           <button onclick="setReportTier('hs')" id="rTierHS" class="py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">HS (SITC)</button>
           <button onclick="setReportTier('hss')" id="rTierHSS" class="py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">HSS (HITC)</button>
-          <button onclick="setReportTier('lk_master')" id="rTierLKM" class="py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">🪁 LK Master</button>
-          <button onclick="setReportTier('lk_junior')" id="rTierLKJ" class="py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">🪁 LK Junior (Class 7)</button>
-          <button onclick="setReportTier('digital_square')" id="rTierDS" class="py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">💻 Digital Square</button>
+          <button onclick="setReportTier('lk')" id="rTierLK" class="py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">🪁 Little Kites</button>
         </div>
       </div>
 
@@ -316,15 +329,9 @@
       <form id="schoolForm" onsubmit="handleSchoolSave(event)" class="p-6 overflow-y-auto space-y-3 flex-1 text-xs">
         <input type="hidden" id="formAction" value="add" />
         
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block font-bold text-slate-500 mb-1">School Code *</label>
-            <input id="formCode" required type="text" placeholder="e.g. 47301" class="w-full font-mono-code bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-indigo-500" />
-          </div>
-          <div>
-            <label class="block font-bold text-slate-500 mb-1">Level / Classes *</label>
-            <input id="formLevel" required type="text" placeholder="e.g. 1 - 7, 5 - 7, 1 - 4" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-indigo-500" />
-          </div>
+        <div>
+          <label class="block font-bold text-slate-500 mb-1">School Code *</label>
+          <input id="formCode" required type="text" placeholder="e.g. 47301" class="w-full font-mono-code bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-indigo-500" />
         </div>
 
         <div>
@@ -332,49 +339,57 @@
           <input id="formName" required type="text" placeholder="e.g. GLPS Poolappoyil" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-indigo-500" />
         </div>
 
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold text-slate-500 mb-1">Management</label>
+            <select id="formMgmt" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 outline-none">
+              <option value="Government">Government</option>
+              <option value="Aided">Aided</option>
+              <option value="Unaided Recognised">Unaided Recognised</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-500 mb-1">Level / Classes</label>
+            <input id="formLevel" type="text" placeholder="e.g. 1 - 4" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 outline-none" />
+          </div>
+        </div>
+
         <div class="pt-2 border-t border-slate-100 space-y-2.5">
-          <p class="font-extrabold text-indigo-600 text-[11px] uppercase tracking-wider">HM & Principal</p>
+          <p class="font-extrabold text-indigo-600 text-[11px] uppercase tracking-wider">Personnel Contacts</p>
+          
           <div class="grid grid-cols-2 gap-2">
             <input id="formHMName" type="text" placeholder="HM Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
             <input id="formHMPhone" type="text" placeholder="HM Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
           </div>
+
           <div class="grid grid-cols-2 gap-2">
             <input id="formPrincipalName" type="text" placeholder="Principal Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
             <input id="formPrincipalPhone" type="text" placeholder="Principal Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
           </div>
 
-          <p class="font-extrabold text-indigo-600 text-[11px] uppercase tracking-wider pt-1">IT Coordinators</p>
           <div class="grid grid-cols-2 gap-2">
             <input id="formPSITCName" type="text" placeholder="PSITC Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
             <input id="formPSITCPhone" type="text" placeholder="PSITC Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
           </div>
+
           <div class="grid grid-cols-2 gap-2">
             <input id="formSITCName" type="text" placeholder="SITC Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
             <input id="formSITCPhone" type="text" placeholder="SITC Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
           </div>
+
           <div class="grid grid-cols-2 gap-2">
             <input id="formHITCName" type="text" placeholder="HITC Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
             <input id="formHITCPhone" type="text" placeholder="HITC Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
           </div>
 
-          <p class="font-extrabold text-amber-600 text-[11px] uppercase tracking-wider pt-1">Little Kites Masters (HS)</p>
           <div class="grid grid-cols-2 gap-2">
-            <input id="formLKM1Name" type="text" placeholder="LK Master 1 Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-            <input id="formLKM1Phone" type="text" placeholder="LK Master 1 Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <input id="formLKM2Name" type="text" placeholder="LK Master 2 Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-            <input id="formLKM2Phone" type="text" placeholder="LK Master 2 Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+            <input id="formLK1Name" type="text" placeholder="LK Mentor 1 Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+            <input id="formLK1Phone" type="text" placeholder="LK Mentor 1 Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
           </div>
 
-          <p class="font-extrabold text-teal-600 text-[11px] uppercase tracking-wider pt-1">LK Junior (Class 7) & Digital Square (Primary)</p>
           <div class="grid grid-cols-2 gap-2">
-            <input id="formLKJrName" type="text" placeholder="LK Junior Name (Class 7)" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-            <input id="formLKJrPhone" type="text" placeholder="LK Junior Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <input id="formDSName" type="text" placeholder="Digital Square Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-            <input id="formDSPhone" type="text" placeholder="Digital Square Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+            <input id="formLK2Name" type="text" placeholder="LK Mentor 2 Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+            <input id="formLK2Phone" type="text" placeholder="LK Mentor 2 Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
           </div>
         </div>
 
@@ -389,7 +404,7 @@
 
 
   <!-- ======================================================== -->
-  <!-- PRINT AREA -->
+  <!-- PRINT AREA: PARAGRAPH + TABLE ONLY -->
   <!-- ======================================================== -->
   <div id="printArea" style="display: none;">
     <div style="max-width: 800px; margin: 0 auto; line-height: 1.6;">
@@ -416,7 +431,7 @@
 
 
   <!-- ======================================================== -->
-  <!-- MODAL: DETAILS POPUP -->
+  <!-- ROLE-ADAPTIVE MODAL (DETAILS POPUP) -->
   <!-- ======================================================== -->
   <div id="modalBackdrop" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div id="modalCard" class="w-full sm:max-w-md bg-white rounded-t-[2.5rem] sm:rounded-3xl max-h-[85vh] flex flex-col shadow-2xl transform transition-transform duration-300 translate-y-full sm:translate-y-0 sm:scale-95 border border-slate-100">
@@ -448,6 +463,7 @@
     let rawSchools = [];
     let currentTier = null;
     let selectedLevel = 'all';
+    let selectedMgmt = 'all';
 
     let reportTier = 'primary';
     let absentSchoolCodes = new Set();
@@ -586,6 +602,7 @@
       document.getElementById('formCode').value = school.code;
       document.getElementById('formCode').disabled = true;
       document.getElementById('formName').value = school.name;
+      document.getElementById('formMgmt').value = school.management || "Government";
       document.getElementById('formLevel').value = school.level || "";
 
       document.getElementById('formHMName').value = school.hm?.name || "";
@@ -599,14 +616,10 @@
       document.getElementById('formHITCName').value = school.hitc?.name || "";
       document.getElementById('formHITCPhone').value = school.hitc?.phone || "";
 
-      document.getElementById('formLKM1Name').value = school.lkMaster1?.name || "";
-      document.getElementById('formLKM1Phone').value = school.lkMaster1?.phone || "";
-      document.getElementById('formLKM2Name').value = school.lkMaster2?.name || "";
-      document.getElementById('formLKM2Phone').value = school.lkMaster2?.phone || "";
-      document.getElementById('formLKJrName').value = school.lkJunior?.name || "";
-      document.getElementById('formLKJrPhone').value = school.lkJunior?.phone || "";
-      document.getElementById('formDSName').value = school.digitalSquare?.name || "";
-      document.getElementById('formDSPhone').value = school.digitalSquare?.phone || "";
+      document.getElementById('formLK1Name').value = school.lkMentors?.[0]?.name || "";
+      document.getElementById('formLK1Phone').value = school.lkMentors?.[0]?.phone || "";
+      document.getElementById('formLK2Name').value = school.lkMentors?.[1]?.name || "";
+      document.getElementById('formLK2Phone').value = school.lkMentors?.[1]?.phone || "";
 
       document.getElementById('editSchoolModal').classList.remove('hidden');
     }
@@ -625,16 +638,17 @@
       const schoolPayload = {
         code: document.getElementById('formCode').value.trim(),
         name: document.getElementById('formName').value.trim(),
+        management: document.getElementById('formMgmt').value,
         level: document.getElementById('formLevel').value.trim(),
         hm: { name: document.getElementById('formHMName').value.trim(), phone: document.getElementById('formHMPhone').value.trim() },
         principal: { name: document.getElementById('formPrincipalName').value.trim(), phone: document.getElementById('formPrincipalPhone').value.trim() },
         psitc: { name: document.getElementById('formPSITCName').value.trim(), phone: document.getElementById('formPSITCPhone').value.trim() },
         sitc: { name: document.getElementById('formSITCName').value.trim(), phone: document.getElementById('formSITCPhone').value.trim() },
         hitc: { name: document.getElementById('formHITCName').value.trim(), phone: document.getElementById('formHITCPhone').value.trim() },
-        lkMaster1: { name: document.getElementById('formLKM1Name').value.trim(), phone: document.getElementById('formLKM1Phone').value.trim() },
-        lkMaster2: { name: document.getElementById('formLKM2Name').value.trim(), phone: document.getElementById('formLKM2Phone').value.trim() },
-        lkJunior: { name: document.getElementById('formLKJrName').value.trim(), phone: document.getElementById('formLKJrPhone').value.trim() },
-        digitalSquare: { name: document.getElementById('formDSName').value.trim(), phone: document.getElementById('formDSPhone').value.trim() }
+        lkMentors: [
+          { name: document.getElementById('formLK1Name').value.trim(), phone: document.getElementById('formLK1Phone').value.trim() },
+          { name: document.getElementById('formLK2Name').value.trim(), phone: document.getElementById('formLK2Phone').value.trim() }
+        ]
       };
 
       try {
@@ -674,38 +688,23 @@
     }
 
     // ==========================================
-    // CRITICAL FILTER RULES
+    // FILTER HELPERS
     // ==========================================
-    function isDigitalSquareEligible(school) {
-      const lvl = (school.level || '').trim();
-      return (
-        lvl.includes('1 - 7') || lvl.includes('1-7') ||
-        lvl.includes('5 - 7') || lvl.includes('5-7') ||
-        lvl.includes('1 - 4') || lvl.includes('1-4') ||
-        lvl.includes('1 - 10') || lvl.includes('1-10') ||
-        Boolean(school.digitalSquare && school.digitalSquare.name)
-      );
-    }
-
-    function isLKJuniorEligible(school) {
-      const lvl = (school.level || '').trim();
-      return (
-        lvl.includes('7') ||
-        Boolean(school.lkJunior && school.lkJunior.name)
-      );
-    }
-
     function matchSchoolTier(school, tier) {
       const lvl = (school.level || '').trim();
-      if (tier === 'primary') return Boolean(school.psitc?.name) || isDigitalSquareEligible(school) || lvl.includes('1 - 4') || lvl.includes('5 - 7') || lvl.includes('1 - 7') || lvl.includes('1 - 5');
-      if (tier === 'hs') return Boolean(school.sitc?.name) || Boolean(school.lkMaster1?.name) || lvl.includes('8 - 10') || lvl.includes('1 - 10') || lvl.includes('5 - 10') || lvl.includes('12');
-      if (tier === 'hss') return Boolean(school.principal?.name) || Boolean(school.hitc?.name) || lvl.includes('12');
-      
-      if (tier === 'digital_square') return isDigitalSquareEligible(school);
-      if (tier === 'lk_junior') return isLKJuniorEligible(school);
-      if (tier === 'lk_master') return Boolean(school.lkMaster1?.name || school.lkMaster2?.name || lvl.includes('8 - 10') || lvl.includes('1 - 10'));
-      
+      if (tier === 'primary') return Boolean(school.psitc) || lvl.includes('1 - 4') || lvl.includes('5 - 7') || lvl.includes('1 - 7') || lvl.includes('1 - 5');
+      if (tier === 'hs') return Boolean(school.sitc) || (school.lkMentors && school.lkMentors.length > 0) || lvl.includes('8 - 10') || lvl.includes('1 - 10') || lvl.includes('5 - 10') || lvl.includes('12');
+      if (tier === 'hss') return Boolean(school.principal) || Boolean(school.hitc) || lvl.includes('12');
+      if (tier === 'lk') return Boolean(school.lkMentors && school.lkMentors.length > 0);
       return false;
+    }
+
+    function getManagementCategory(mgmtString) {
+      const s = (mgmtString || '').toLowerCase().trim();
+      if (s.includes('unaid')) return 'unaided';
+      if (s.includes('gov')) return 'govt';
+      if (s.includes('aid')) return 'aided';
+      return 'unaided';
     }
 
     function updateCounts() {
@@ -717,6 +716,7 @@
     function openTierPage(tier) {
       currentTier = tier;
       selectedLevel = 'all';
+      selectedMgmt = 'all';
       document.getElementById('searchInput').value = '';
 
       const labels = {
@@ -729,6 +729,8 @@
       document.getElementById('listTierSubtitle').textContent = labels[tier].sub;
 
       renderLevelButtons(tier);
+      updateButtonUI();
+
       document.getElementById('pageDashboard').classList.add('hidden');
       document.getElementById('pageReport').classList.add('hidden');
       document.getElementById('pageList').classList.remove('hidden');
@@ -752,27 +754,24 @@
 
     function setReportTier(tier) {
       reportTier = tier;
-      const btns = { 
-        primary: document.getElementById('rTierPrimary'), 
-        hs: document.getElementById('rTierHS'), 
-        hss: document.getElementById('rTierHSS'), 
-        lk_master: document.getElementById('rTierLKM'),
-        lk_junior: document.getElementById('rTierLKJ'),
-        digital_square: document.getElementById('rTierDS')
-      };
-      
+      const btns = { primary: document.getElementById('rTierPrimary'), hs: document.getElementById('rTierHS'), hss: document.getElementById('rTierHSS'), lk: document.getElementById('rTierLK') };
       Object.keys(btns).forEach(k => {
-        if (!btns[k]) return;
-        btns[k].className = (k === tier) 
-          ? 'py-2.5 text-xs rounded-2xl font-bold bg-emerald-600 text-white shadow-xs transition' 
-          : 'py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+        btns[k].className = (k === tier) ? 'py-2.5 text-xs rounded-2xl font-bold bg-emerald-600 text-white shadow-xs transition' : 'py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
       });
       renderChecklist();
     }
 
     function getReportSchools() {
       const schools = rawSchools.filter(s => matchSchoolTier(s, reportTier));
-      schools.sort((a, b) => (parseInt(cleanDigits(a.code), 10) || 0) - (parseInt(cleanDigits(b.code), 10) || 0));
+      schools.sort((a, b) => {
+        const mgmtA = getManagementCategory(a.management);
+        const mgmtB = getManagementCategory(b.management);
+        const isGA_A = (mgmtA === 'govt' || mgmtA === 'aided');
+        const isGA_B = (mgmtB === 'govt' || mgmtB === 'aided');
+        if (isGA_A && !isGA_B) return -1;
+        if (!isGA_A && isGA_B) return 1;
+        return (parseInt(cleanDigits(a.code), 10) || 0) - (parseInt(cleanDigits(b.code), 10) || 0);
+      });
       return schools;
     }
 
@@ -790,9 +789,7 @@
         if (reportTier === 'primary') incharge = s.psitc?.name ? `PSITC: ${s.psitc.name}` : (s.hm?.name ? `HM: ${s.hm.name}` : '');
         else if (reportTier === 'hs') incharge = s.sitc?.name ? `SITC: ${s.sitc.name}` : (s.hm?.name ? `HM: ${s.hm.name}` : '');
         else if (reportTier === 'hss') incharge = s.hitc?.name ? `HITC: ${s.hitc.name}` : (s.principal?.name ? `Principal: ${s.principal.name}` : '');
-        else if (reportTier === 'lk_master') incharge = s.lkMaster1?.name ? `Master: ${s.lkMaster1.name}` : '';
-        else if (reportTier === 'lk_junior') incharge = s.lkJunior?.name ? `LK Junior: ${s.lkJunior.name}` : '';
-        else if (reportTier === 'digital_square') incharge = s.digitalSquare?.name ? `DS: ${s.digitalSquare.name}` : '';
+        else if (reportTier === 'lk') incharge = s.lkMentors?.length ? `LK: ${s.lkMentors.map(m => m.name).join(', ')}` : '';
 
         row.innerHTML = `
           <div class="flex items-center gap-3">
@@ -889,10 +886,25 @@
       renderCards();
     }
 
+    function setMgmtFilter(mgmt) {
+      selectedMgmt = mgmt;
+      document.querySelectorAll('.mgmt-btn').forEach(btn => {
+        btn.className = (btn.getAttribute('data-mgmt') === mgmt) ? 'mgmt-btn px-3 py-1.5 text-xs rounded-xl font-bold bg-indigo-600 text-white shadow-xs transition' : 'mgmt-btn px-3 py-1.5 text-xs rounded-xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+      });
+      document.getElementById('activeMgmtLabel').textContent = mgmt.replace('_', ' & ').toUpperCase();
+      renderCards();
+    }
+
     function resetFilters() {
       setLevelFilter('all');
+      setMgmtFilter('all');
       document.getElementById('searchInput').value = '';
       renderCards();
+    }
+
+    function updateButtonUI() {
+      setLevelFilter('all');
+      setMgmtFilter('all');
     }
 
     function backToDashboard() {
@@ -916,6 +928,7 @@
       let filtered = rawSchools.filter(school => {
         if (!matchSchoolTier(school, currentTier)) return false;
         const lvl = (school.level || '').trim();
+        const mgmtType = getManagementCategory(school.management);
 
         if (currentTier === 'primary') {
           if (selectedLevel === 'lp' && !(lvl.includes('1 - 4') || lvl.includes('1 - 5') || lvl === '1-4')) return false;
@@ -929,20 +942,24 @@
           if (selectedLevel === 'hss' && !lvl.includes('12')) return false;
         }
 
+        if (selectedMgmt === 'govt' && mgmtType !== 'govt') return false;
+        if (selectedMgmt === 'aided' && mgmtType !== 'aided') return false;
+        if (selectedMgmt === 'govt_aided' && mgmtType !== 'govt' && mgmtType !== 'aided') return false;
+        if (selectedMgmt === 'unaided' && mgmtType !== 'unaided') return false;
+
         if (!q) return true;
-        return (
-          school.name.toLowerCase().includes(q) ||
-          school.code.toLowerCase().includes(q) ||
-          (school.hm && school.hm.name.toLowerCase().includes(q)) ||
-          (school.sitc && school.sitc.name.toLowerCase().includes(q)) ||
-          (school.psitc && school.psitc.name.toLowerCase().includes(q)) ||
-          (school.lkMaster1 && school.lkMaster1.name.toLowerCase().includes(q)) ||
-          (school.lkJunior && school.lkJunior.name.toLowerCase().includes(q)) ||
-          (school.digitalSquare && school.digitalSquare.name.toLowerCase().includes(q))
-        );
+        return school.name.toLowerCase().includes(q) || school.code.toLowerCase().includes(q);
       });
 
-      filtered.sort((a, b) => (parseInt(cleanDigits(a.code), 10) || 0) - (parseInt(cleanDigits(b.code), 10) || 0));
+      filtered.sort((a, b) => {
+        const mgmtA = getManagementCategory(a.management);
+        const mgmtB = getManagementCategory(b.management);
+        const isGA_A = (mgmtA === 'govt' || mgmtA === 'aided');
+        const isGA_B = (mgmtB === 'govt' || mgmtB === 'aided');
+        if (isGA_A && !isGA_B) return -1;
+        if (!isGA_A && isGA_B) return 1;
+        return (parseInt(cleanDigits(a.code), 10) || 0) - (parseInt(cleanDigits(b.code), 10) || 0);
+      });
 
       countEl.textContent = `${filtered.length} schools`;
       listEl.innerHTML = '';
@@ -958,29 +975,17 @@
         card.className = "bg-white p-4 rounded-3xl border border-slate-200/80 shadow-xs hover:border-indigo-300 active:scale-[0.99] transition cursor-pointer relative";
         card.onclick = () => openModal(school);
 
-        // Preview row: ONLY displays if the role actually has a name in the sheet
+        const mgmtType = getManagementCategory(school.management);
+        const mgmtColor = mgmtType === 'govt' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : mgmtType === 'aided' ? 'bg-blue-50 text-blue-700 border-blue-100' : 'bg-amber-50 text-amber-700 border-amber-100';
+
         let rolePreview = '';
         if (currentTier === 'primary') {
-          const hmText = school.hm?.name ? `<span class="text-slate-600 truncate max-w-[150px]">HM: <strong class="text-slate-800">${school.hm.name}</strong></span>` : '';
-          const psitcText = school.psitc?.name ? `<span class="text-indigo-600 font-bold truncate max-w-[140px]">PSITC: ${school.psitc.name}</span>` : '';
-          
-          if (hmText || psitcText) {
-            rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">${hmText || '<span></span>'}${psitcText}</div>`;
-          }
+          rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]"><span class="text-slate-600 truncate max-w-[160px]">HM: <strong class="text-slate-800">${school.hm?.name || 'Assigned'}</strong></span><span class="text-indigo-600 font-bold truncate max-w-[150px]">PSITC: ${school.psitc?.name || 'Assigned'}</span></div>`;
         } else if (currentTier === 'hs') {
-          const sitcText = school.sitc?.name ? `<span class="text-slate-600 truncate max-w-[150px]">SITC: <strong class="text-slate-800">${school.sitc.name}</strong></span>` : '';
-          const lkText = school.lkMaster1?.name ? `<span class="text-amber-700 font-extrabold truncate max-w-[140px]">LK: ${school.lkMaster1.name}</span>` : '';
-          
-          if (sitcText || lkText) {
-            rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">${sitcText || '<span></span>'}${lkText}</div>`;
-          }
+          const lkCount = school.lkMentors ? school.lkMentors.length : 0;
+          rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]"><span class="text-slate-600 truncate max-w-[160px]">SITC: <strong class="text-slate-800">${school.sitc?.name || 'Assigned'}</strong></span><span class="${lkCount > 0 ? 'text-amber-700 font-extrabold' : 'text-slate-400'}">${lkCount > 0 ? `🪁 ${lkCount} LK Mentors` : 'No LK'}</span></div>`;
         } else if (currentTier === 'hss') {
-          const pText = school.principal?.name ? `<span class="text-slate-600 truncate max-w-[150px]">Principal: <strong class="text-slate-800">${school.principal.name}</strong></span>` : '';
-          const hitcText = school.hitc?.name ? `<span class="text-purple-600 font-bold truncate max-w-[140px]">HITC: ${school.hitc.name}</span>` : '';
-          
-          if (pText || hitcText) {
-            rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">${pText || '<span></span>'}${hitcText}</div>`;
-          }
+          rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]"><span class="text-slate-600 truncate max-w-[160px]">Principal: <strong class="text-slate-800">${school.principal?.name || 'Assigned'}</strong></span><span class="text-purple-600 font-bold truncate max-w-[150px]">HITC: ${school.hitc?.name || 'Assigned'}</span></div>`;
         }
 
         const editButtonHtml = isAdmin ? `
@@ -991,7 +996,10 @@
 
         card.innerHTML = `
           <div class="flex items-center justify-between mb-1.5">
-            <span class="text-[10px] font-mono-code font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-lg">#${school.code}</span>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] font-mono-code font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-lg">#${school.code}</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${mgmtColor}">${school.management}</span>
+            </div>
             ${editButtonHtml}
           </div>
           <h3 class="text-sm font-extrabold text-slate-900 leading-snug tracking-tight">${school.name}</h3>
@@ -1003,15 +1011,9 @@
       });
     }
 
-    // STRICT CHECK: ONLY render contact box if name AND phone actually exist in sheets
     function renderContactBox(roleTitle, name, phone, badge) {
-      const cleanName = (name || '').trim();
-      const cleanPhone = (phone || '').trim();
-
-      // If there is no data in sheet, return empty string (DO NOT SHOW)
-      if (!cleanName && !cleanPhone) return '';
-
-      const digits = cleanDigits(cleanPhone);
+      if (!name && !phone) return '';
+      const digits = cleanDigits(phone);
       const waNumber = digits.length === 10 ? '91' + digits : digits;
 
       return `
@@ -1020,10 +1022,9 @@
             <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">${roleTitle}</span>
             ${badge ? `<span class="bg-indigo-100/70 text-indigo-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full">${badge}</span>` : ''}
           </div>
-          <p class="font-extrabold text-slate-900 text-xs">${cleanName || 'Contact Person'}</p>
-          ${cleanPhone ? `<p class="font-mono-code text-[11px] text-slate-500 mt-0.5">${cleanPhone}</p>` : ''}
-
-          ${digits ? `
+          <p class="font-extrabold text-slate-900 text-xs">${name || 'Assigned Staff'}</p>
+          <p class="font-mono-code text-[11px] text-slate-500 mt-0.5">${phone || '-'}</p>
+          ${phone ? `
           <div class="grid grid-cols-2 gap-2 mt-2.5">
             <a href="tel:${digits}" class="flex items-center justify-center gap-1.5 py-2 bg-white border border-slate-200 rounded-xl text-indigo-600 font-bold text-xs shadow-2xs active:bg-slate-100 transition">Call</a>
             <a href="https://wa.me/${waNumber}" target="_blank" class="flex items-center justify-center gap-1.5 py-2 bg-emerald-600 text-white rounded-xl font-bold text-xs shadow-2xs active:bg-emerald-700 transition">WhatsApp</a>
@@ -1036,54 +1037,27 @@
       document.body.classList.add('modal-open');
       document.getElementById('modalBadges').innerHTML = `
         <span class="text-[10px] font-mono-code font-bold px-2 py-0.5 rounded-lg bg-slate-100 text-slate-700">#${s.code}</span>
-        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">Classes: ${s.level || '-'}</span>
+        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">${s.management}</span>
       `;
       document.getElementById('modalName').textContent = s.name;
-      document.getElementById('modalSub').textContent = `Mukkam Educational Sub-District`;
+      document.getElementById('modalSub').textContent = `Classes: ${s.level || 'Standard'} • Mukkam Educational Sub-District`;
 
       let contactsHtml = '';
-      
-      // TIER 1: LP & UP SCHOOLS
       if (currentTier === 'primary') {
-        if (s.hm?.name || s.hm?.phone) {
-          contactsHtml += renderContactBox('Headmaster / Headmistress', s.hm.name, s.hm.phone, 'HM');
+        if (s.hm) contactsHtml += renderContactBox('Headmaster / Headmistress', s.hm.name, s.hm.phone, 'HM');
+        if (s.psitc) contactsHtml += renderContactBox('Primary IT Coordinator', s.psitc.name, s.psitc.phone, 'PSITC');
+      } else if (currentTier === 'hs') {
+        if (s.hm) contactsHtml += renderContactBox('Headmaster / Headmistress', s.hm.name, s.hm.phone, 'HM');
+        if (s.sitc) contactsHtml += renderContactBox('High School IT Coordinator', s.sitc.name, s.sitc.phone, 'SITC');
+        if (s.lkMentors && s.lkMentors.length > 0) {
+          contactsHtml += `<div class="pt-1"><div class="flex items-center gap-1.5 mb-2"><span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Little Kites Mentors</span><span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-1.5 py-0.2 rounded-full">Active</span></div><div class="space-y-2">${s.lkMentors.map((lk, i) => renderContactBox(`LK Mentor ${i + 1}`, lk.name, lk.phone, 'LK Mentor')).join('')}</div></div>`;
         }
-        if (s.psitc?.name || s.psitc?.phone) {
-          contactsHtml += renderContactBox('Primary IT Coordinator', s.psitc.name, s.psitc.phone, 'PSITC');
-        }
-        if (isLKJuniorEligible(s) && (s.lkJunior?.name || s.lkJunior?.phone)) {
-          contactsHtml += renderContactBox('Little Kites Junior', s.lkJunior.name, s.lkJunior.phone, 'LK Junior');
-        }
-        if (isDigitalSquareEligible(s) && (s.digitalSquare?.name || s.digitalSquare?.phone)) {
-          contactsHtml += renderContactBox('Digital Square Coordinator', s.digitalSquare.name, s.digitalSquare.phone, 'Digital Square');
-        }
-      } 
-      // TIER 2: HIGH SCHOOLS
-      else if (currentTier === 'hs') {
-        if (s.hm?.name || s.hm?.phone) {
-          contactsHtml += renderContactBox('Headmaster / Headmistress', s.hm.name, s.hm.phone, 'HM');
-        }
-        if (s.sitc?.name || s.sitc?.phone) {
-          contactsHtml += renderContactBox('High School IT Coordinator', s.sitc.name, s.sitc.phone, 'SITC');
-        }
-        if (s.lkMaster1?.name || s.lkMaster1?.phone) {
-          contactsHtml += renderContactBox('Little Kites Master 1', s.lkMaster1.name, s.lkMaster1.phone, 'LK Master');
-        }
-        if (s.lkMaster2?.name || s.lkMaster2?.phone) {
-          contactsHtml += renderContactBox('Little Kites Master 2', s.lkMaster2.name, s.lkMaster2.phone, 'LK Master');
-        }
-      } 
-      // TIER 3: HIGHER SECONDARY
-      else if (currentTier === 'hss') {
-        if (s.principal?.name || s.principal?.phone) {
-          contactsHtml += renderContactBox('Principal (Higher Secondary)', s.principal.name, s.principal.phone, 'Principal');
-        }
-        if (s.hitc?.name || s.hitc?.phone) {
-          contactsHtml += renderContactBox('Higher Secondary IT Coordinator', s.hitc.name, s.hitc.phone, 'HITC');
-        }
+      } else if (currentTier === 'hss') {
+        if (s.principal) contactsHtml += renderContactBox('Principal (Higher Secondary)', s.principal.name, s.principal.phone, 'Principal');
+        if (s.hitc) contactsHtml += renderContactBox('Higher Secondary IT Coordinator', s.hitc.name, s.hitc.phone, 'HITC');
       }
 
-      document.getElementById('modalContacts').innerHTML = contactsHtml || '<div class="text-center text-slate-400 py-8 font-medium">No contact numbers entered for this school.</div>';
+      document.getElementById('modalContacts').innerHTML = contactsHtml;
       const backdrop = document.getElementById('modalBackdrop');
       const card = document.getElementById('modalCard');
       backdrop.classList.remove('hidden');
