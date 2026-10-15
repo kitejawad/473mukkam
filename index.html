@@ -10,29 +10,41 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Mukkam Hub" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="theme-color" content="#4f46e5" />
-  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%234f46e5'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-size='50'>🏫</text></svg>" />
-  <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22Mukkam%20Schools%20Hub%22%2C%22short_name%22%3A%22Mukkam%20Hub%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22orientation%22%3A%22portrait%22%2C%22background_color%22%3A%22%23ffffff%22%2C%22theme_color%22%3A%22%234f46e5%22%7D" />
+  <meta name="theme-color" content="#4338ca" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%234338ca'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-size='50'>🏫</text></svg>" />
+  <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22Mukkam%20Schools%20Hub%22%2C%22short_name%22%3A%22Mukkam%20Hub%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22orientation%22%3A%22portrait%22%2C%22background_color%22%3A%22%234338ca%22%2C%22theme_color%22%3A%22%234338ca%22%7D" />
 
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- RELIABLE PRE-COMPILED CSS (WILL NEVER FAIL TO LOAD OR GET BLOCKED) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" integrity="sha512-wnea99tKIC3TkvTOv3vZsxIgFK1JKUM+iq35wtb9SUYZRMDz9+3E4E8zW2Q42rJzJ3K0+T5A1X7q38+b0/aN2g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
   
   <style>
-    /* CRITICAL SAFETY RULES: Prevents layout breaks and giant icons if Tailwind script is delayed */
+    /* SAFETY RULES */
     .hidden { display: none !important; }
-    svg { display: inline-block; vertical-align: middle; flex-shrink: 0; }
-
+    
     body {
       font-family: 'Plus Jakarta Sans', 'Anek Malayalam', sans-serif;
       -webkit-tap-highlight-color: transparent;
       padding-top: env(safe-area-inset-top);
       padding-bottom: env(safe-area-inset-bottom);
+      background-color: #f1f5f9;
     }
     .font-malayalam { font-family: 'Anek Malayalam', sans-serif; }
     .font-mono-code { font-family: 'JetBrains Mono', monospace; }
     body.modal-open { overflow: hidden; touch-action: none; }
+
+    /* CARD ELEVATION & POLISH */
+    .app-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1.25rem;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .app-card:active {
+      transform: scale(0.98);
+    }
 
     /* PRINT STYLES */
     @media print {
@@ -42,124 +54,106 @@
     }
   </style>
 </head>
-<body class="bg-slate-100/70 text-slate-800 antialiased min-h-screen selection:bg-indigo-100">
+<body class="text-gray-800 antialiased min-h-screen">
 
   <!-- ======================================================== -->
   <!-- PAGE 1: DASHBOARD HOME -->
   <!-- ======================================================== -->
   <div id="pageDashboard" class="min-h-screen flex flex-col justify-between max-w-md mx-auto">
     <div>
-      <header class="relative overflow-hidden bg-gradient-to-br from-indigo-700 via-indigo-600 to-violet-800 text-white pt-7 pb-8 px-6 rounded-b-[2.5rem] shadow-xl shadow-indigo-950/10">
-        <div class="relative z-10 flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="w-11 h-11 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center border border-white/20" style="width: 44px; height: 44px;">
-              <svg width="24" height="24" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-              </svg>
+      <!-- Attractive App Header -->
+      <header class="bg-gradient-to-r from-indigo-700 to-indigo-900 text-white p-5 rounded-b-3xl shadow-lg">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-2xl bg-white bg-opacity-20 flex items-center justify-center text-xl shadow-inner">
+              🏫
             </div>
             <div>
               <h1 class="text-lg font-extrabold tracking-tight">Mukkam Sub-District</h1>
-              <p class="text-[11px] text-indigo-200 font-medium">Educational Directory</p>
+              <p class="text-xs text-indigo-200 font-medium">Educational Directory</p>
             </div>
           </div>
 
-          <div class="flex items-center gap-2">
-            <div id="syncBadge" class="flex items-center gap-1.5 text-[10px] font-bold bg-white/10 backdrop-blur-md text-indigo-100 px-2.5 py-1 rounded-full border border-white/15">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-              Loading
-            </div>
+          <div id="syncBadge" class="text-xs font-semibold bg-indigo-950 bg-opacity-50 text-indigo-200 px-3 py-1 rounded-full border border-indigo-400 border-opacity-30 flex items-center space-x-1.5">
+            <span class="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></span>
+            <span>Loading</span>
           </div>
         </div>
       </header>
 
-      <main class="px-4 -mt-3 relative z-20 space-y-3">
+      <!-- Tiles -->
+      <main class="px-4 py-4 space-y-3">
         <!-- TILE 1: LP & UP -->
-        <button onclick="openTierPage('primary')" class="w-full bg-white p-4 rounded-3xl border border-slate-200/70 shadow-sm hover:shadow-md active:scale-[0.98] transition-all flex items-center justify-between text-left group">
-          <div class="flex items-center gap-3.5">
-            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center border border-indigo-100 group-hover:scale-105 transition-transform" style="width: 48px; height: 48px;">
-              <svg width="24" height="24" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
+        <button onclick="openTierPage('primary')" class="w-full app-card p-4 shadow-sm flex items-center justify-between text-left group">
+          <div class="flex items-center space-x-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl group-hover:scale-105 transition-transform">
+              🎒
             </div>
             <div>
-              <div class="flex items-center gap-2">
-                <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">LP & UP Schools</h3>
-                <span id="badgePrimary" class="text-[10px] font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full border border-indigo-100">--</span>
+              <div class="flex items-center space-x-2">
+                <h3 class="text-base font-extrabold text-gray-900">LP & UP Schools</h3>
+                <span id="badgePrimary" class="text-xs font-bold bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full">--</span>
               </div>
-              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 1–4 &bull; Classes 5–7 (LP/UP Only)</p>
+              <p class="text-xs text-gray-500 font-medium mt-0.5">Classes 1–4 &bull; Classes 5–7 (LP/UP Only)</p>
             </div>
           </div>
-          <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all" style="width: 32px; height: 32px;">
-            <svg width="16" height="16" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
-          </div>
+          <span class="text-gray-300 group-hover:text-indigo-600 font-bold text-xl pr-1">&rarr;</span>
         </button>
 
         <!-- TILE 2: HIGH SCHOOL -->
-        <button onclick="openTierPage('hs')" class="w-full bg-white p-4 rounded-3xl border border-slate-200/70 shadow-sm hover:shadow-md active:scale-[0.98] transition-all flex items-center justify-between text-left group">
-          <div class="flex items-center gap-3.5">
-            <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100 group-hover:scale-105 transition-transform" style="width: 48px; height: 48px;">
-              <svg width="24" height="24" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
-              </svg>
+        <button onclick="openTierPage('hs')" class="w-full app-card p-4 shadow-sm flex items-center justify-between text-left group">
+          <div class="flex items-center space-x-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-yellow-50 text-yellow-700 flex items-center justify-center text-2xl group-hover:scale-105 transition-transform">
+              🏛️
             </div>
             <div>
-              <div class="flex items-center gap-2">
-                <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">High Schools</h3>
-                <span id="badgeHS" class="text-[10px] font-bold bg-amber-50 text-amber-800 px-2 py-0.5 rounded-full border border-amber-100">--</span>
+              <div class="flex items-center space-x-2">
+                <h3 class="text-base font-extrabold text-gray-900">High Schools</h3>
+                <span id="badgeHS" class="text-xs font-bold bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full">--</span>
               </div>
-              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 8–10 (including attached 1–10 / 5–10 / 1–12)</p>
+              <p class="text-xs text-gray-500 font-medium mt-0.5">Classes 8–10 (including attached schools)</p>
             </div>
           </div>
-          <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-amber-500 group-hover:text-white transition-all" style="width: 32px; height: 32px;">
-            <svg width="16" height="16" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
-          </div>
+          <span class="text-gray-300 group-hover:text-yellow-600 font-bold text-xl pr-1">&rarr;</span>
         </button>
 
         <!-- TILE 3: HIGHER SECONDARY -->
-        <button onclick="openTierPage('hss')" class="w-full bg-white p-4 rounded-3xl border border-slate-200/70 shadow-sm hover:shadow-md active:scale-[0.98] transition-all flex items-center justify-between text-left group">
-          <div class="flex items-center gap-3.5">
-            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100 group-hover:scale-105 transition-transform" style="width: 48px; height: 48px;">
-              <svg width="24" height="24" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
-              </svg>
+        <button onclick="openTierPage('hss')" class="w-full app-card p-4 shadow-sm flex items-center justify-between text-left group">
+          <div class="flex items-center space-x-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl group-hover:scale-105 transition-transform">
+              📚
             </div>
             <div>
-              <div class="flex items-center gap-2">
-                <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">Higher Secondary</h3>
-                <span id="badgeHSS" class="text-[10px] font-bold bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full border border-purple-100">--</span>
+              <div class="flex items-center space-x-2">
+                <h3 class="text-base font-extrabold text-gray-900">Higher Secondary</h3>
+                <span id="badgeHSS" class="text-xs font-bold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">--</span>
               </div>
-              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 11–12 (HSS / VHSS)</p>
+              <p class="text-xs text-gray-500 font-medium mt-0.5">Classes 11–12 (HSS / VHSS)</p>
             </div>
           </div>
-          <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-purple-600 group-hover:text-white transition-all" style="width: 32px; height: 32px;">
-            <svg width="16" height="16" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
-          </div>
+          <span class="text-gray-300 group-hover:text-purple-600 font-bold text-xl pr-1">&rarr;</span>
         </button>
 
         <!-- TILE 4: TRAINING REPORT BUILDER -->
-        <button onclick="openReportPage()" class="w-full bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-700 text-white p-4 rounded-3xl shadow-md hover:shadow-lg active:scale-[0.98] transition-all flex items-center justify-between text-left group border border-emerald-500/30">
-          <div class="flex items-center gap-3.5">
-            <div class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-105 transition-transform" style="width: 48px; height: 48px;">
-              <svg width="24" height="24" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
+        <button onclick="openReportPage()" class="w-full p-4 rounded-2xl bg-gradient-to-r from-green-600 to-teal-700 text-white shadow-md flex items-center justify-between text-left group">
+          <div class="flex items-center space-x-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-white bg-opacity-20 flex items-center justify-center text-2xl">
+              📄
             </div>
             <div>
-              <div class="flex items-center gap-2">
-                <h3 class="text-sm font-extrabold tracking-tight">Training Absentee Report</h3>
-                <span class="text-[9px] font-extrabold bg-white/25 px-2 py-0.5 rounded-full uppercase tracking-wider">PDF</span>
+              <div class="flex items-center space-x-2">
+                <h3 class="text-base font-extrabold">Training Absentee Report</h3>
+                <span class="text-xs font-bold bg-white bg-opacity-25 px-2 py-0.5 rounded-full">PDF</span>
               </div>
-              <p class="text-[11px] text-emerald-100 font-medium mt-0.5">Malayalam Statement & List Generator</p>
+              <p class="text-xs text-green-100 font-medium mt-0.5">Malayalam Statement & List Generator</p>
             </div>
           </div>
-          <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-emerald-700 transition-all" style="width: 32px; height: 32px;">
-            <svg width="16" height="16" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
-          </div>
+          <span class="text-white opacity-60 group-hover:opacity-100 font-bold text-xl pr-1">&rarr;</span>
         </button>
       </main>
     </div>
 
-    <footer class="p-6 text-center text-xs text-slate-400 font-medium">
+    <footer class="p-6 text-center text-xs text-gray-400 font-semibold">
       AEO Mukkam &bull; Educational Sub-District
     </footer>
   </div>
@@ -169,61 +163,40 @@
   <!-- PAGE 2: SCHOOLS DIRECTORY -->
   <!-- ======================================================== -->
   <div id="pageList" class="hidden min-h-screen max-w-md mx-auto pb-16">
-    <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
-      <div class="px-4 pt-3 pb-3">
-        <div class="flex items-center justify-between mb-2.5">
-          <div class="flex items-center gap-3">
-            <button onclick="backToDashboard()" class="w-9 h-9 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 active:scale-90 flex items-center justify-center font-bold transition" style="width: 36px; height: 36px;">
-              <svg width="16" height="16" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
-            </button>
-            <div>
-              <h2 id="listTierTitle" class="text-base font-extrabold tracking-tight text-slate-900 leading-tight">Schools</h2>
-              <p id="listTierSubtitle" class="text-[10px] text-slate-500 font-medium">Directory</p>
-            </div>
+    <header class="sticky top-0 z-30 bg-indigo-700 text-white shadow-md">
+      <div class="px-4 py-3">
+        <div class="flex items-center space-x-3 mb-2.5">
+          <button onclick="backToDashboard()" class="w-9 h-9 rounded-full bg-white bg-opacity-15 hover:bg-opacity-25 flex items-center justify-center font-bold text-lg transition">
+            &larr;
+          </button>
+          <div>
+            <h2 id="listTierTitle" class="text-base font-extrabold leading-tight">Schools</h2>
+            <p id="listTierSubtitle" class="text-xs text-indigo-200">Directory</p>
           </div>
         </div>
 
-        <div class="relative">
-          <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 text-xs pointer-events-none">
-            <svg width="16" height="16" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-          </span>
-          <input id="searchInput" type="search" placeholder="Search school, code, staff name..." class="w-full pl-9 pr-3 py-2 text-xs bg-slate-100/90 text-slate-800 rounded-2xl border border-transparent focus:border-indigo-400 focus:bg-white focus:outline-none transition shadow-inner" />
-        </div>
+        <input id="searchInput" type="search" placeholder="Search school name, code, staff..." class="w-full px-3.5 py-2 text-xs bg-indigo-900 bg-opacity-50 text-white placeholder-indigo-300 rounded-xl border border-indigo-400 border-opacity-30 focus:outline-none focus:bg-indigo-950 transition" />
       </div>
     </header>
 
     <main class="px-4 pt-3 space-y-3">
-      <div class="bg-white p-3.5 rounded-3xl border border-slate-200/80 shadow-xs space-y-3">
+      <div class="bg-white p-3.5 rounded-2xl border border-gray-200 shadow-sm space-y-3">
         <div>
-          <div class="flex items-center justify-between mb-1.5 px-0.5">
-            <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Class Level</span>
-            <span id="activeLevelLabel" class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">ALL</span>
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold uppercase tracking-wider text-gray-400">Class Level</span>
+            <span id="activeLevelLabel" class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">ALL</span>
           </div>
           <div id="levelButtonGroup" class="flex flex-wrap gap-1.5"></div>
         </div>
 
-        <div class="pt-2 border-t border-slate-100">
-          <div class="flex items-center justify-between mb-1.5 px-0.5">
-            <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Management</span>
-            <span id="activeMgmtLabel" class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">ALL</span>
-          </div>
-          <div class="flex flex-wrap gap-1.5">
-            <button onclick="setMgmtFilter('all')" class="mgmt-btn px-3 py-1.5 text-xs rounded-xl font-bold bg-indigo-600 text-white shadow-xs transition" data-mgmt="all">All</button>
-            <button onclick="setMgmtFilter('govt_aided')" class="mgmt-btn px-3 py-1.5 text-xs rounded-xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition" data-mgmt="govt_aided">Govt & Aided</button>
-            <button onclick="setMgmtFilter('govt')" class="mgmt-btn px-3 py-1.5 text-xs rounded-xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition" data-mgmt="govt">Govt</button>
-            <button onclick="setMgmtFilter('aided')" class="mgmt-btn px-3 py-1.5 text-xs rounded-lg font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition" data-mgmt="aided">Aided</button>
-            <button onclick="setMgmtFilter('unaided')" class="mgmt-btn px-3 py-1.5 text-xs rounded-xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition" data-mgmt="unaided">Unaided</button>
-          </div>
-        </div>
-
-        <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs px-0.5">
-          <span id="filteredCount" class="font-extrabold text-slate-700">0 schools</span>
-          <button onclick="resetFilters()" class="text-[11px] font-bold text-indigo-600 hover:underline">Reset</button>
+        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs">
+          <span id="filteredCount" class="font-extrabold text-gray-700">0 schools</span>
+          <button onclick="resetFilters()" class="text-xs font-bold text-indigo-600 hover:underline">Reset Filters</button>
         </div>
       </div>
 
       <div id="schoolList" class="space-y-2.5"></div>
-      <div id="noResults" class="hidden text-center py-12 px-4 bg-white rounded-3xl border border-dashed border-slate-300 text-slate-400 text-xs">No schools found matching your selected filters.</div>
+      <div id="noResults" class="hidden text-center py-12 px-4 bg-white rounded-2xl border border-dashed border-gray-300 text-gray-400 text-xs">No schools found matching your search.</div>
     </main>
   </div>
 
@@ -232,51 +205,50 @@
   <!-- PAGE 3: TRAINING REPORT BUILDER -->
   <!-- ======================================================== -->
   <div id="pageReport" class="hidden min-h-screen max-w-md mx-auto pb-16">
-    <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
-      <div class="px-4 py-3 flex items-center gap-3">
-        <button onclick="backToDashboard()" class="w-9 h-9 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 active:scale-90 flex items-center justify-center font-bold transition" style="width: 36px; height: 36px;">
-          <svg width="16" height="16" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
+    <header class="sticky top-0 z-30 bg-green-700 text-white shadow-md">
+      <div class="px-4 py-3 flex items-center space-x-3">
+        <button onclick="backToDashboard()" class="w-9 h-9 rounded-full bg-white bg-opacity-15 hover:bg-opacity-25 flex items-center justify-center font-bold text-lg transition">
+          &larr;
         </button>
         <div>
-          <h2 class="text-base font-extrabold tracking-tight text-slate-900 leading-tight">Generate Training Report</h2>
-          <p class="text-[10px] text-slate-500 font-medium">Official Absentee Statement (Malayalam)</p>
+          <h2 class="text-base font-extrabold leading-tight">Training Absentee Report</h2>
+          <p class="text-xs text-green-200">Official Absentee Statement (Malayalam)</p>
         </div>
       </div>
     </header>
 
     <main class="px-4 pt-3 space-y-3.5">
-      <div class="bg-white p-4 rounded-3xl border border-slate-200/80 shadow-xs space-y-2">
+      <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-2">
         <div class="flex items-center justify-between">
-          <h3 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider">Report Description</h3>
-          <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">Anek Malayalam</span>
+          <h3 class="font-extrabold text-gray-900 text-xs uppercase tracking-wider">Report Description</h3>
+          <span class="text-xs font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">Anek Malayalam</span>
         </div>
-        <textarea id="reportIntroPara" rows="4" placeholder="വിവരണം ഇവിടെ നൽകുക..." class="w-full font-malayalam bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none leading-relaxed transition"></textarea>
+        <textarea id="reportIntroPara" rows="4" placeholder="വിവരണം ഇവിടെ നൽകുക... (ഉദാ: പരിശീലനത്തിൽ പങ്കെടുക്കാത്ത സ്കൂളുകളുടെ വിവരങ്ങൾ ചുവടെ ചേർക്കുന്നു:)" class="w-full font-malayalam bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-green-500 focus:bg-white outline-none leading-relaxed transition"></textarea>
       </div>
 
-      <div class="bg-white p-4 rounded-3xl border border-slate-200/80 shadow-xs space-y-2 text-xs">
-        <h3 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider">Select Category</h3>
+      <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-2 text-xs">
+        <h3 class="font-extrabold text-gray-900 text-xs uppercase tracking-wider">Select Category</h3>
         <div class="grid grid-cols-2 gap-2">
-          <button onclick="setReportTier('primary')" id="rTierPrimary" class="py-2.5 text-xs rounded-2xl font-bold bg-emerald-600 text-white shadow-xs transition">Primary (PSITC)</button>
-          <button onclick="setReportTier('hs')" id="rTierHS" class="py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">HS (SITC)</button>
-          <button onclick="setReportTier('hss')" id="rTierHSS" class="py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">HSS (HITC)</button>
-          <button onclick="setReportTier('lk')" id="rTierLK" class="py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">🪁 Little Kites</button>
+          <button onclick="setReportTier('primary')" id="rTierPrimary" class="py-2.5 text-xs rounded-xl font-bold bg-green-600 text-white shadow-sm transition">Primary (PSITC)</button>
+          <button onclick="setReportTier('hs')" id="rTierHS" class="py-2.5 text-xs rounded-xl font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">HS (SITC)</button>
+          <button onclick="setReportTier('hss')" id="rTierHSS" class="py-2.5 text-xs rounded-xl font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">HSS (HITC)</button>
+          <button onclick="setReportTier('lk')" id="rTierLK" class="py-2.5 text-xs rounded-xl font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">🪁 Little Kites</button>
         </div>
       </div>
 
-      <div class="bg-white p-4 rounded-3xl border border-slate-200/80 shadow-xs space-y-2.5 text-xs">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 px-0.5">
-          <h3 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider">Mark Absentees</h3>
-          <div class="flex items-center gap-2">
-            <button id="selectAllBtn" onclick="toggleSelectAll()" class="px-3 py-1 text-[11px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl active:scale-95 transition">Select All</button>
-            <span id="absentCountBadge" class="bg-red-50 text-red-600 font-bold px-2.5 py-0.5 rounded-full text-[11px] border border-red-100">0 Absent</span>
+      <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-2.5 text-xs">
+        <div class="flex items-center justify-between border-b border-gray-100 pb-2.5">
+          <h3 class="font-extrabold text-gray-900 text-xs uppercase tracking-wider">Mark Absentees</h3>
+          <div class="flex items-center space-x-2">
+            <button id="selectAllBtn" onclick="toggleSelectAll()" class="px-3 py-1 text-xs font-bold bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg active:scale-95 transition">Select All</button>
+            <span id="absentCountBadge" class="bg-red-50 text-red-600 font-bold px-2.5 py-0.5 rounded-full text-xs border border-red-100">0 Absent</span>
           </div>
         </div>
         <div id="absentChecklist" class="max-h-72 overflow-y-auto space-y-1.5 pt-1"></div>
       </div>
 
-      <button onclick="generatePDF()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-extrabold text-sm shadow-md active:scale-98 transition flex items-center justify-center gap-2">
-        <svg width="20" height="20" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
-        <span>Generate Clean PDF</span>
+      <button onclick="generatePDF()" class="w-full py-3.5 bg-green-600 hover:bg-green-700 text-white rounded-xl font-extrabold text-sm shadow-md active:scale-98 transition flex items-center justify-center space-x-2">
+        <span>🖨️ Generate Clean PDF</span>
       </button>
     </main>
   </div>
@@ -312,22 +284,19 @@
   <!-- ======================================================== -->
   <!-- MODAL: DETAILS POPUP -->
   <!-- ======================================================== -->
-  <div id="modalBackdrop" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-    <div id="modalCard" class="w-full sm:max-w-md bg-white rounded-t-[2.5rem] sm:rounded-3xl max-h-[85vh] flex flex-col shadow-2xl transform transition-transform duration-300 translate-y-full sm:translate-y-0 sm:scale-95 border border-slate-100">
-      <div class="w-full flex justify-center pt-3.5 pb-1 cursor-pointer sm:hidden" onclick="closeModal()">
-        <div class="w-12 h-1.5 bg-slate-200 rounded-full" style="width: 48px; height: 6px;"></div>
-      </div>
-      <div class="px-6 pt-3 pb-4 border-b border-slate-100 flex items-start justify-between gap-3">
+  <div id="modalBackdrop" class="fixed inset-0 z-50 bg-black bg-opacity-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div id="modalCard" class="w-full sm:max-w-md bg-white rounded-t-3xl sm:rounded-3xl max-h-85vh flex flex-col shadow-2xl border border-gray-100">
+      <div class="px-5 pt-4 pb-3 border-b border-gray-100 flex items-start justify-between">
         <div>
-          <div class="flex flex-wrap items-center gap-1.5 mb-1.5" id="modalBadges"></div>
-          <h2 id="modalName" class="text-base font-extrabold text-slate-900 leading-tight"></h2>
-          <p id="modalSub" class="text-xs text-slate-500 mt-0.5 font-medium"></p>
+          <div class="flex items-center space-x-1.5 mb-1" id="modalBadges"></div>
+          <h2 id="modalName" class="text-base font-extrabold text-gray-900 leading-tight"></h2>
+          <p id="modalSub" class="text-xs text-gray-500 mt-0.5 font-medium"></p>
         </div>
-        <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold flex items-center justify-center text-sm transition" style="width: 32px; height: 32px;">&times;</button>
+        <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 font-bold flex items-center justify-center text-sm transition">&times;</button>
       </div>
-      <div id="modalContacts" class="p-6 overflow-y-auto space-y-3.5 flex-1 text-xs"></div>
-      <div class="p-4 bg-slate-50 border-t border-slate-100">
-        <button onclick="closeModal()" class="w-full py-3 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold rounded-2xl active:scale-98 transition">Close</button>
+      <div id="modalContacts" class="p-5 overflow-y-auto space-y-3 text-xs" style="max-height: 60vh;"></div>
+      <div class="p-4 bg-gray-50 border-t border-gray-100">
+        <button onclick="closeModal()" class="w-full py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs font-bold rounded-xl active:scale-98 transition">Close</button>
       </div>
     </div>
   </div>
@@ -337,32 +306,30 @@
   <!-- JAVASCRIPT & APP LOGIC -->
   <!-- ======================================================== -->
   <script>
-    // Live Deployment URL
     const API_URL = "https://script.google.com/macros/s/AKfycbwbWD044IQa31gHQ12giCVOJ4ztuRhvxAzwZaaX__3xcn90rLONsVCsyayUYxHUN1Bl/exec";
 
     let rawSchools = [];
     let currentTier = null;
     let selectedLevel = 'all';
-    let selectedMgmt = 'all';
 
     let reportTier = 'primary';
     let absentSchoolCodes = new Set();
 
     async function loadData() {
-      // 1. Instant local storage retrieval (sub-second)
+      // 1. Instant local cache (loads in 0.05 seconds)
       const cachedJson = localStorage.getItem('mukkam_directory_cache');
       if (cachedJson) {
         try {
           rawSchools = JSON.parse(cachedJson);
           updateCounts();
           if (currentTier) renderCards();
-          document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Ready`;
+          document.getElementById('syncBadge').innerHTML = `<span class="w-2 h-2 rounded-full bg-green-400"></span><span>Ready</span>`;
         } catch (e) {
-          console.warn("Cache parse failed", e);
+          console.warn("Cache parse error", e);
         }
       }
 
-      // 2. Silent background fetch
+      // 2. Background sync
       try {
         const res = await fetch(API_URL).then(r => r.json());
         if (res.status === 'success' && res.data && Array.isArray(res.data.schools)) {
@@ -370,31 +337,26 @@
           localStorage.setItem('mukkam_directory_cache', JSON.stringify(rawSchools));
           updateCounts();
           if (currentTier) renderCards();
-          document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Live`;
+          document.getElementById('syncBadge').innerHTML = `<span class="w-2 h-2 rounded-full bg-green-400"></span><span>Live</span>`;
         }
       } catch (err) {
         if (!cachedJson) {
-          document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Offline`;
+          document.getElementById('syncBadge').innerHTML = `<span class="w-2 h-2 rounded-full bg-gray-400"></span><span>Offline</span>`;
         }
       }
     }
 
     // ==========================================
-    // PRECISE TIER SEPARATION LOGIC
+    // TIER SEPARATION LOGIC
     // ==========================================
     function isHighSchoolOrHigher(school) {
       const lvl = (school.level || '').replace(/\s+/g, '');
       const name = (school.name || '').toUpperCase();
       
-      // If classes reach 10 or 12, it is a High School / HSS
       if (lvl.includes('10') || lvl.includes('12')) return true;
-
-      // School name designations for High School / Higher Secondary
       if (/\b(GHSS|HSS|GHS|HS|VHSS)\b/.test(name)) return true;
       if (name.includes('HIGH SCHOOL') || name.includes('HIGHER SECONDARY')) return true;
       if (name.includes(' H S') || name.includes(' G H S')) return true;
-
-      // Staff indicators
       if (school.sitc?.name || school.hitc?.name || school.principal?.name) return true;
 
       return false;
@@ -405,34 +367,14 @@
       const lvl = (school.level || '').replace(/\s+/g, '');
       const name = (school.name || '').toUpperCase();
 
-      // 1. PRIMARY: ONLY pure LP and UP schools (never High Schools / HSS)
-      if (tier === 'primary') {
-        return !isHS;
-      }
-
-      // 2. HIGH SCHOOL: Must be an HS or HSS (classes 8-10, 1-10, 5-10, 1-12, 5-12, 8-12)
-      if (tier === 'hs') {
-        return isHS;
-      }
-
-      // 3. HIGHER SECONDARY: Only schools with classes 11-12
+      if (tier === 'primary') return !isHS;
+      if (tier === 'hs') return isHS;
       if (tier === 'hss') {
         return lvl.includes('12') || name.includes('HSS') || name.includes('HIGHER SECONDARY') || Boolean(school.principal?.name) || Boolean(school.hitc?.name);
       }
-
-      if (tier === 'lk') {
-        return Boolean(school.lkMentors && school.lkMentors.length > 0);
-      }
+      if (tier === 'lk') return Boolean(school.lkMentors && school.lkMentors.length > 0);
 
       return false;
-    }
-
-    function getManagementCategory(mgmtString) {
-      const s = (mgmtString || '').toLowerCase().trim();
-      if (s.includes('unaid')) return 'unaided';
-      if (s.includes('gov')) return 'govt';
-      if (s.includes('aid')) return 'aided';
-      return 'unaided';
     }
 
     function updateCounts() {
@@ -444,12 +386,11 @@
     function openTierPage(tier) {
       currentTier = tier;
       selectedLevel = 'all';
-      selectedMgmt = 'all';
       document.getElementById('searchInput').value = '';
 
       const labels = {
         primary: { title: 'LP & UP Schools', sub: 'Classes 1–4 & Classes 5–7 (LP/UP Only)' },
-        hs: { title: 'High Schools', sub: 'Classes 8–10 (including attached 1–10 / 5–10 / 1–12)' },
+        hs: { title: 'High Schools', sub: 'Classes 8–10 (including attached schools)' },
         hss: { title: 'Higher Secondary', sub: 'Classes 11–12 (HSS / VHSS)' }
       };
 
@@ -457,8 +398,6 @@
       document.getElementById('listTierSubtitle').textContent = labels[tier].sub;
 
       renderLevelButtons(tier);
-      updateButtonUI();
-
       document.getElementById('pageDashboard').classList.add('hidden');
       document.getElementById('pageReport').classList.add('hidden');
       document.getElementById('pageList').classList.remove('hidden');
@@ -484,22 +423,14 @@
       reportTier = tier;
       const btns = { primary: document.getElementById('rTierPrimary'), hs: document.getElementById('rTierHS'), hss: document.getElementById('rTierHSS'), lk: document.getElementById('rTierLK') };
       Object.keys(btns).forEach(k => {
-        btns[k].className = (k === tier) ? 'py-2.5 text-xs rounded-2xl font-bold bg-emerald-600 text-white shadow-xs transition' : 'py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+        btns[k].className = (k === tier) ? 'py-2.5 text-xs rounded-xl font-bold bg-green-600 text-white shadow-sm transition' : 'py-2.5 text-xs rounded-xl font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200 transition';
       });
       renderChecklist();
     }
 
     function getReportSchools() {
       const schools = rawSchools.filter(s => matchSchoolTier(s, reportTier));
-      schools.sort((a, b) => {
-        const mgmtA = getManagementCategory(a.management);
-        const mgmtB = getManagementCategory(b.management);
-        const isGA_A = (mgmtA === 'govt' || mgmtA === 'aided');
-        const isGA_B = (mgmtB === 'govt' || mgmtB === 'aided');
-        if (isGA_A && !isGA_B) return -1;
-        if (!isGA_A && isGA_B) return 1;
-        return (parseInt(cleanDigits(a.code), 10) || 0) - (parseInt(cleanDigits(b.code), 10) || 0);
-      });
+      schools.sort((a, b) => (parseInt(cleanDigits(a.code), 10) || 0) - (parseInt(cleanDigits(b.code), 10) || 0));
       return schools;
     }
 
@@ -511,7 +442,7 @@
       schools.forEach(s => {
         const isChecked = absentSchoolCodes.has(s.code);
         const row = document.createElement('label');
-        row.className = `flex items-center justify-between p-3 rounded-2xl border transition cursor-pointer select-none ${isChecked ? 'bg-red-50/80 border-red-200 shadow-2xs' : 'bg-slate-50/80 border-slate-200/70 hover:bg-white'}`;
+        row.className = `flex items-center justify-between p-3 rounded-xl border transition cursor-pointer select-none ${isChecked ? 'bg-red-50 border-red-200' : 'bg-gray-50 border-gray-200 hover:bg-white'}`;
         
         let incharge = '';
         if (reportTier === 'primary') incharge = s.psitc?.name ? `PSITC: ${s.psitc.name}` : (s.hm?.name ? `HM: ${s.hm.name}` : '');
@@ -520,17 +451,17 @@
         else if (reportTier === 'lk') incharge = s.lkMentors?.length ? `LK: ${s.lkMentors.map(m => m.name).join(', ')}` : '';
 
         row.innerHTML = `
-          <div class="flex items-center gap-3">
-            <input type="checkbox" class="w-4 h-4 text-red-600 rounded-lg border-slate-300 focus:ring-red-500 accent-red-600" ${isChecked ? 'checked' : ''} onchange="toggleAbsent('${s.code}')" />
+          <div class="flex items-center space-x-3">
+            <input type="checkbox" class="w-4 h-4 text-red-600 rounded border-gray-300" ${isChecked ? 'checked' : ''} onchange="toggleAbsent('${s.code}')" />
             <div>
-              <div class="flex items-center gap-1.5">
-                <span class="font-extrabold text-slate-900 text-xs">${s.name}</span>
-                <span class="text-[10px] font-mono-code text-slate-400">#${s.code}</span>
+              <div class="flex items-center space-x-1.5">
+                <span class="font-extrabold text-gray-900 text-xs">${s.name}</span>
+                <span class="text-xs font-mono-code text-gray-400">#${s.code}</span>
               </div>
-              ${incharge ? `<p class="text-[10px] text-slate-500 font-medium mt-0.5">${incharge}</p>` : ''}
+              ${incharge ? `<p class="text-xs text-gray-500 font-medium mt-0.5">${incharge}</p>` : ''}
             </div>
           </div>
-          <span class="text-[10px] px-2 py-0.5 rounded-full font-extrabold tracking-wide ${isChecked ? 'bg-red-100 text-red-700' : 'bg-slate-200/80 text-slate-600'}">
+          <span class="text-xs px-2 py-0.5 rounded-full font-extrabold ${isChecked ? 'bg-red-100 text-red-700' : 'bg-gray-200 text-gray-600'}">
             ${isChecked ? 'ABSENT' : 'Present'}
           </span>
         `;
@@ -561,7 +492,7 @@
       const allSelected = totalCount > 0 && schools.every(s => absentSchoolCodes.has(s.code));
 
       selectAllBtn.textContent = allSelected ? 'Deselect All' : 'Select All';
-      selectAllBtn.className = allSelected ? 'px-3 py-1 text-[11px] font-bold bg-red-100 hover:bg-red-200 text-red-700 rounded-xl active:scale-95 transition' : 'px-3 py-1 text-[11px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl active:scale-95 transition';
+      selectAllBtn.className = allSelected ? 'px-3 py-1 text-xs font-bold bg-red-100 text-red-700 rounded-lg active:scale-95 transition' : 'px-3 py-1 text-xs font-bold bg-gray-100 text-gray-700 rounded-lg active:scale-95 transition';
       badge.textContent = `${absentSchoolCodes.size} Absent`;
     }
 
@@ -601,38 +532,23 @@
       else if (tier === 'hss') buttons = [{ id: 'all', label: 'All HSS' }, { id: 'hss', label: 'HSS (11–12)' }];
 
       btnGroup.innerHTML = buttons.map(b => `
-        <button onclick="setLevelFilter('${b.id}')" class="lvl-btn px-3 py-1.5 text-xs rounded-xl font-semibold transition ${selectedLevel === b.id ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}" data-lvl="${b.id}">${b.label}</button>
+        <button onclick="setLevelFilter('${b.id}')" class="lvl-btn px-3 py-1.5 text-xs rounded-xl font-semibold transition ${selectedLevel === b.id ? 'bg-indigo-600 text-white font-bold' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}" data-lvl="${b.id}">${b.label}</button>
       `).join('');
     }
 
     function setLevelFilter(lvl) {
       selectedLevel = lvl;
       document.querySelectorAll('.lvl-btn').forEach(btn => {
-        btn.className = (btn.getAttribute('data-lvl') === lvl) ? 'lvl-btn px-3 py-1.5 text-xs rounded-xl font-bold bg-indigo-600 text-white shadow-xs transition' : 'lvl-btn px-3 py-1.5 text-xs rounded-xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+        btn.className = (btn.getAttribute('data-lvl') === lvl) ? 'lvl-btn px-3 py-1.5 text-xs rounded-xl font-bold bg-indigo-600 text-white shadow-sm' : 'lvl-btn px-3 py-1.5 text-xs rounded-xl font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200';
       });
       document.getElementById('activeLevelLabel').textContent = lvl.toUpperCase();
       renderCards();
     }
 
-    function setMgmtFilter(mgmt) {
-      selectedMgmt = mgmt;
-      document.querySelectorAll('.mgmt-btn').forEach(btn => {
-        btn.className = (btn.getAttribute('data-mgmt') === mgmt) ? 'mgmt-btn px-3 py-1.5 text-xs rounded-xl font-bold bg-indigo-600 text-white shadow-xs transition' : 'mgmt-btn px-3 py-1.5 text-xs rounded-xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
-      });
-      document.getElementById('activeMgmtLabel').textContent = mgmt.replace('_', ' & ').toUpperCase();
-      renderCards();
-    }
-
     function resetFilters() {
       setLevelFilter('all');
-      setMgmtFilter('all');
       document.getElementById('searchInput').value = '';
       renderCards();
-    }
-
-    function updateButtonUI() {
-      setLevelFilter('all');
-      setMgmtFilter('all');
     }
 
     function backToDashboard() {
@@ -656,7 +572,6 @@
       let filtered = rawSchools.filter(school => {
         if (!matchSchoolTier(school, currentTier)) return false;
         const lvl = (school.level || '').trim();
-        const mgmtType = getManagementCategory(school.management);
 
         if (currentTier === 'primary') {
           if (selectedLevel === 'lp' && !(lvl.includes('1 - 4') || lvl.includes('1 - 5') || lvl === '1-4')) return false;
@@ -670,24 +585,11 @@
           if (selectedLevel === 'hss' && !lvl.includes('12')) return false;
         }
 
-        if (selectedMgmt === 'govt' && mgmtType !== 'govt') return false;
-        if (selectedMgmt === 'aided' && mgmtType !== 'aided') return false;
-        if (selectedMgmt === 'govt_aided' && mgmtType !== 'govt' && mgmtType !== 'aided') return false;
-        if (selectedMgmt === 'unaided' && mgmtType !== 'unaided') return false;
-
         if (!q) return true;
         return school.name.toLowerCase().includes(q) || school.code.toLowerCase().includes(q);
       });
 
-      filtered.sort((a, b) => {
-        const mgmtA = getManagementCategory(a.management);
-        const mgmtB = getManagementCategory(b.management);
-        const isGA_A = (mgmtA === 'govt' || mgmtA === 'aided');
-        const isGA_B = (mgmtB === 'govt' || mgmtB === 'aided');
-        if (isGA_A && !isGA_B) return -1;
-        if (!isGA_A && isGA_B) return 1;
-        return (parseInt(cleanDigits(a.code), 10) || 0) - (parseInt(cleanDigits(b.code), 10) || 0);
-      });
+      filtered.sort((a, b) => (parseInt(cleanDigits(a.code), 10) || 0) - (parseInt(cleanDigits(b.code), 10) || 0));
 
       countEl.textContent = `${filtered.length} schools`;
       listEl.innerHTML = '';
@@ -700,40 +602,34 @@
 
       filtered.forEach(school => {
         const card = document.createElement('div');
-        card.className = "bg-white p-4 rounded-3xl border border-slate-200/80 shadow-xs hover:border-indigo-300 active:scale-[0.99] transition cursor-pointer relative";
+        card.className = "app-card p-4 shadow-sm hover:border-indigo-400 cursor-pointer";
         card.onclick = () => openModal(school);
-
-        const mgmtType = getManagementCategory(school.management);
-        const mgmtColor = mgmtType === 'govt' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : mgmtType === 'aided' ? 'bg-blue-50 text-blue-700 border-blue-100' : 'bg-amber-50 text-amber-700 border-amber-100';
 
         let rolePreview = '';
         if (currentTier === 'primary') {
-          const hmText = school.hm?.name ? `<span class="text-slate-600 truncate max-w-[150px]">HM: <strong class="text-slate-800">${school.hm.name}</strong></span>` : '';
-          const psitcText = school.psitc?.name ? `<span class="text-indigo-600 font-bold truncate max-w-[140px]">PSITC: ${school.psitc.name}</span>` : '';
+          const hmText = school.hm?.name ? `<span class="text-gray-600 truncate max-w-xs">HM: <strong class="text-gray-800">${school.hm.name}</strong></span>` : '';
+          const psitcText = school.psitc?.name ? `<span class="text-indigo-600 font-bold truncate">PSITC: ${school.psitc.name}</span>` : '';
           if (hmText || psitcText) {
-            rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">${hmText || '<span></span>'}${psitcText}</div>`;
+            rolePreview = `<div class="mt-3 pt-2.5 border-t border-gray-100 flex items-center justify-between text-xs">${hmText || '<span></span>'}${psitcText}</div>`;
           }
         } else if (currentTier === 'hs') {
-          const sitcText = school.sitc?.name ? `<span class="text-slate-600 truncate max-w-[150px]">SITC: <strong class="text-slate-800">${school.sitc.name}</strong></span>` : '';
+          const sitcText = school.sitc?.name ? `<span class="text-gray-600 truncate max-w-xs">SITC: <strong class="text-gray-800">${school.sitc.name}</strong></span>` : '';
           const lkCount = school.lkMentors ? school.lkMentors.length : 0;
-          rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">${sitcText || '<span></span>'}<span class="${lkCount > 0 ? 'text-amber-700 font-extrabold' : 'text-slate-400'}">${lkCount > 0 ? `🪁 ${lkCount} LK Mentors` : ''}</span></div>`;
+          rolePreview = `<div class="mt-3 pt-2.5 border-t border-gray-100 flex items-center justify-between text-xs">${sitcText || '<span></span>'}<span class="${lkCount > 0 ? 'text-yellow-700 font-extrabold' : 'text-gray-400'}">${lkCount > 0 ? `🪁 ${lkCount} LK Mentors` : ''}</span></div>`;
         } else if (currentTier === 'hss') {
-          const pText = school.principal?.name ? `<span class="text-slate-600 truncate max-w-[150px]">Principal: <strong class="text-slate-800">${school.principal.name}</strong></span>` : '';
-          const hitcText = school.hitc?.name ? `<span class="text-purple-600 font-bold truncate max-w-[140px]">HITC: ${school.hitc.name}</span>` : '';
+          const pText = school.principal?.name ? `<span class="text-gray-600 truncate max-w-xs">Principal: <strong class="text-gray-800">${school.principal.name}</strong></span>` : '';
+          const hitcText = school.hitc?.name ? `<span class="text-purple-600 font-bold truncate">HITC: ${school.hitc.name}</span>` : '';
           if (pText || hitcText) {
-            rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">${pText || '<span></span>'}${hitcText}</div>`;
+            rolePreview = `<div class="mt-3 pt-2.5 border-t border-gray-100 flex items-center justify-between text-xs">${pText || '<span></span>'}${hitcText}</div>`;
           }
         }
 
         card.innerHTML = `
           <div class="flex items-center justify-between mb-1.5">
-            <div class="flex items-center gap-1.5">
-              <span class="text-[10px] font-mono-code font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-lg">#${school.code}</span>
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${mgmtColor}">${school.management || 'School'}</span>
-            </div>
+            <span class="text-xs font-mono-code font-bold bg-gray-100 text-gray-700 px-2 py-0.5 rounded-lg">#${school.code}</span>
           </div>
-          <h3 class="text-sm font-extrabold text-slate-900 leading-snug tracking-tight">${school.name}</h3>
-          <p class="text-[11px] text-slate-400 font-medium mt-0.5">Classes ${school.level || '-'}</p>
+          <h3 class="text-sm font-extrabold text-gray-900 leading-snug">${school.name}</h3>
+          <p class="text-xs text-gray-400 font-medium mt-0.5">Classes ${school.level || '-'}</p>
           ${rolePreview}
         `;
 
@@ -750,18 +646,18 @@
       const waNumber = digits.length === 10 ? '91' + digits : digits;
 
       return `
-        <div class="bg-slate-50/90 p-3.5 rounded-2xl border border-slate-200/70">
+        <div class="bg-gray-50 p-3 rounded-xl border border-gray-200">
           <div class="flex items-center justify-between mb-1">
-            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">${roleTitle}</span>
-            ${badge ? `<span class="bg-indigo-100/70 text-indigo-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full">${badge}</span>` : ''}
+            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">${roleTitle}</span>
+            ${badge ? `<span class="bg-indigo-100 text-indigo-700 text-xs font-extrabold px-2 py-0.5 rounded-full">${badge}</span>` : ''}
           </div>
-          <p class="font-extrabold text-slate-900 text-xs">${cleanName}</p>
-          ${cleanPhone ? `<p class="font-mono-code text-[11px] text-slate-500 mt-0.5">${cleanPhone}</p>` : ''}
+          <p class="font-extrabold text-gray-900 text-xs">${cleanName}</p>
+          ${cleanPhone ? `<p class="font-mono-code text-xs text-gray-500 mt-0.5">${cleanPhone}</p>` : ''}
 
           ${digits ? `
           <div class="grid grid-cols-2 gap-2 mt-2.5">
-            <a href="tel:${digits}" class="flex items-center justify-center gap-1.5 py-2 bg-white border border-slate-200 rounded-xl text-indigo-600 font-bold text-xs shadow-2xs active:bg-slate-100 transition">Call</a>
-            <a href="https://wa.me/${waNumber}" target="_blank" class="flex items-center justify-center gap-1.5 py-2 bg-emerald-600 text-white rounded-xl font-bold text-xs shadow-2xs active:bg-emerald-700 transition">WhatsApp</a>
+            <a href="tel:${digits}" class="flex items-center justify-center py-2 bg-white border border-gray-200 rounded-xl text-indigo-600 font-bold text-xs shadow-sm active:bg-gray-100 transition">📞 Call</a>
+            <a href="https://wa.me/${waNumber}" target="_blank" class="flex items-center justify-center py-2 bg-green-600 text-white rounded-xl font-bold text-xs shadow-sm active:bg-green-700 transition">💬 WhatsApp</a>
           </div>` : ''}
         </div>
       `;
@@ -770,11 +666,11 @@
     function openModal(s) {
       document.body.classList.add('modal-open');
       document.getElementById('modalBadges').innerHTML = `
-        <span class="text-[10px] font-mono-code font-bold px-2 py-0.5 rounded-lg bg-slate-100 text-slate-700">#${s.code}</span>
-        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">${s.management}</span>
+        <span class="text-xs font-mono-code font-bold px-2 py-0.5 rounded-lg bg-gray-100 text-gray-700">#${s.code}</span>
+        <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">Classes: ${s.level || '-'}</span>
       `;
       document.getElementById('modalName').textContent = s.name;
-      document.getElementById('modalSub').textContent = `Classes: ${s.level || 'Standard'} • Mukkam Educational Sub-District`;
+      document.getElementById('modalSub').textContent = `Mukkam Educational Sub-District`;
 
       let contactsHtml = '';
       if (currentTier === 'primary') {
@@ -793,18 +689,13 @@
         if (s.hitc?.name || s.hitc?.phone) contactsHtml += renderContactBox('Higher Secondary IT Coordinator', s.hitc.name, s.hitc.phone, 'HITC');
       }
 
-      document.getElementById('modalContacts').innerHTML = contactsHtml || '<div class="text-center text-slate-400 py-8 font-medium">No contact numbers entered.</div>';
-      const backdrop = document.getElementById('modalBackdrop');
-      const card = document.getElementById('modalCard');
-      backdrop.classList.remove('hidden');
-      setTimeout(() => { card.classList.remove('translate-y-full', 'sm:scale-95'); card.classList.add('translate-y-0', 'sm:scale-100'); }, 10);
+      document.getElementById('modalContacts').innerHTML = contactsHtml || '<div class="text-center text-gray-400 py-8 font-medium">No contact numbers entered.</div>';
+      document.getElementById('modalBackdrop').classList.remove('hidden');
     }
 
     function closeModal() {
-      const card = document.getElementById('modalCard');
-      card.classList.remove('translate-y-0', 'sm:scale-100');
-      card.classList.add('translate-y-full', 'sm:scale-95');
-      setTimeout(() => { document.getElementById('modalBackdrop').classList.add('hidden'); document.body.classList.remove('modal-open'); }, 250);
+      document.getElementById('modalBackdrop').classList.add('hidden');
+      document.body.classList.remove('modal-open');
     }
 
     document.getElementById('modalBackdrop').addEventListener('click', (e) => {
