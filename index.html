@@ -33,7 +33,7 @@
     /* PRINT STYLES */
     @media print {
       body { background: #ffffff !important; color: #000000 !important; margin: 0 !important; padding: 0 !important; }
-      #pageDashboard, #pageList, #pageReport, #modalBackdrop, #adminAuthModal, #editSchoolModal, header { display: none !important; }
+      #pageDashboard, #pageList, #pageReport, #modalBackdrop, header { display: none !important; }
       #printArea { display: block !important; visibility: visible !important; width: 100% !important; margin: 0 !important; padding: 25px !important; font-family: 'Anek Malayalam', 'Plus Jakarta Sans', sans-serif !important; }
     }
   </style>
@@ -60,26 +60,15 @@
           </div>
 
           <div class="flex items-center gap-2">
-            <button onclick="toggleAdminModal()" class="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md flex items-center justify-center transition active:scale-95 border border-white/20" title="Admin">
-              <span id="adminLockIcon">🔒</span>
-            </button>
             <div id="syncBadge" class="flex items-center gap-1.5 text-[10px] font-bold bg-white/10 backdrop-blur-md text-indigo-100 px-2.5 py-1 rounded-full border border-white/15">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-              Live
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+              Loading
             </div>
           </div>
         </div>
       </header>
 
       <main class="px-4 -mt-3 relative z-20 space-y-3">
-        <div id="adminModeBanner" class="hidden bg-amber-500 text-white px-4 py-2.5 rounded-2xl flex items-center justify-between shadow-xs">
-          <span class="text-xs font-bold">⚡ Admin Mode Active</span>
-          <div class="flex items-center gap-2">
-            <button onclick="openAddSchoolModal()" class="px-2.5 py-1 bg-white text-amber-900 rounded-lg text-[11px] font-extrabold active:scale-95 transition">+ Add School</button>
-            <button onclick="logoutAdmin()" class="text-[11px] underline opacity-90">Logout</button>
-          </div>
-        </div>
-
         <!-- TILE 1: LP & UP -->
         <button onclick="openTierPage('primary')" class="w-full bg-white p-4 rounded-3xl border border-slate-200/70 shadow-sm hover:shadow-md active:scale-[0.98] transition-all flex items-center justify-between text-left group">
           <div class="flex items-center gap-3.5">
@@ -190,8 +179,6 @@
               <p id="listTierSubtitle" class="text-[10px] text-slate-500 font-medium">Directory</p>
             </div>
           </div>
-          
-          <button id="adminAddSchoolBtn" onclick="openAddSchoolModal()" class="hidden px-3 py-1.5 bg-indigo-600 text-white rounded-xl text-xs font-bold active:scale-95 transition shadow-xs">+ Add</button>
         </div>
 
         <div class="relative">
@@ -294,116 +281,6 @@
 
 
   <!-- ======================================================== -->
-  <!-- MODAL: ADMIN LOGIN -->
-  <!-- ======================================================== -->
-  <div id="adminAuthModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
-    <div class="w-full max-w-xs bg-white rounded-3xl shadow-2xl p-6 space-y-4 border border-slate-100">
-      <div class="text-center">
-        <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 mx-auto flex items-center justify-center text-xl mb-2">🔐</div>
-        <h3 class="text-base font-extrabold text-slate-900">Admin Login</h3>
-        <p class="text-xs text-slate-400 mt-0.5">Enter PIN to edit schools</p>
-      </div>
-
-      <div>
-        <input id="adminPinInput" type="password" maxlength="8" placeholder="Enter PIN" class="w-full text-center text-lg tracking-widest font-mono-code bg-slate-50 border border-slate-200 rounded-2xl py-2.5 focus:border-indigo-500 focus:outline-none" />
-      </div>
-
-      <div class="flex gap-2">
-        <button onclick="closeAdminModal()" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">Cancel</button>
-        <button id="authBtnSubmit" onclick="loginAdmin()" class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition shadow-xs">Authorize</button>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ======================================================== -->
-  <!-- MODAL: ADD / EDIT SCHOOL -->
-  <!-- ======================================================== -->
-  <div id="editSchoolModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-    <div class="w-full sm:max-w-md bg-white rounded-t-[2.5rem] sm:rounded-3xl max-h-[90vh] flex flex-col shadow-2xl border border-slate-100">
-      <div class="px-6 pt-4 pb-3 border-b border-slate-100 flex items-center justify-between">
-        <h2 id="editModalTitle" class="text-base font-extrabold text-slate-900">Edit School</h2>
-        <button onclick="closeEditModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 flex items-center justify-center text-sm font-bold">&times;</button>
-      </div>
-
-      <form id="schoolForm" onsubmit="handleSchoolSave(event)" class="p-6 overflow-y-auto space-y-3 flex-1 text-xs">
-        <input type="hidden" id="formAction" value="add" />
-        
-        <div>
-          <label class="block font-bold text-slate-500 mb-1">School Code *</label>
-          <input id="formCode" required type="text" placeholder="e.g. 47301" class="w-full font-mono-code bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-indigo-500" />
-        </div>
-
-        <div>
-          <label class="block font-bold text-slate-500 mb-1">School Name *</label>
-          <input id="formName" required type="text" placeholder="e.g. GLPS Poolappoyil" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-indigo-500" />
-        </div>
-
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block font-bold text-slate-500 mb-1">Management</label>
-            <select id="formMgmt" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 outline-none">
-              <option value="Government">Government</option>
-              <option value="Aided">Aided</option>
-              <option value="Unaided Recognised">Unaided Recognised</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-bold text-slate-500 mb-1">Level / Classes</label>
-            <input id="formLevel" type="text" placeholder="e.g. 1 - 4" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 outline-none" />
-          </div>
-        </div>
-
-        <div class="pt-2 border-t border-slate-100 space-y-2.5">
-          <p class="font-extrabold text-indigo-600 text-[11px] uppercase tracking-wider">Personnel Contacts</p>
-          
-          <div class="grid grid-cols-2 gap-2">
-            <input id="formHMName" type="text" placeholder="HM Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-            <input id="formHMPhone" type="text" placeholder="HM Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-          </div>
-
-          <div class="grid grid-cols-2 gap-2">
-            <input id="formPrincipalName" type="text" placeholder="Principal Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-            <input id="formPrincipalPhone" type="text" placeholder="Principal Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-          </div>
-
-          <div class="grid grid-cols-2 gap-2">
-            <input id="formPSITCName" type="text" placeholder="PSITC Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-            <input id="formPSITCPhone" type="text" placeholder="PSITC Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-          </div>
-
-          <div class="grid grid-cols-2 gap-2">
-            <input id="formSITCName" type="text" placeholder="SITC Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-            <input id="formSITCPhone" type="text" placeholder="SITC Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-          </div>
-
-          <div class="grid grid-cols-2 gap-2">
-            <input id="formHITCName" type="text" placeholder="HITC Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-            <input id="formHITCPhone" type="text" placeholder="HITC Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-          </div>
-
-          <div class="grid grid-cols-2 gap-2">
-            <input id="formLK1Name" type="text" placeholder="LK Mentor 1 Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-            <input id="formLK1Phone" type="text" placeholder="LK Mentor 1 Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-          </div>
-
-          <div class="grid grid-cols-2 gap-2">
-            <input id="formLK2Name" type="text" placeholder="LK Mentor 2 Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-            <input id="formLK2Phone" type="text" placeholder="LK Mentor 2 Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
-          </div>
-        </div>
-
-        <div class="pt-3">
-          <button type="submit" id="saveSchoolBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold text-xs shadow-md active:scale-98 transition">
-            Save to Google Sheet
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-
-  <!-- ======================================================== -->
   <!-- PRINT AREA: PARAGRAPH + TABLE ONLY -->
   <!-- ======================================================== -->
   <div id="printArea" style="display: none;">
@@ -458,6 +335,7 @@
   <!-- JAVASCRIPT & APP LOGIC -->
   <!-- ======================================================== -->
   <script>
+    // Exact deployment URL confirmed by user
     const API_URL = "https://script.google.com/macros/s/AKfycbwbWD044IQa31gHQ12giCVOJ4ztuRhvxAzwZaaX__3xcn90rLONsVCsyayUYxHUN1Bl/exec";
 
     let rawSchools = [];
@@ -467,12 +345,9 @@
 
     let reportTier = 'primary';
     let absentSchoolCodes = new Set();
-    
-    let isAdmin = false;
-    let adminToken = sessionStorage.getItem('mkm_admin_token') || "";
 
     async function loadData() {
-      // 1. Instant local storage retrieval (0.05 seconds)
+      // 1. Instant local storage retrieval (sub-second)
       const cachedJson = localStorage.getItem('mukkam_directory_cache');
       if (cachedJson) {
         try {
@@ -485,22 +360,15 @@
         }
       }
 
-      if (adminToken) {
-        isAdmin = true;
-        document.getElementById('adminLockIcon').textContent = '🔓';
-        document.getElementById('adminModeBanner').classList.remove('hidden');
-        document.getElementById('adminAddSchoolBtn').classList.remove('hidden');
-      }
-
-      // 2. Silent background sync
+      // 2. Silent background fetch
       try {
         const res = await fetch(API_URL).then(r => r.json());
-        if (res.status === 'success' && Array.isArray(res.data.schools)) {
+        if (res.status === 'success' && res.data && Array.isArray(res.data.schools)) {
           rawSchools = res.data.schools;
           localStorage.setItem('mukkam_directory_cache', JSON.stringify(rawSchools));
           updateCounts();
           if (currentTier) renderCards();
-          document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Synced`;
+          document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Live`;
         }
       } catch (err) {
         if (!cachedJson) {
@@ -510,189 +378,8 @@
     }
 
     // ==========================================
-    // ADMIN AUTHENTICATION
-    // ==========================================
-    function toggleAdminModal() {
-      if (isAdmin) {
-        logoutAdmin();
-      } else {
-        document.getElementById('adminPinInput').value = '';
-        document.getElementById('adminAuthModal').classList.remove('hidden');
-      }
-    }
-
-    function closeAdminModal() {
-      document.getElementById('adminAuthModal').classList.add('hidden');
-    }
-
-    async function loginAdmin() {
-      const pinInput = document.getElementById('adminPinInput');
-      const enteredPin = pinInput.value.trim();
-      
-      if (!enteredPin) {
-        alert("Please enter a PIN");
-        return;
-      }
-
-      const submitBtn = document.getElementById('authBtnSubmit');
-      submitBtn.textContent = "Verifying...";
-      submitBtn.disabled = true;
-
-      try {
-        const response = await fetch(API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify({
-            action: 'verify_pin',
-            pin: enteredPin
-          })
-        });
-
-        const result = await response.json();
-
-        if (result.status === 'success') {
-          isAdmin = true;
-          adminToken = result.token;
-          sessionStorage.setItem('mkm_admin_token', adminToken);
-
-          document.getElementById('adminLockIcon').textContent = '🔓';
-          document.getElementById('adminModeBanner').classList.remove('hidden');
-          document.getElementById('adminAddSchoolBtn').classList.remove('hidden');
-          closeAdminModal();
-          renderCards();
-        } else {
-          alert("Invalid PIN. Access denied.");
-          pinInput.value = '';
-        }
-      } catch (err) {
-        alert("Verification error: " + err.message);
-      } finally {
-        submitBtn.textContent = "Authorize";
-        submitBtn.disabled = false;
-      }
-    }
-
-    function logoutAdmin() {
-      isAdmin = false;
-      adminToken = "";
-      sessionStorage.removeItem('mkm_admin_token');
-      document.getElementById('adminLockIcon').textContent = '🔒';
-      document.getElementById('adminModeBanner').classList.add('hidden');
-      document.getElementById('adminAddSchoolBtn').classList.add('hidden');
-      renderCards();
-    }
-
-    // ==========================================
-    // ADD / EDIT SCHOOL
-    // ==========================================
-    function openAddSchoolModal() {
-      document.getElementById('editModalTitle').textContent = "Add New School";
-      document.getElementById('formAction').value = "add";
-      document.getElementById('formCode').disabled = false;
-      document.getElementById('schoolForm').reset();
-      document.getElementById('editSchoolModal').classList.remove('hidden');
-    }
-
-    function openEditSchoolModal(code, event) {
-      if (event) event.stopPropagation();
-      const school = rawSchools.find(s => s.code === code);
-      if (!school) return;
-
-      document.getElementById('editModalTitle').textContent = "Edit School (" + school.name + ")";
-      document.getElementById('formAction').value = "edit";
-      
-      document.getElementById('formCode').value = school.code;
-      document.getElementById('formCode').disabled = true;
-      document.getElementById('formName').value = school.name;
-      document.getElementById('formMgmt').value = school.management || "Government";
-      document.getElementById('formLevel').value = school.level || "";
-
-      document.getElementById('formHMName').value = school.hm?.name || "";
-      document.getElementById('formHMPhone').value = school.hm?.phone || "";
-      document.getElementById('formPrincipalName').value = school.principal?.name || "";
-      document.getElementById('formPrincipalPhone').value = school.principal?.phone || "";
-      document.getElementById('formPSITCName').value = school.psitc?.name || "";
-      document.getElementById('formPSITCPhone').value = school.psitc?.phone || "";
-      document.getElementById('formSITCName').value = school.sitc?.name || "";
-      document.getElementById('formSITCPhone').value = school.sitc?.phone || "";
-      document.getElementById('formHITCName').value = school.hitc?.name || "";
-      document.getElementById('formHITCPhone').value = school.hitc?.phone || "";
-
-      document.getElementById('formLK1Name').value = school.lkMentors?.[0]?.name || "";
-      document.getElementById('formLK1Phone').value = school.lkMentors?.[0]?.phone || "";
-      document.getElementById('formLK2Name').value = school.lkMentors?.[1]?.name || "";
-      document.getElementById('formLK2Phone').value = school.lkMentors?.[1]?.phone || "";
-
-      document.getElementById('editSchoolModal').classList.remove('hidden');
-    }
-
-    function closeEditModal() {
-      document.getElementById('editSchoolModal').classList.add('hidden');
-    }
-
-    async function handleSchoolSave(e) {
-      e.preventDefault();
-      const saveBtn = document.getElementById('saveSchoolBtn');
-      saveBtn.disabled = true;
-      saveBtn.textContent = "Saving to Google Sheet...";
-
-      const action = document.getElementById('formAction').value;
-      const schoolPayload = {
-        code: document.getElementById('formCode').value.trim(),
-        name: document.getElementById('formName').value.trim(),
-        management: document.getElementById('formMgmt').value,
-        level: document.getElementById('formLevel').value.trim(),
-        hm: { name: document.getElementById('formHMName').value.trim(), phone: document.getElementById('formHMPhone').value.trim() },
-        principal: { name: document.getElementById('formPrincipalName').value.trim(), phone: document.getElementById('formPrincipalPhone').value.trim() },
-        psitc: { name: document.getElementById('formPSITCName').value.trim(), phone: document.getElementById('formPSITCPhone').value.trim() },
-        sitc: { name: document.getElementById('formSITCName').value.trim(), phone: document.getElementById('formSITCPhone').value.trim() },
-        hitc: { name: document.getElementById('formHITCName').value.trim(), phone: document.getElementById('formHITCPhone').value.trim() },
-        lkMentors: [
-          { name: document.getElementById('formLK1Name').value.trim(), phone: document.getElementById('formLK1Phone').value.trim() },
-          { name: document.getElementById('formLK2Name').value.trim(), phone: document.getElementById('formLK2Phone').value.trim() }
-        ]
-      };
-
-      try {
-        const res = await fetch(API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify({
-            token: adminToken,
-            action: action,
-            school: schoolPayload
-          })
-        });
-
-        const result = await res.json();
-        if (result.status === 'success') {
-          if (action === 'edit') {
-            const idx = rawSchools.findIndex(s => s.code === schoolPayload.code);
-            if (idx !== -1) rawSchools[idx] = Object.assign(rawSchools[idx], schoolPayload);
-          } else {
-            rawSchools.push(schoolPayload);
-          }
-
-          localStorage.setItem('mukkam_directory_cache', JSON.stringify(rawSchools));
-          updateCounts();
-          renderCards();
-          closeEditModal();
-          alert("Saved successfully to Google Sheet!");
-        } else {
-          alert("Failed: " + result.message);
-        }
-      } catch (err) {
-        alert("Save error: " + err.message);
-      } finally {
-        saveBtn.disabled = false;
-        saveBtn.textContent = "Save to Google Sheet";
-      }
-    }
-
-    // ==========================================
     // PRECISE TIER SEPARATION LOGIC
     // ==========================================
-    // Check if school is High School or Higher Secondary
     function isHighSchoolOrHigher(school) {
       const lvl = (school.level || '').replace(/\s+/g, '');
       const name = (school.name || '').toUpperCase();
@@ -716,7 +403,7 @@
       const lvl = (school.level || '').replace(/\s+/g, '');
       const name = (school.name || '').toUpperCase();
 
-      // 1. PRIMARY: ONLY pure LP and UP schools (NEVER High Schools / HSS)
+      // 1. PRIMARY: ONLY pure LP and UP schools (never High Schools / HSS)
       if (tier === 'primary') {
         return !isHS;
       }
@@ -1019,27 +706,29 @@
 
         let rolePreview = '';
         if (currentTier === 'primary') {
-          rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]"><span class="text-slate-600 truncate max-w-[160px]">HM: <strong class="text-slate-800">${school.hm?.name || 'Assigned'}</strong></span><span class="text-indigo-600 font-bold truncate max-w-[150px]">PSITC: ${school.psitc?.name || 'Assigned'}</span></div>`;
+          const hmText = school.hm?.name ? `<span class="text-slate-600 truncate max-w-[150px]">HM: <strong class="text-slate-800">${school.hm.name}</strong></span>` : '';
+          const psitcText = school.psitc?.name ? `<span class="text-indigo-600 font-bold truncate max-w-[140px]">PSITC: ${school.psitc.name}</span>` : '';
+          if (hmText || psitcText) {
+            rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">${hmText || '<span></span>'}${psitcText}</div>`;
+          }
         } else if (currentTier === 'hs') {
+          const sitcText = school.sitc?.name ? `<span class="text-slate-600 truncate max-w-[150px]">SITC: <strong class="text-slate-800">${school.sitc.name}</strong></span>` : '';
           const lkCount = school.lkMentors ? school.lkMentors.length : 0;
-          rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]"><span class="text-slate-600 truncate max-w-[160px]">SITC: <strong class="text-slate-800">${school.sitc?.name || 'Assigned'}</strong></span><span class="${lkCount > 0 ? 'text-amber-700 font-extrabold' : 'text-slate-400'}">${lkCount > 0 ? `🪁 ${lkCount} LK Mentors` : 'No LK'}</span></div>`;
+          rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">${sitcText || '<span></span>'}<span class="${lkCount > 0 ? 'text-amber-700 font-extrabold' : 'text-slate-400'}">${lkCount > 0 ? `🪁 ${lkCount} LK Mentors` : ''}</span></div>`;
         } else if (currentTier === 'hss') {
-          rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]"><span class="text-slate-600 truncate max-w-[160px]">Principal: <strong class="text-slate-800">${school.principal?.name || 'Assigned'}</strong></span><span class="text-purple-600 font-bold truncate max-w-[150px]">HITC: ${school.hitc?.name || 'Assigned'}</span></div>`;
+          const pText = school.principal?.name ? `<span class="text-slate-600 truncate max-w-[150px]">Principal: <strong class="text-slate-800">${school.principal.name}</strong></span>` : '';
+          const hitcText = school.hitc?.name ? `<span class="text-purple-600 font-bold truncate max-w-[140px]">HITC: ${school.hitc.name}</span>` : '';
+          if (pText || hitcText) {
+            rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">${pText || '<span></span>'}${hitcText}</div>`;
+          }
         }
-
-        const editButtonHtml = isAdmin ? `
-          <button onclick="openEditSchoolModal('${school.code}', event)" class="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 transition active:scale-95" title="Edit School">
-            ✏️
-          </button>
-        ` : '';
 
         card.innerHTML = `
           <div class="flex items-center justify-between mb-1.5">
             <div class="flex items-center gap-1.5">
               <span class="text-[10px] font-mono-code font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-lg">#${school.code}</span>
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${mgmtColor}">${school.management}</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${mgmtColor}">${school.management || 'School'}</span>
             </div>
-            ${editButtonHtml}
           </div>
           <h3 class="text-sm font-extrabold text-slate-900 leading-snug tracking-tight">${school.name}</h3>
           <p class="text-[11px] text-slate-400 font-medium mt-0.5">Classes ${school.level || '-'}</p>
@@ -1051,8 +740,11 @@
     }
 
     function renderContactBox(roleTitle, name, phone, badge) {
-      if (!name && !phone) return '';
-      const digits = cleanDigits(phone);
+      const cleanName = (name || '').trim();
+      const cleanPhone = (phone || '').trim();
+      if (!cleanName && !cleanPhone) return '';
+
+      const digits = cleanDigits(cleanPhone);
       const waNumber = digits.length === 10 ? '91' + digits : digits;
 
       return `
@@ -1061,9 +753,10 @@
             <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">${roleTitle}</span>
             ${badge ? `<span class="bg-indigo-100/70 text-indigo-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full">${badge}</span>` : ''}
           </div>
-          <p class="font-extrabold text-slate-900 text-xs">${name || 'Assigned Staff'}</p>
-          <p class="font-mono-code text-[11px] text-slate-500 mt-0.5">${phone || '-'}</p>
-          ${phone ? `
+          <p class="font-extrabold text-slate-900 text-xs">${cleanName}</p>
+          ${cleanPhone ? `<p class="font-mono-code text-[11px] text-slate-500 mt-0.5">${cleanPhone}</p>` : ''}
+
+          ${digits ? `
           <div class="grid grid-cols-2 gap-2 mt-2.5">
             <a href="tel:${digits}" class="flex items-center justify-center gap-1.5 py-2 bg-white border border-slate-200 rounded-xl text-indigo-600 font-bold text-xs shadow-2xs active:bg-slate-100 transition">Call</a>
             <a href="https://wa.me/${waNumber}" target="_blank" class="flex items-center justify-center gap-1.5 py-2 bg-emerald-600 text-white rounded-xl font-bold text-xs shadow-2xs active:bg-emerald-700 transition">WhatsApp</a>
@@ -1076,27 +769,29 @@
       document.body.classList.add('modal-open');
       document.getElementById('modalBadges').innerHTML = `
         <span class="text-[10px] font-mono-code font-bold px-2 py-0.5 rounded-lg bg-slate-100 text-slate-700">#${s.code}</span>
-        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">${s.management}</span>
+        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">Classes: ${s.level || '-'}</span>
       `;
       document.getElementById('modalName').textContent = s.name;
-      document.getElementById('modalSub').textContent = `Classes: ${s.level || 'Standard'} • Mukkam Educational Sub-District`;
+      document.getElementById('modalSub').textContent = `Mukkam Educational Sub-District`;
 
       let contactsHtml = '';
       if (currentTier === 'primary') {
-        if (s.hm) contactsHtml += renderContactBox('Headmaster / Headmistress', s.hm.name, s.hm.phone, 'HM');
-        if (s.psitc) contactsHtml += renderContactBox('Primary IT Coordinator', s.psitc.name, s.psitc.phone, 'PSITC');
+        if (s.hm?.name || s.hm?.phone) contactsHtml += renderContactBox('Headmaster / Headmistress', s.hm.name, s.hm.phone, 'HM');
+        if (s.psitc?.name || s.psitc?.phone) contactsHtml += renderContactBox('Primary IT Coordinator', s.psitc.name, s.psitc.phone, 'PSITC');
       } else if (currentTier === 'hs') {
-        if (s.hm) contactsHtml += renderContactBox('Headmaster / Headmistress', s.hm.name, s.hm.phone, 'HM');
-        if (s.sitc) contactsHtml += renderContactBox('High School IT Coordinator', s.sitc.name, s.sitc.phone, 'SITC');
+        if (s.hm?.name || s.hm?.phone) contactsHtml += renderContactBox('Headmaster / Headmistress', s.hm.name, s.hm.phone, 'HM');
+        if (s.sitc?.name || s.sitc?.phone) contactsHtml += renderContactBox('High School IT Coordinator', s.sitc.name, s.sitc.phone, 'SITC');
         if (s.lkMentors && s.lkMentors.length > 0) {
-          contactsHtml += `<div class="pt-1"><div class="flex items-center gap-1.5 mb-2"><span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Little Kites Mentors</span><span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-1.5 py-0.2 rounded-full">Active</span></div><div class="space-y-2">${s.lkMentors.map((lk, i) => renderContactBox(`LK Mentor ${i + 1}`, lk.name, lk.phone, 'LK Mentor')).join('')}</div></div>`;
+          s.lkMentors.forEach((m, i) => {
+            if (m.name || m.phone) contactsHtml += renderContactBox(`LK Mentor ${i + 1}`, m.name, m.phone, 'LK');
+          });
         }
       } else if (currentTier === 'hss') {
-        if (s.principal) contactsHtml += renderContactBox('Principal (Higher Secondary)', s.principal.name, s.principal.phone, 'Principal');
-        if (s.hitc) contactsHtml += renderContactBox('Higher Secondary IT Coordinator', s.hitc.name, s.hitc.phone, 'HITC');
+        if (s.principal?.name || s.principal?.phone) contactsHtml += renderContactBox('Principal (Higher Secondary)', s.principal.name, s.principal.phone, 'Principal');
+        if (s.hitc?.name || s.hitc?.phone) contactsHtml += renderContactBox('Higher Secondary IT Coordinator', s.hitc.name, s.hitc.phone, 'HITC');
       }
 
-      document.getElementById('modalContacts').innerHTML = contactsHtml;
+      document.getElementById('modalContacts').innerHTML = contactsHtml || '<div class="text-center text-slate-400 py-8 font-medium">No contact numbers entered.</div>';
       const backdrop = document.getElementById('modalBackdrop');
       const card = document.getElementById('modalCard');
       backdrop.classList.remove('hidden');
