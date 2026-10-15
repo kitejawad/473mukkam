@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Mukkam Schools Hub</title>
 
-  <!-- PWA Fullscreen & Standalone Configuration (Hides Address Bar) -->
+  <!-- PWA Fullscreen & Standalone Configuration -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Mukkam Hub" />
@@ -64,8 +64,8 @@
               <span id="adminLockIcon">🔒</span>
             </button>
             <div id="syncBadge" class="flex items-center gap-1.5 text-[10px] font-bold bg-white/10 backdrop-blur-md text-indigo-100 px-2.5 py-1 rounded-full border border-white/15">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-              Live
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+              Loading
             </div>
           </div>
         </div>
@@ -431,7 +431,7 @@
 
 
   <!-- ======================================================== -->
-  <!-- ROLE-ADAPTIVE MODAL (DETAILS POPUP) -->
+  <!-- MODAL: DETAILS POPUP -->
   <!-- ======================================================== -->
   <div id="modalBackdrop" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div id="modalCard" class="w-full sm:max-w-md bg-white rounded-t-[2.5rem] sm:rounded-3xl max-h-[85vh] flex flex-col shadow-2xl transform transition-transform duration-300 translate-y-full sm:translate-y-0 sm:scale-95 border border-slate-100">
@@ -472,6 +472,7 @@
     let adminToken = sessionStorage.getItem('mkm_admin_token') || "";
 
     async function loadData() {
+      // 1. Instant local storage retrieval (0.05 seconds)
       const cachedJson = localStorage.getItem('mukkam_directory_cache');
       if (cachedJson) {
         try {
@@ -491,6 +492,7 @@
         document.getElementById('adminAddSchoolBtn').classList.remove('hidden');
       }
 
+      // 2. Silent background sync
       try {
         const res = await fetch(API_URL).then(r => r.json());
         if (res.status === 'success' && Array.isArray(res.data.schools)) {
