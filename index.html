@@ -64,8 +64,8 @@
               <span id="adminLockIcon">🔒</span>
             </button>
             <div id="syncBadge" class="flex items-center gap-1.5 text-[10px] font-bold bg-white/10 backdrop-blur-md text-indigo-100 px-2.5 py-1 rounded-full border border-white/15">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-              Loading
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              Live
             </div>
           </div>
         </div>
@@ -93,7 +93,7 @@
                 <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">LP & UP Schools</h3>
                 <span id="badgePrimary" class="text-[10px] font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full border border-indigo-100">--</span>
               </div>
-              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 1–7</p>
+              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 1–4 &bull; Classes 5–7 (LP/UP Only)</p>
             </div>
           </div>
           <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all">
@@ -114,7 +114,7 @@
                 <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">High Schools</h3>
                 <span id="badgeHS" class="text-[10px] font-bold bg-amber-50 text-amber-800 px-2 py-0.5 rounded-full border border-amber-100">--</span>
               </div>
-              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 8–10</p>
+              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 8–10 (including attached 1–10 / 5–10 / 1–12)</p>
             </div>
           </div>
           <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-amber-500 group-hover:text-white transition-all">
@@ -137,7 +137,7 @@
                 <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">Higher Secondary</h3>
                 <span id="badgeHSS" class="text-[10px] font-bold bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full border border-purple-100">--</span>
               </div>
-              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 11–12</p>
+              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Classes 11–12 (HSS / VHSS)</p>
             </div>
           </div>
           <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-purple-600 group-hover:text-white transition-all">
@@ -198,7 +198,7 @@
           <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 text-xs pointer-events-none">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
           </span>
-          <input id="searchInput" type="search" placeholder="Search school, code, HM, SITC..." class="w-full pl-9 pr-3 py-2 text-xs bg-slate-100/90 text-slate-800 rounded-2xl border border-transparent focus:border-indigo-400 focus:bg-white focus:outline-none transition shadow-inner" />
+          <input id="searchInput" type="search" placeholder="Search school, code, staff name..." class="w-full pl-9 pr-3 py-2 text-xs bg-slate-100/90 text-slate-800 rounded-2xl border border-transparent focus:border-indigo-400 focus:bg-white focus:outline-none transition shadow-inner" />
         </div>
       </div>
     </header>
@@ -690,14 +690,51 @@
     }
 
     // ==========================================
-    // FILTER HELPERS
+    // PRECISE TIER SEPARATION LOGIC
     // ==========================================
+    // Check if school is High School or Higher Secondary
+    function isHighSchoolOrHigher(school) {
+      const lvl = (school.level || '').replace(/\s+/g, '');
+      const name = (school.name || '').toUpperCase();
+      
+      // If classes reach 10 or 12, it is a High School / HSS
+      if (lvl.includes('10') || lvl.includes('12')) return true;
+
+      // School name designations for High School / Higher Secondary
+      if (/\b(GHSS|HSS|GHS|HS|VHSS)\b/.test(name)) return true;
+      if (name.includes('HIGH SCHOOL') || name.includes('HIGHER SECONDARY')) return true;
+      if (name.includes(' H S') || name.includes(' G H S')) return true;
+
+      // Staff indicators
+      if (school.sitc?.name || school.hitc?.name || school.principal?.name) return true;
+
+      return false;
+    }
+
     function matchSchoolTier(school, tier) {
-      const lvl = (school.level || '').trim();
-      if (tier === 'primary') return Boolean(school.psitc) || lvl.includes('1 - 4') || lvl.includes('5 - 7') || lvl.includes('1 - 7') || lvl.includes('1 - 5');
-      if (tier === 'hs') return Boolean(school.sitc) || (school.lkMentors && school.lkMentors.length > 0) || lvl.includes('8 - 10') || lvl.includes('1 - 10') || lvl.includes('5 - 10') || lvl.includes('12');
-      if (tier === 'hss') return Boolean(school.principal) || Boolean(school.hitc) || lvl.includes('12');
-      if (tier === 'lk') return Boolean(school.lkMentors && school.lkMentors.length > 0);
+      const isHS = isHighSchoolOrHigher(school);
+      const lvl = (school.level || '').replace(/\s+/g, '');
+      const name = (school.name || '').toUpperCase();
+
+      // 1. PRIMARY: ONLY pure LP and UP schools (NEVER High Schools / HSS)
+      if (tier === 'primary') {
+        return !isHS;
+      }
+
+      // 2. HIGH SCHOOL: Must be an HS or HSS (classes 8-10, 1-10, 5-10, 1-12, 5-12, 8-12)
+      if (tier === 'hs') {
+        return isHS;
+      }
+
+      // 3. HIGHER SECONDARY: Only schools with classes 11-12
+      if (tier === 'hss') {
+        return lvl.includes('12') || name.includes('HSS') || name.includes('HIGHER SECONDARY') || Boolean(school.principal?.name) || Boolean(school.hitc?.name);
+      }
+
+      if (tier === 'lk') {
+        return Boolean(school.lkMentors && school.lkMentors.length > 0);
+      }
+
       return false;
     }
 
@@ -722,9 +759,9 @@
       document.getElementById('searchInput').value = '';
 
       const labels = {
-        primary: { title: 'LP & UP Schools', sub: 'Classes 1–7' },
-        hs: { title: 'High Schools', sub: 'Classes 8–10' },
-        hss: { title: 'Higher Secondary', sub: 'Classes 11–12' }
+        primary: { title: 'LP & UP Schools', sub: 'Classes 1–4 & Classes 5–7 (LP/UP Only)' },
+        hs: { title: 'High Schools', sub: 'Classes 8–10 (including attached 1–10 / 5–10 / 1–12)' },
+        hss: { title: 'Higher Secondary', sub: 'Classes 11–12 (HSS / VHSS)' }
       };
 
       document.getElementById('listTierTitle').textContent = labels[tier].title;
