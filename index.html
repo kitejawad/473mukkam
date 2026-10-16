@@ -169,6 +169,25 @@
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
           </div>
         </button>
+
+        <!-- TILE 5: SYNC CONTACTS TO IPHONE (CALLER ID) -->
+        <a id="vcfDownloadLink" href="https://script.google.com/macros/s/AKfycbwbWD044IQa31gHQ12giCVOJ4ztuRhvxAzwZaaX__3xcn90rLONsVCsyayUYxHUN1Bl/exec?action=export_vcf" target="_blank" class="w-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 rounded-3xl shadow-md hover:shadow-lg active:scale-[0.98] transition-all flex items-center justify-between text-left group border border-blue-500/30">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-105 transition-transform text-xl">
+              📲
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-sm font-extrabold tracking-tight">Sync Contacts to iPhone</h3>
+                <span class="text-[9px] font-extrabold bg-white/25 px-2 py-0.5 rounded-full uppercase tracking-wider">Caller ID</span>
+              </div>
+              <p class="text-[11px] text-blue-100 font-medium mt-0.5">Displays Name & School when phone rings</p>
+            </div>
+          </div>
+          <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-blue-700 transition-all">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+          </div>
+        </a>
       </main>
     </div>
 
@@ -463,6 +482,7 @@
   <!-- ======================================================== -->
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbwbWD044IQa31gHQ12giCVOJ4ztuRhvxAzwZaaX__3xcn90rLONsVCsyayUYxHUN1Bl/exec";
+    const CACHE_STORAGE_KEY = 'mukkam_directory_local_cache';
 
     let rawSchools = [];
     let currentTier = null;
@@ -477,23 +497,44 @@
     let adminToken = sessionStorage.getItem('mkm_admin_token') || "";
 
     async function loadData() {
+      // 1. INSTANT LOCAL STORAGE RENDER
+      const localData = localStorage.getItem(CACHE_STORAGE_KEY);
+      if (localData) {
+        try {
+          const parsed = JSON.parse(localData);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            rawSchools = parsed;
+            updateCounts();
+            if (currentTier) renderCards();
+            document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Live`;
+          }
+        } catch (e) {
+          console.warn("Local cache read error", e);
+        }
+      }
+
+      // Restore session if token exists
+      if (adminToken) {
+        isAdmin = true;
+        document.getElementById('adminLockIcon').textContent = '🔓';
+        document.getElementById('adminModeBanner').classList.remove('hidden');
+        document.getElementById('adminAddSchoolBtn').classList.remove('hidden');
+      }
+
+      // 2. BACKGROUND FETCH FROM SHEET
       try {
         const res = await fetch(API_URL).then(r => r.json());
         if (res.status === 'success') {
           rawSchools = res.data.schools || [];
+          localStorage.setItem(CACHE_STORAGE_KEY, JSON.stringify(rawSchools));
           updateCounts();
+          if (currentTier) renderCards();
           document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Live`;
-
-          // Restore session if token exists
-          if (adminToken) {
-            isAdmin = true;
-            document.getElementById('adminLockIcon').textContent = '🔓';
-            document.getElementById('adminModeBanner').classList.remove('hidden');
-            document.getElementById('adminAddSchoolBtn').classList.remove('hidden');
-          }
         }
       } catch (err) {
-        document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Offline`;
+        if (!rawSchools.length) {
+          document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Offline`;
+        }
         console.error(err);
       }
     }
@@ -662,6 +703,7 @@
             rawSchools.push(schoolPayload);
           }
 
+          localStorage.setItem(CACHE_STORAGE_KEY, JSON.stringify(rawSchools));
           updateCounts();
           renderCards();
           closeEditModal();
