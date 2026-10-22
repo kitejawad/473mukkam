@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Mukkam Schools Hub</title>
 
-  <!-- PWA Fullscreen & Standalone Configuration (Hides Address Bar) -->
+  <!-- PWA Fullscreen & Standalone Configuration -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Mukkam Hub" />
@@ -30,7 +30,7 @@
     .font-mono-code { font-family: 'JetBrains Mono', monospace; }
     body.modal-open { overflow: hidden; touch-action: none; }
 
-    /* PRINT STYLES (PURE MALAYALAM PARAGRAPH + TABLE) */
+    /* PRINT STYLES */
     @media print {
       body { background: #ffffff !important; color: #000000 !important; margin: 0 !important; padding: 0 !important; }
       #pageDashboard, #pageList, #pageReport, #modalBackdrop, #adminAuthModal, #editSchoolModal, header { display: none !important; }
@@ -74,7 +74,7 @@
       </header>
 
       <!-- Dashboard Tiles -->
-      <main class="px-4 -mt-3 relative z-20 space-y-3">
+      <main class="px-4 -mt-3 relative z-20 space-y-3 pb-8">
         <!-- Admin Banner -->
         <div id="adminModeBanner" class="hidden bg-amber-500 text-white px-4 py-2.5 rounded-2xl flex items-center justify-between shadow-xs">
           <span class="text-xs font-bold">⚡ Admin Mode Active</span>
@@ -149,7 +149,47 @@
           </div>
         </button>
 
-        <!-- TILE 4: TRAINING REPORT BUILDER -->
+        <!-- TILE 4: DIGITAL SQUARE -->
+        <button onclick="openTierPage('digital_square')" class="w-full bg-white p-4 rounded-3xl border border-slate-200/70 shadow-sm hover:shadow-md active:scale-[0.98] transition-all flex items-center justify-between text-left group">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center border border-cyan-100 group-hover:scale-105 transition-transform">
+              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">Digital Square</h3>
+                <span id="badgeDS" class="text-[10px] font-bold bg-cyan-50 text-cyan-700 px-2 py-0.5 rounded-full border border-cyan-100">--</span>
+              </div>
+              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Digital Classrooms & Mentors</p>
+            </div>
+          </div>
+          <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-cyan-600 group-hover:text-white transition-all">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+          </div>
+        </button>
+
+        <!-- TILE 5: LITTLE KITES JUNIOR -->
+        <button onclick="openTierPage('lk_junior')" class="w-full bg-white p-4 rounded-3xl border border-slate-200/70 shadow-sm hover:shadow-md active:scale-[0.98] transition-all flex items-center justify-between text-left group">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-100 group-hover:scale-105 transition-transform text-xl">
+              🪁
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">Little Kites Junior</h3>
+                <span id="badgeLKJunior" class="text-[10px] font-bold bg-rose-50 text-rose-700 px-2 py-0.5 rounded-full border border-rose-100">--</span>
+              </div>
+              <p class="text-[11px] text-slate-500 font-medium mt-0.5">Primary Wing Mentors & Clubs</p>
+            </div>
+          </div>
+          <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-rose-600 group-hover:text-white transition-all">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+          </div>
+        </button>
+
+        <!-- TILE 6: TRAINING REPORT BUILDER -->
         <button onclick="openReportPage()" class="w-full bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-700 text-white p-4 rounded-3xl shadow-md hover:shadow-lg active:scale-[0.98] transition-all flex items-center justify-between text-left group border border-emerald-500/30">
           <div class="flex items-center gap-3.5">
             <div class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-105 transition-transform">
@@ -202,14 +242,14 @@
           <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 text-xs pointer-events-none">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
           </span>
-          <input id="searchInput" type="search" placeholder="Search school, code, HM, SITC..." class="w-full pl-9 pr-3 py-2 text-xs bg-slate-100/90 text-slate-800 rounded-2xl border border-transparent focus:border-indigo-400 focus:bg-white focus:outline-none transition shadow-inner" />
+          <input id="searchInput" type="search" placeholder="Search school, code, staff, mentor..." class="w-full pl-9 pr-3 py-2 text-xs bg-slate-100/90 text-slate-800 rounded-2xl border border-transparent focus:border-indigo-400 focus:bg-white focus:outline-none transition shadow-inner" />
         </div>
       </div>
     </header>
 
     <main class="px-4 pt-3 space-y-3">
       <div class="bg-white p-3.5 rounded-3xl border border-slate-200/80 shadow-xs space-y-3">
-        <div>
+        <div id="levelFilterContainer">
           <div class="flex items-center justify-between mb-1.5 px-0.5">
             <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Class Level</span>
             <span id="activeLevelLabel" class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">ALL</span>
@@ -275,6 +315,8 @@
           <button onclick="setReportTier('hs')" id="rTierHS" class="py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">HS (SITC)</button>
           <button onclick="setReportTier('hss')" id="rTierHSS" class="py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">HSS (HITC)</button>
           <button onclick="setReportTier('lk')" id="rTierLK" class="py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">🪁 Little Kites</button>
+          <button onclick="setReportTier('digital_square')" id="rTierDS" class="py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Digital Square</button>
+          <button onclick="setReportTier('lk_junior')" id="rTierLKJun" class="py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">🪁 LK Junior</button>
         </div>
       </div>
 
@@ -298,7 +340,7 @@
 
 
   <!-- ======================================================== -->
-  <!-- MODAL: ADMIN LOGIN (VERIFIED ONLY AT BACKEND) -->
+  <!-- MODAL: ADMIN LOGIN -->
   <!-- ======================================================== -->
   <div id="adminAuthModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
     <div class="w-full max-w-xs bg-white rounded-3xl shadow-2xl p-6 space-y-4 border border-slate-100">
@@ -359,7 +401,7 @@
         </div>
 
         <div class="pt-2 border-t border-slate-100 space-y-2.5">
-          <p class="font-extrabold text-indigo-600 text-[11px] uppercase tracking-wider">Personnel Contacts</p>
+          <p class="font-extrabold text-indigo-600 text-[11px] uppercase tracking-wider">Leadership & IT Staff</p>
           
           <div class="grid grid-cols-2 gap-2">
             <input id="formHMName" type="text" placeholder="HM Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
@@ -397,6 +439,23 @@
           </div>
         </div>
 
+        <!-- NEW SECTIONS IN ADMIN FORM -->
+        <div class="pt-2 border-t border-slate-100 space-y-2.5">
+          <p class="font-extrabold text-cyan-600 text-[11px] uppercase tracking-wider">Digital Square Coordinator</p>
+          <div class="grid grid-cols-2 gap-2">
+            <input id="formDSName" type="text" placeholder="DS Coordinator Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+            <input id="formDSPhone" type="text" placeholder="DS Coordinator Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-slate-100 space-y-2.5">
+          <p class="font-extrabold text-rose-600 text-[11px] uppercase tracking-wider">Little Kites Junior Mentor</p>
+          <div class="grid grid-cols-2 gap-2">
+            <input id="formLKJunName" type="text" placeholder="LK Junior Mentor Name" class="bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+            <input id="formLKJunPhone" type="text" placeholder="LK Junior Mentor Phone" class="font-mono-code bg-slate-50 border border-slate-200 rounded-xl p-2 outline-none" />
+          </div>
+        </div>
+
         <div class="pt-3">
           <button type="submit" id="saveSchoolBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold text-xs shadow-md active:scale-98 transition">
             Save to Google Sheet
@@ -408,7 +467,7 @@
 
 
   <!-- ======================================================== -->
-  <!-- PRINT AREA: PARAGRAPH (ANEK MALAYALAM) + TABLE ONLY -->
+  <!-- PRINT AREA -->
   <!-- ======================================================== -->
   <div id="printArea" style="display: none;">
     <div style="max-width: 800px; margin: 0 auto; line-height: 1.6;">
@@ -463,7 +522,7 @@
   <!-- ======================================================== -->
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbwbWD044IQa31gHQ12giCVOJ4ztuRhvxAzwZaaX__3xcn90rLONsVCsyayUYxHUN1Bl/exec";
-    const CACHE_KEY = "mkm_schools_cache_v1";
+    const CACHE_KEY = "mkm_schools_cache_v2";
 
     let rawSchools = [];
     let currentTier = null;
@@ -473,11 +532,9 @@
     let reportTier = 'primary';
     let absentSchoolCodes = new Set();
     
-    // Auth state - No PIN is stored here!
     let isAdmin = false;
     let adminToken = sessionStorage.getItem('mkm_admin_token') || "";
 
-    // 1. Instantly read & render from LocalStorage if present
     function initFromLocalStorage() {
       const cached = localStorage.getItem(CACHE_KEY);
       if (cached) {
@@ -495,7 +552,6 @@
       }
     }
 
-    // 2. Fetch fresh data in the background (Stale-While-Revalidate)
     async function loadData() {
       initFromLocalStorage();
 
@@ -510,7 +566,6 @@
 
           document.getElementById('syncBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Live`;
 
-          // Restore session if token exists
           if (adminToken) {
             isAdmin = true;
             document.getElementById('adminLockIcon').textContent = '🔓';
@@ -529,7 +584,7 @@
     }
 
     // ==========================================
-    // SECURE SERVER-SIDE ADMIN AUTHENTICATION
+    // AUTHENTICATION
     // ==========================================
     function toggleAdminModal() {
       if (isAdmin) {
@@ -602,7 +657,7 @@
     }
 
     // ==========================================
-    // ADD / EDIT SCHOOL LOGIC (C.R.U.D)
+    // ADD / EDIT SCHOOL
     // ==========================================
     function openAddSchoolModal() {
       document.getElementById('editModalTitle').textContent = "Add New School";
@@ -621,7 +676,7 @@
       document.getElementById('formAction').value = "edit";
       
       document.getElementById('formCode').value = school.code;
-      document.getElementById('formCode').disabled = true; // Primary key
+      document.getElementById('formCode').disabled = true;
       document.getElementById('formName').value = school.name;
       document.getElementById('formMgmt').value = school.management || "Government";
       document.getElementById('formLevel').value = school.level || "";
@@ -641,6 +696,11 @@
       document.getElementById('formLK1Phone').value = school.lkMentors?.[0]?.phone || "";
       document.getElementById('formLK2Name').value = school.lkMentors?.[1]?.name || "";
       document.getElementById('formLK2Phone').value = school.lkMentors?.[1]?.phone || "";
+
+      document.getElementById('formDSName').value = school.digitalSquare?.name || "";
+      document.getElementById('formDSPhone').value = school.digitalSquare?.phone || "";
+      document.getElementById('formLKJunName').value = school.lkJunior?.name || "";
+      document.getElementById('formLKJunPhone').value = school.lkJunior?.phone || "";
 
       document.getElementById('editSchoolModal').classList.remove('hidden');
     }
@@ -692,6 +752,14 @@
       if (lk2Name || lk2Phone) lkMentors.push({ name: lk2Name, phone: lk2Phone });
       if (lkMentors.length > 0) schoolPayload.lkMentors = lkMentors;
 
+      const dsName = document.getElementById('formDSName').value.trim();
+      const dsPhone = document.getElementById('formDSPhone').value.trim();
+      if (dsName || dsPhone) schoolPayload.digitalSquare = { name: dsName, phone: dsPhone };
+
+      const lkJunName = document.getElementById('formLKJunName').value.trim();
+      const lkJunPhone = document.getElementById('formLKJunPhone').value.trim();
+      if (lkJunName || lkJunPhone) schoolPayload.lkJunior = { name: lkJunName, phone: lkJunPhone };
+
       try {
         const res = await fetch(API_URL, {
           method: 'POST',
@@ -712,7 +780,6 @@
             rawSchools.push(schoolPayload);
           }
 
-          // Immediately update LocalStorage cache
           localStorage.setItem(CACHE_KEY, JSON.stringify(rawSchools));
 
           updateCounts();
@@ -739,6 +806,8 @@
       if (tier === 'hs') return Boolean(school.sitc) || (school.lkMentors && school.lkMentors.length > 0) || lvl.includes('8 - 10') || lvl.includes('1 - 10') || lvl.includes('5 - 10') || lvl.includes('12');
       if (tier === 'hss') return Boolean(school.principal) || Boolean(school.hitc) || lvl.includes('12');
       if (tier === 'lk') return Boolean(school.lkMentors && school.lkMentors.length > 0);
+      if (tier === 'digital_square') return Boolean(school.digitalSquare && (school.digitalSquare.name || school.digitalSquare.phone));
+      if (tier === 'lk_junior') return Boolean(school.lkJunior && (school.lkJunior.name || school.lkJunior.phone));
       return false;
     }
 
@@ -754,6 +823,8 @@
       document.getElementById('badgePrimary').textContent = `${rawSchools.filter(s => matchSchoolTier(s, 'primary')).length} Schools`;
       document.getElementById('badgeHS').textContent = `${rawSchools.filter(s => matchSchoolTier(s, 'hs')).length} Schools`;
       document.getElementById('badgeHSS').textContent = `${rawSchools.filter(s => matchSchoolTier(s, 'hss')).length} Schools`;
+      document.getElementById('badgeDS').textContent = `${rawSchools.filter(s => matchSchoolTier(s, 'digital_square')).length} Schools`;
+      document.getElementById('badgeLKJunior').textContent = `${rawSchools.filter(s => matchSchoolTier(s, 'lk_junior')).length} Schools`;
     }
 
     function openTierPage(tier) {
@@ -765,7 +836,9 @@
       const labels = {
         primary: { title: 'LP & UP Schools', sub: 'Classes 1–7' },
         hs: { title: 'High Schools', sub: 'Classes 8–10' },
-        hss: { title: 'Higher Secondary', sub: 'Classes 11–12' }
+        hss: { title: 'Higher Secondary', sub: 'Classes 11–12' },
+        digital_square: { title: 'Digital Square Schools', sub: 'Digital Classrooms & Mentors' },
+        lk_junior: { title: 'Little Kites Junior', sub: 'Primary Wing Mentors & Clubs' }
       };
 
       document.getElementById('listTierTitle').textContent = labels[tier].title;
@@ -797,9 +870,18 @@
 
     function setReportTier(tier) {
       reportTier = tier;
-      const btns = { primary: document.getElementById('rTierPrimary'), hs: document.getElementById('rTierHS'), hss: document.getElementById('rTierHSS'), lk: document.getElementById('rTierLK') };
+      const btns = { 
+        primary: document.getElementById('rTierPrimary'), 
+        hs: document.getElementById('rTierHS'), 
+        hss: document.getElementById('rTierHSS'), 
+        lk: document.getElementById('rTierLK'),
+        digital_square: document.getElementById('rTierDS'),
+        lk_junior: document.getElementById('rTierLKJun')
+      };
       Object.keys(btns).forEach(k => {
-        btns[k].className = (k === tier) ? 'py-2.5 text-xs rounded-2xl font-bold bg-emerald-600 text-white shadow-xs transition' : 'py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+        if (btns[k]) {
+          btns[k].className = (k === tier) ? 'py-2.5 text-xs rounded-2xl font-bold bg-emerald-600 text-white shadow-xs transition' : 'py-2.5 text-xs rounded-2xl font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+        }
       });
       renderChecklist();
     }
@@ -833,6 +915,8 @@
         else if (reportTier === 'hs') incharge = s.sitc?.name ? `SITC: ${s.sitc.name}` : (s.hm?.name ? `HM: ${s.hm.name}` : '');
         else if (reportTier === 'hss') incharge = s.hitc?.name ? `HITC: ${s.hitc.name}` : (s.principal?.name ? `Principal: ${s.principal.name}` : '');
         else if (reportTier === 'lk') incharge = s.lkMentors?.length ? `LK: ${s.lkMentors.map(m => m.name).join(', ')}` : '';
+        else if (reportTier === 'digital_square') incharge = s.digitalSquare?.name ? `DS: ${s.digitalSquare.name}` : '';
+        else if (reportTier === 'lk_junior') incharge = s.lkJunior?.name ? `LK Junior: ${s.lkJunior.name}` : '';
 
         row.innerHTML = `
           <div class="flex items-center gap-3">
@@ -910,10 +994,23 @@
     // ==========================================
     function renderLevelButtons(tier) {
       const btnGroup = document.getElementById('levelButtonGroup');
+      const container = document.getElementById('levelFilterContainer');
       let buttons = [];
-      if (tier === 'primary') buttons = [{ id: 'all', label: 'All' }, { id: 'lp', label: 'LP (1–4)' }, { id: 'up', label: 'UP (5–7)' }, { id: 'lp_up', label: 'Combined (1–7)' }];
-      else if (tier === 'hs') buttons = [{ id: 'all', label: 'All' }, { id: 'hs', label: 'HS (8–10)' }, { id: 'attached', label: 'Attached (1/5–10)' }, { id: 'campus', label: 'Campus (8/1–12)' }];
-      else if (tier === 'hss') buttons = [{ id: 'all', label: 'All HSS' }, { id: 'hss', label: 'HSS (11–12)' }];
+
+      if (tier === 'primary') {
+        container.style.display = 'block';
+        buttons = [{ id: 'all', label: 'All' }, { id: 'lp', label: 'LP (1–4)' }, { id: 'up', label: 'UP (5–7)' }, { id: 'lp_up', label: 'Combined (1–7)' }];
+      } else if (tier === 'hs') {
+        container.style.display = 'block';
+        buttons = [{ id: 'all', label: 'All' }, { id: 'hs', label: 'HS (8–10)' }, { id: 'attached', label: 'Attached (1/5–10)' }, { id: 'campus', label: 'Campus (8/1–12)' }];
+      } else if (tier === 'hss') {
+        container.style.display = 'block';
+        buttons = [{ id: 'all', label: 'All HSS' }, { id: 'hss', label: 'HSS (11–12)' }];
+      } else {
+        container.style.display = 'none';
+        btnGroup.innerHTML = '';
+        return;
+      }
 
       btnGroup.innerHTML = buttons.map(b => `
         <button onclick="setLevelFilter('${b.id}')" class="lvl-btn px-3 py-1.5 text-xs rounded-xl font-semibold transition ${selectedLevel === b.id ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}" data-lvl="${b.id}">${b.label}</button>
@@ -991,7 +1088,19 @@
         if (selectedMgmt === 'unaided' && mgmtType !== 'unaided') return false;
 
         if (!q) return true;
-        return school.name.toLowerCase().includes(q) || school.code.toLowerCase().includes(q);
+        const searchPool = [
+          school.name,
+          school.code,
+          school.hm?.name,
+          school.principal?.name,
+          school.psitc?.name,
+          school.sitc?.name,
+          school.hitc?.name,
+          school.digitalSquare?.name,
+          school.lkJunior?.name
+        ].filter(Boolean).join(' ').toLowerCase();
+
+        return searchPool.includes(q);
       });
 
       filtered.sort((a, b) => {
@@ -1029,9 +1138,12 @@
           rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]"><span class="text-slate-600 truncate max-w-[160px]">SITC: <strong class="text-slate-800">${school.sitc?.name || 'Assigned'}</strong></span><span class="${lkCount > 0 ? 'text-amber-700 font-extrabold' : 'text-slate-400'}">${lkCount > 0 ? `🪁 ${lkCount} LK Mentors` : 'No LK'}</span></div>`;
         } else if (currentTier === 'hss') {
           rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]"><span class="text-slate-600 truncate max-w-[160px]">Principal: <strong class="text-slate-800">${school.principal?.name || 'Assigned'}</strong></span><span class="text-purple-600 font-bold truncate max-w-[150px]">HITC: ${school.hitc?.name || 'Assigned'}</span></div>`;
+        } else if (currentTier === 'digital_square') {
+          rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]"><span class="text-slate-600 truncate max-w-[160px]">DS Coordinator: <strong class="text-cyan-700">${school.digitalSquare?.name || 'Assigned'}</strong></span><span class="text-cyan-600 font-bold font-mono-code">${school.digitalSquare?.phone || ''}</span></div>`;
+        } else if (currentTier === 'lk_junior') {
+          rolePreview = `<div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]"><span class="text-slate-600 truncate max-w-[160px]">LK Junior: <strong class="text-rose-700">${school.lkJunior?.name || 'Assigned'}</strong></span><span class="text-rose-600 font-bold font-mono-code">${school.lkJunior?.phone || ''}</span></div>`;
         }
 
-        // Edit button for authorized Admin
         const editButtonHtml = isAdmin ? `
           <button onclick="openEditSchoolModal('${school.code}', event)" class="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 transition active:scale-95" title="Edit School">
             ✏️
@@ -1100,6 +1212,14 @@
       } else if (currentTier === 'hss') {
         if (s.principal) contactsHtml += renderContactBox('Principal (Higher Secondary)', s.principal.name, s.principal.phone, 'Principal');
         if (s.hitc) contactsHtml += renderContactBox('Higher Secondary IT Coordinator', s.hitc.name, s.hitc.phone, 'HITC');
+      } else if (currentTier === 'digital_square') {
+        if (s.digitalSquare) contactsHtml += renderContactBox('Digital Square Coordinator', s.digitalSquare.name, s.digitalSquare.phone, 'DS Coordinator');
+        if (s.hm) contactsHtml += renderContactBox('Headmaster / Headmistress', s.hm.name, s.hm.phone, 'HM');
+        if (s.psitc) contactsHtml += renderContactBox('Primary IT Coordinator', s.psitc.name, s.psitc.phone, 'PSITC');
+      } else if (currentTier === 'lk_junior') {
+        if (s.lkJunior) contactsHtml += renderContactBox('Little Kites Junior Mentor', s.lkJunior.name, s.lkJunior.phone, 'LK Junior');
+        if (s.hm) contactsHtml += renderContactBox('Headmaster / Headmistress', s.hm.name, s.hm.phone, 'HM');
+        if (s.psitc) contactsHtml += renderContactBox('Primary IT Coordinator', s.psitc.name, s.psitc.phone, 'PSITC');
       }
 
       document.getElementById('modalContacts').innerHTML = contactsHtml;
